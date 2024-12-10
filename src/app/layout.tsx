@@ -1,11 +1,13 @@
 import type { ReactNode } from 'react';
 
 import type { Metadata } from 'next';
+import { Roboto } from 'next/font/google';
 import localFont from 'next/font/local';
 
 import { ThemeProvider } from 'next-themes';
 
 import '@/app/globals.css';
+import { NavBar } from '@/components/nav-bar';
 
 const geistSans = localFont({
     src: './fonts/GeistVF.woff',
@@ -17,6 +19,23 @@ const geistMono = localFont({
     variable: '--font-geist-mono',
     weight: '100 900'
 });
+const clashDisplay = localFont({
+    src: [
+        { path: './fonts/ClashDisplay-Extralight.woff', weight: '200', style: 'normal' },
+        { path: './fonts/ClashDisplay-Light.woff', weight: '300', style: 'normal' },
+        { path: './fonts/ClashDisplay-Regular.woff', weight: '400', style: 'normal' },
+        { path: './fonts/ClashDisplay-Medium.woff', weight: '500', style: 'normal' },
+        { path: './fonts/ClashDisplay-Semibold.woff', weight: '600', style: 'normal' },
+        { path: './fonts/ClashDisplay-Bold.woff', weight: '700', style: 'normal' }
+    ],
+    variable: '--font-clashdisplay'
+});
+const roboto = Roboto({
+    weight: ['100', '300', '400', '500', '700', '900'],
+    style: 'normal',
+    subsets: ['latin'],
+    variable: '--font-roboto'
+});
 
 export const metadata: Metadata = {
     title: 'Create Next App',
@@ -27,9 +46,15 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
     return (
         // ? https://github.com/pacocoursey/next-themes?tab=readme-ov-file#with-app
         // ? https://react.dev/reference/react-dom/client/hydrateRoot#suppressing-unavoidable-hydration-mismatch-errors
-        <html suppressHydrationWarning lang='en'>
-            <body className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased`}>
-                <ThemeProvider attribute='class'>{children}</ThemeProvider>
+        <html
+            suppressHydrationWarning
+            lang='en'
+            className={`${geistSans.variable} ${geistMono.variable} ${clashDisplay.variable} ${roboto.variable}`}>
+            <body className='bg-background font-clash text-foreground antialiased'>
+                <ThemeProvider attribute='class'>
+                    <NavBar />
+                    {children}
+                </ThemeProvider>
             </body>
         </html>
     );
