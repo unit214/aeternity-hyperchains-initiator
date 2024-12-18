@@ -7,6 +7,7 @@ import localFont from 'next/font/local';
 import { ThemeProvider } from 'next-themes';
 
 import '@/app/globals.css';
+import { FAQ } from '@/components/faq';
 import { Footer } from '@/components/footer';
 import { NavBar } from '@/components/nav-bar';
 
@@ -56,6 +57,7 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
                 <ThemeProvider attribute='class' forcedTheme={'light'}>
                     <NavBar />
                     <main className='flex-1'>{children}</main>
+                    <FAQ />
                     <Footer />
                 </ThemeProvider>
             </body>
