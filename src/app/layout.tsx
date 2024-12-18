@@ -7,6 +7,7 @@ import localFont from 'next/font/local';
 import { ThemeProvider } from 'next-themes';
 
 import '@/app/globals.css';
+import { Footer } from '@/components/footer';
 import { NavBar } from '@/components/nav-bar';
 
 const geistSans = localFont({
@@ -46,14 +47,16 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
     return (
         // ? https://github.com/pacocoursey/next-themes?tab=readme-ov-file#with-app
         // ? https://react.dev/reference/react-dom/client/hydrateRoot#suppressing-unavoidable-hydration-mismatch-errors
+        // Theme is forced light for now
         <html
             suppressHydrationWarning
             lang='en'
             className={`${geistSans.variable} ${geistMono.variable} ${clashDisplay.variable} ${roboto.variable}`}>
-            <body className='bg-background font-clash text-foreground antialiased'>
-                <ThemeProvider attribute='class'>
+            <body className='flex min-h-screen flex-col bg-background font-clash text-foreground antialiased'>
+                <ThemeProvider attribute='class' forcedTheme={'light'}>
                     <NavBar />
-                    {children}
+                    <main className='flex-1'>{children}</main>
+                    <Footer />
                 </ThemeProvider>
             </body>
         </html>
