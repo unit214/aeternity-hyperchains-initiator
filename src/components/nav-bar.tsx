@@ -7,7 +7,7 @@ export function NavBar() {
     return (
         <div className='hidden flex-col md:flex'>
             <div className='border-b'>
-                <div className='flex h-16 items-center justify-between px-4'>
+                <div className='flex h-16 items-center justify-between px-4 lg:px-10'>
                     <Image
                         className='h-6 sm:h-8'
                         src='/hyperchains_logo.svg'
@@ -16,21 +16,24 @@ export function NavBar() {
                         height={38}
                         priority
                     />
-                    <nav className='mx-6 flex items-center space-x-4 lg:space-x-6'>
+                    <nav className='mx-6 flex items-center space-x-4 lg:space-x-10'>
                         <Link href='#' className=''>
-                            Overview
+                            Home
                         </Link>
                         <Link href='#' className=''>
-                            Customers
+                            All Chains
                         </Link>
                         <Link href='#' className=''>
-                            Products
+                            My Delegations
                         </Link>
                         <Link href='#' className=''>
-                            Settings
+                            Validators
+                        </Link>
+                        <Link href='#' className=''>
+                            Documentation
                         </Link>
                     </nav>
-                    <Button className='font-roboto' variant='outline'>
+                    <Button variant='outline'>
                         Create a Hyperchain
                     </Button>
                 </div>
