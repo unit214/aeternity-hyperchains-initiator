@@ -36,14 +36,10 @@ export default [
     ...tailwind.configs['flat/recommended'], // ? https://github.com/francoismassart/eslint-plugin-tailwindcss
     {
         rules: {
-            'no-unused-vars': 'off',
             'react/react-in-jsx-scope': 'off',
-            'react-hooks/exhaustive-deps': 'off',
             'react/display-name': 'off',
             'react/prop-types': 'off',
             'newline-before-return': 'error',
-            '@typescript-eslint/no-unused-vars': 'off',
-            '@typescript-eslint/no-unused-expressions': 'off',
             'tailwindcss/classnames-order': 'off',
             'tailwindcss/migration-from-tailwind-2': 'off',
             'tailwindcss/no-custom-classname': 'off',
