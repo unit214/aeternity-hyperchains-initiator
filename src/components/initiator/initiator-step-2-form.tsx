@@ -49,7 +49,7 @@ export const InitiatorStep2Form: React.FC = () => {
     return (
         <>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col gap-48 font-roboto'>
+                <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col gap-24 font-roboto'>
                     <div className='grid grid-cols-2 gap-x-12 gap-y-6'>
                         <FormField
                             control={form.control}
