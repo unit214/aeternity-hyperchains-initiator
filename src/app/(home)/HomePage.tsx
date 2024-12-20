@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 
@@ -54,9 +55,9 @@ const HomePage: React.FC = () => {
                         alt='Home illustration 3'
                     />
                 </div>
-                <Button variant='default' className='mb-28 w-fit self-center'>
-                    Start Build Chain
-                </Button>
+                <Link href='/initiate/1' className='mb-28 w-fit self-center'>
+                    <Button variant='default'>Start Build Chain</Button>
+                </Link>
             </div>
         </div>
     );
