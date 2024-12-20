@@ -3,7 +3,7 @@ import React from 'react';
 import { InitiatorStep } from '@/components/initiator-step';
 import { InitiatorStep3Form } from '@/components/initiator/initiator-step-3-form';
 
-const Initiate1Page: React.FC = () => {
+const Initiate3Page: React.FC = () => {
     return (
         <div className='my-20 flex size-full items-center justify-center'>
             <InitiatorStep
@@ -16,4 +16,4 @@ const Initiate1Page: React.FC = () => {
     );
 };
 
-export default Initiate1Page;
+export default Initiate3Page;
