@@ -27,7 +27,7 @@ export const LogoSection: React.FC = () => {
         <div className='z-0 flex w-64 flex-col items-start text-neutral-500'>
             <img loading='lazy' src='/hyperchains_logo_white.svg' alt='HC Logo' className='max-w-full object-contain' />
             <div className='mt-3 w-full self-stretch leading-6'>
-                æternity's long-awaited hyperchains technology is a quantum leap for Web3
+                æternity&apos;s long-awaited hyperchains technology is a quantum leap for Web3
             </div>
             <div className='mt-3 flex max-w-full flex-col leading-loose'>
                 <div>Powered by</div>
