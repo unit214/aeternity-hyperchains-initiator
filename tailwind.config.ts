@@ -57,7 +57,10 @@ const config: Config = {
                 },
                 pink: 'hsl(var(--pink))',
                 'pink-light': 'hsl(var(--pink-light))',
-                'grey-3': 'hsl(var(--grey-3))'
+                'grey-2': 'hsl(var(--grey-2))',
+                'grey-3': 'hsl(var(--grey-3))',
+                'grey-4': 'hsl(var(--grey-4))',
+                'grey-6': 'hsl(var(--grey-6))'
             },
             fontFamily: {
                 sans: ['var(--font-geist-sans)'],
