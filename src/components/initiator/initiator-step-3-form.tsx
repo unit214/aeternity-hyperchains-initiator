@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
@@ -10,35 +11,52 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useLocalStorage } from '@uidotdev/usehooks';
 
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 const formSchema = z.object({
-    blockReward: z.number().min(0),
-    pinningReward: z.number().min(0),
-    slashingFee: z.number().min(0),
-    transactionFailurePenalty: z.number().min(0),
-    mintingAmount: z.number().min(0),
+    blockReward: z.coerce.number().gt(0),
+    pinningReward: z.coerce.number().gt(0),
+    slashingFee: z.coerce.number().gt(0),
+    transactionFailurePenalty: z.coerce.number().gt(0),
+    mintingAmount: z.coerce.number().gt(0),
     pinningInterval: z.string(),
-    parentChainTransactionFee: z.number().min(0),
+    parentChainTransactionFee: z.coerce.number().gt(0),
     tokenAccountPublicAddress: z.string().url()
 });
+type FormValues = z.infer<typeof formSchema>;
 
-export const InitiatorStep3Form: React.FC = () => {
+const INITIATOR_STEP_3_STORAGE_KEY = 'InitiatorStep3';
+
+const PageForm: React.FC<{ initialData?: FormValues; setInitialData: (data: FormValues) => void }> = ({
+    initialData,
+    setInitialData
+}) => {
     const router = useRouter();
-    const form = useForm<z.infer<typeof formSchema>>({
+
+    const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
-        defaultValues: {}
+        defaultValues: {
+            blockReward: initialData?.blockReward || ('' as unknown as number),
+            pinningReward: initialData?.pinningReward || ('' as unknown as number),
+            slashingFee: initialData?.slashingFee || ('' as unknown as number),
+            transactionFailurePenalty: initialData?.transactionFailurePenalty || ('' as unknown as number),
+            mintingAmount: initialData?.mintingAmount || ('' as unknown as number),
+            pinningInterval: initialData?.pinningInterval || '',
+            parentChainTransactionFee: initialData?.parentChainTransactionFee || ('' as unknown as number),
+            tokenAccountPublicAddress: initialData?.tokenAccountPublicAddress || ''
+        }
     });
 
     function onBack() {
-        // TODO store form data in local storage
+        setInitialData(form.getValues());
         router.push('/initiate/2');
     }
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        // TODO store form data in local storage
-        console.log(values);
+
+    function onSubmit(values: FormValues) {
+        setInitialData(values);
         router.push('/initiate/4');
     }
 
@@ -172,4 +190,17 @@ export const InitiatorStep3Form: React.FC = () => {
             </Form>
         </>
     );
+};
+
+export const InitiatorStep3Form: React.FC = () => {
+    const [initialData, setInitialData] = useLocalStorage<FormValues>(INITIATOR_STEP_3_STORAGE_KEY, undefined);
+    useEffect(() => {
+        setIsLoading(false);
+    }, [initialData, setInitialData]);
+    const [isLoading, setIsLoading] = useState(true);
+    if (!isLoading) {
+        return <PageForm initialData={initialData} setInitialData={setInitialData} />;
+    }
+
+    return <></>;
 };
