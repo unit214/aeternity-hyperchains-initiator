@@ -30,7 +30,7 @@ const AccordionTrigger = React.forwardRef<
             )}
             {...props}>
             {children}
-            <PlusIcon className='size-4 shrink-0 transition-transform duration-200 group-data-[state=open]:hidden'/>
+            <PlusIcon className='size-4 shrink-0 transition-transform duration-200 group-data-[state=open]:hidden' />
             <MinusIcon className='size-4 shrink-0 transition-transform duration-200 group-data-[state=closed]:hidden' />
         </AccordionPrimitive.Trigger>
     </AccordionPrimitive.Header>

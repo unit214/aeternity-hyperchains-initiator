@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Image from 'next/image';
+
 import { Button } from '@/components/ui/button';
 
 interface StepProps {
@@ -16,7 +17,7 @@ const Step: React.FC<StepProps> = ({ stepNumber, title, description, imageSrc, a
         <div className='flex w-64 flex-col items-start rounded-xl bg-primary-foreground p-4'>
             <Image className='h-40 self-center' src={imageSrc} alt={alt} width={222} height={154} />
             <span className='font-roboto text-sm text-pink'>Step {stepNumber}</span>
-            <span className='text-2xl lead font-semibold'>{title}</span>
+            <span className='lead text-2xl font-semibold'>{title}</span>
             <span className='font-roboto text-sm text-muted-foreground'>{description}</span>
         </div>
     );
@@ -24,13 +25,13 @@ const Step: React.FC<StepProps> = ({ stepNumber, title, description, imageSrc, a
 
 const HomePage: React.FC = () => {
     return (
-        <div className='flex size-full items-center justify-center font-clash mt-20'>
-            <div className="flex flex-col">
-                <div className='text-4xl mb-4 font-semibold'>Welcome to Your Chain Builder</div>
-                <div className='font-roboto text-muted-foreground mb-10'>
+        <div className='mt-20 flex size-full items-center justify-center font-clash'>
+            <div className='flex flex-col'>
+                <div className='mb-4 text-4xl font-semibold'>Welcome to Your Chain Builder</div>
+                <div className='mb-10 font-roboto text-muted-foreground'>
                     Ready to create your own blockchain? With just a few onboarding steps, you will receive your chain
                 </div>
-                <div className='flex gap-6 mb-14'>
+                <div className='mb-14 flex gap-6'>
                     <Step
                         stepNumber={1}
                         title='Generate Your Custom Chain'
@@ -53,7 +54,9 @@ const HomePage: React.FC = () => {
                         alt='Home illustration 3'
                     />
                 </div>
-                <Button variant='default' className="w-fit self-center mb-28">Start Build Chain</Button>
+                <Button variant='default' className='mb-28 w-fit self-center'>
+                    Start Build Chain
+                </Button>
             </div>
         </div>
     );

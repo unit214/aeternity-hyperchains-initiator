@@ -33,9 +33,7 @@ export function NavBar() {
                             Documentation
                         </Link>
                     </nav>
-                    <Button variant='outline'>
-                        Create a Hyperchain
-                    </Button>
+                    <Button variant='outline'>Create a Hyperchain</Button>
                 </div>
             </div>
         </div>
