@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
-import { useLocalStorage } from '@/lib/useLocalStorage';
+import { getFromLocalStorage, saveToLocalStorage } from '@/lib/local-storage';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { useForm } from 'react-hook-form';
@@ -25,14 +25,11 @@ type FormValues = z.infer<typeof formSchema>;
 
 const INITIATOR_STEP_1_STORAGE_KEY = 'InitiatorStep1';
 
-const PageForm: React.FC<{ initialData?: FormValues; setInitialData: (data: FormValues) => void }> = ({
-    initialData,
-    setInitialData
-}) => {
+const PageForm: React.FC<{ initialData: FormValues | null }> = ({ initialData }) => {
     const router = useRouter();
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
-        values: {
+        defaultValues: {
             id: initialData?.id || '0x3F2d4E7ftdrey764dygJUGeC89f',
             blockTime: initialData?.blockTime || 6500,
             blockProductionTime: initialData?.blockProductionTime || 6500
@@ -40,11 +37,11 @@ const PageForm: React.FC<{ initialData?: FormValues; setInitialData: (data: Form
     });
 
     function onBack() {
-        setInitialData(form.getValues());
+        saveToLocalStorage<FormValues>(form.getValues(), INITIATOR_STEP_1_STORAGE_KEY);
         router.push('/');
     }
     function onSubmit(values: FormValues) {
-        setInitialData(values);
+        saveToLocalStorage<FormValues>(values, INITIATOR_STEP_1_STORAGE_KEY);
         router.push('/initiate/2');
     }
 
@@ -138,13 +135,13 @@ const PageForm: React.FC<{ initialData?: FormValues; setInitialData: (data: Form
 };
 
 export const InitiatorStep1Form: React.FC = () => {
-    const [initialData, setInitialData] = useLocalStorage<FormValues>(INITIATOR_STEP_1_STORAGE_KEY, undefined);
+    const [initialData, setInitialData] = useState<FormValues | null | undefined>(undefined);
     useEffect(() => {
-        setIsLoading(false);
-    }, [initialData, setInitialData]);
-    const [isLoading, setIsLoading] = useState(true);
-    if (!isLoading) {
-        return <PageForm initialData={initialData} setInitialData={setInitialData} />;
+        setInitialData(getFromLocalStorage<FormValues>(INITIATOR_STEP_1_STORAGE_KEY));
+    }, [window]);
+
+    if (initialData !== undefined) {
+        return <PageForm initialData={initialData} />;
     }
 
     return <></>;

@@ -12,7 +12,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
-import { useLocalStorage } from '@/lib/useLocalStorage';
+import { getFromLocalStorage, saveToLocalStorage } from '@/lib/local-storage';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { useForm } from 'react-hook-form';
@@ -29,10 +29,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 const INITIATOR_STEP_2_STORAGE_KEY = 'InitiatorStep2';
 
-const PageForm: React.FC<{ initialData?: FormValues; setInitialData: (data: FormValues) => void }> = ({
-    initialData,
-    setInitialData
-}) => {
+const PageForm: React.FC<{ initialData: FormValues | null }> = ({ initialData }) => {
     const router = useRouter();
 
     const form = useForm<FormValues>({
@@ -49,11 +46,11 @@ const PageForm: React.FC<{ initialData?: FormValues; setInitialData: (data: Form
     });
 
     function onBack() {
-        setInitialData(form.getValues());
+        saveToLocalStorage<FormValues>(form.getValues(), INITIATOR_STEP_2_STORAGE_KEY);
         router.push('/initiate/1');
     }
     function onSubmit(values: FormValues) {
-        setInitialData(values);
+        saveToLocalStorage<FormValues>(values, INITIATOR_STEP_2_STORAGE_KEY);
         router.push('/initiate/3');
     }
 
@@ -169,13 +166,13 @@ const PageForm: React.FC<{ initialData?: FormValues; setInitialData: (data: Form
 };
 
 export const InitiatorStep2Form: React.FC = () => {
-    const [initialData, setInitialData] = useLocalStorage<FormValues>(INITIATOR_STEP_2_STORAGE_KEY, undefined);
+    const [initialData, setInitialData] = useState<FormValues | null | undefined>(undefined);
     useEffect(() => {
-        setIsLoading(false);
-    }, [initialData, setInitialData]);
-    const [isLoading, setIsLoading] = useState(true);
-    if (!isLoading) {
-        return <PageForm initialData={initialData} setInitialData={setInitialData} />;
+        setInitialData(getFromLocalStorage<FormValues>(INITIATOR_STEP_2_STORAGE_KEY));
+    }, [window]);
+
+    if (initialData !== undefined) {
+        return <PageForm initialData={initialData} />;
     }
 
     return <></>;
