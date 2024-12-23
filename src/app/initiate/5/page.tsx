@@ -6,6 +6,13 @@ import { ReactNode } from 'react';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
+import {
+    INITIATOR_STEP_1_STORAGE_KEY,
+    INITIATOR_STEP_2_STORAGE_KEY,
+    INITIATOR_STEP_3_STORAGE_KEY,
+    INITIATOR_STEP_4_STORAGE_KEY
+} from '@/lib/constants';
+import { getFromLocalStorage } from '@/lib/local-storage';
 
 import { InfoIcon } from 'lucide-react';
 
@@ -15,7 +22,19 @@ const LineItem = ({ children }: { children?: ReactNode | string }) => {
 
 const InitiatorStep5Form: React.FC = () => {
     const downloadTxtFile = () => {
-        const content = 'test';
+        // get the content from the local storage
+        const step1Data = getFromLocalStorage(INITIATOR_STEP_1_STORAGE_KEY);
+        const step2Data = getFromLocalStorage(INITIATOR_STEP_2_STORAGE_KEY);
+        const step3Data = getFromLocalStorage(INITIATOR_STEP_3_STORAGE_KEY);
+        const step4Data = getFromLocalStorage(INITIATOR_STEP_4_STORAGE_KEY);
+
+        // create a new file
+        const content = JSON.stringify({
+            step1: step1Data,
+            step2: step2Data,
+            step3: step3Data,
+            step4: step4Data
+        });
         const element = document.createElement('a');
         const file = new Blob([content], { type: 'text/plain' });
         element.href = URL.createObjectURL(file);

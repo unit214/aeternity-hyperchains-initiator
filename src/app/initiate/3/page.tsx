@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { INITIATOR_STEP_3_STORAGE_KEY } from '@/lib/constants';
 import { getFromLocalStorage, saveToLocalStorage } from '@/lib/local-storage';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -27,8 +28,6 @@ const formSchema = z.object({
     tokenAccountPublicAddress: z.string().url()
 });
 type FormValues = z.infer<typeof formSchema>;
-
-const INITIATOR_STEP_3_STORAGE_KEY = 'InitiatorStep3';
 
 const InitiatorForm: React.FC<{ initialData: FormValues | null }> = ({ initialData }) => {
     const router = useRouter();

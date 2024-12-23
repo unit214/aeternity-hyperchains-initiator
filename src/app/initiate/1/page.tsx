@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
+import { INITIATOR_STEP_1_STORAGE_KEY } from '@/lib/constants';
 import { getFromLocalStorage, saveToLocalStorage } from '@/lib/local-storage';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -22,8 +23,6 @@ const formSchema = z.object({
     blockProductionTime: z.number().min(0).max(10000)
 });
 type FormValues = z.infer<typeof formSchema>;
-
-const INITIATOR_STEP_1_STORAGE_KEY = 'InitiatorStep1';
 
 const InitiatorForm: React.FC<{ initialData: FormValues | null }> = ({ initialData }) => {
     const router = useRouter();

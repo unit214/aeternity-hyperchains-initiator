@@ -9,6 +9,7 @@ import { InitiatorStep } from '@/components/initiator-step';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { INITIATOR_STEP_4_STORAGE_KEY } from '@/lib/constants';
 import { getFromLocalStorage, saveToLocalStorage } from '@/lib/local-storage';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -21,8 +22,6 @@ const formSchema = z.object({
     validatorMinPercentage: z.coerce.number().gt(0)
 });
 type FormValues = z.infer<typeof formSchema>;
-
-const INITIATOR_STEP_4_STORAGE_KEY = 'InitiatorStep4';
 
 const InitiatorForm: React.FC<{ initialData: FormValues | null }> = ({ initialData }) => {
     const router = useRouter();
