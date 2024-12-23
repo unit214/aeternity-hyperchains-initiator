@@ -16,7 +16,7 @@ export const FormLabelWithTooltip: React.FC<InfoTooltipProps> = ({ label, toolti
             <FormLabel className='font-clash'>{label}</FormLabel>
             <TooltipProvider>
                 <Tooltip>
-                    <TooltipTrigger>
+                    <TooltipTrigger type='button'>
                         <InfoIcon className='size-4' />
                     </TooltipTrigger>
                     <TooltipContent className='font-roboto'>

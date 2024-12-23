@@ -5,7 +5,7 @@ import { InitiatorStep2Form } from '@/components/initiator/initiator-step-2-form
 
 const Initiate2Page: React.FC = () => {
     return (
-        <div className='my-20 flex size-full items-center justify-center'>
+        <div className='flex size-full items-center justify-center'>
             <InitiatorStep
                 title='Set Up Your Pinning Chain'
                 stepNumber={2}

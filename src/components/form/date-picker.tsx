@@ -35,7 +35,7 @@ export const DayPicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
                 <FormControl>
                     <Button
                         variant={'form'}
-                        className={cn('w-[260px] pl-3 text-left font-normal', !value && 'text-grey-4')}>
+                        className={cn('pl-3 text-left font-normal md:w-[260px]', !value && 'text-grey-4')}>
                         {value ? format(value, 'MMM dd, yyyy') : <span>Start Date</span>}
                         <ChevronDown className='ml-auto size-4 opacity-50' />
                     </Button>

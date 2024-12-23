@@ -56,7 +56,7 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
             <body className='flex min-h-screen flex-col bg-background font-clash text-foreground antialiased'>
                 <ThemeProvider attribute='class' forcedTheme={'light'}>
                     <NavBar />
-                    <main className='flex-1'>{children}</main>
+                    <main className='flex-1 px-4'>{children}</main>
                     <FAQ />
                     <Footer />
                 </ThemeProvider>

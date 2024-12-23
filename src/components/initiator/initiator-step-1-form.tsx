@@ -47,8 +47,10 @@ const PageForm: React.FC<{ initialData: FormValues | null }> = ({ initialData })
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col gap-48 font-roboto'>
-                <div className='grid grid-cols-2 gap-x-12 gap-y-6'>
+            <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className='flex flex-col justify-between gap-10 font-roboto md:min-h-[450px]'>
+                <div className='grid grid-cols-1 gap-x-12 gap-y-8 md:grid-cols-2 md:gap-y-6'>
                     <FormField
                         control={form.control}
                         name='id'

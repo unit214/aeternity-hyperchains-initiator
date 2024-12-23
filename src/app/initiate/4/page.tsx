@@ -5,7 +5,7 @@ import { InitiatorStep4Form } from '@/components/initiator/initiator-step-4-form
 
 const Initiate4Page: React.FC = () => {
     return (
-        <div className='mt-20 flex size-full items-center justify-center'>
+        <div className='flex size-full items-center justify-center'>
             <InitiatorStep
                 title='Set Validator Requirements'
                 stepNumber={4}

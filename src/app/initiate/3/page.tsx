@@ -5,7 +5,7 @@ import { InitiatorStep3Form } from '@/components/initiator/initiator-step-3-form
 
 const Initiate3Page: React.FC = () => {
     return (
-        <div className='my-20 flex size-full items-center justify-center'>
+        <div className='flex size-full items-center justify-center'>
             <InitiatorStep
                 title='Set Token Economics'
                 stepNumber={3}

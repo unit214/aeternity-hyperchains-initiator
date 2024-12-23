@@ -56,8 +56,10 @@ const PageForm: React.FC<{ initialData: FormValues | null }> = ({ initialData })
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col gap-24 font-roboto'>
-                <div className='grid grid-cols-2 gap-x-12 gap-y-6'>
+            <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className='flex flex-col justify-between gap-10 font-roboto md:min-h-[450px]'>
+                <div className='grid grid-cols-1 gap-x-12 gap-y-8 md:grid-cols-2 md:gap-y-6'>
                     <FormField
                         control={form.control}
                         name='pinningChain'
@@ -111,7 +113,7 @@ const PageForm: React.FC<{ initialData: FormValues | null }> = ({ initialData })
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabelWithTooltip label='Start Time | Height' tooltip='Tooltip Text' />
-                                <div className='flex flex-row gap-4'>
+                                <div className='flex flex-col gap-4 md:flex-row'>
                                     <DayPicker value={field.value} onChange={field.onChange} />
                                     <HoursPicker value={field.value} onChange={field.onChange} />
                                 </div>
