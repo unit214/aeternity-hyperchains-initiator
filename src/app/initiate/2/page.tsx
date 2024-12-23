@@ -1,7 +1,184 @@
-import React from 'react';
+'use client';
 
+import React, { useEffect, useState } from 'react';
+
+import { useRouter } from 'next/navigation';
+
+import { DayPicker, HoursPicker } from '@/components/form/date-picker';
+import { FormLabelWithTooltip } from '@/components/form/form-label-with-tooltip';
 import { InitiatorStep } from '@/components/initiator-step';
-import { InitiatorStep2Form } from '@/components/initiator/initiator-step-2-form';
+import { Button } from '@/components/ui/button';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Slider } from '@/components/ui/slider';
+import { getFromLocalStorage, saveToLocalStorage } from '@/lib/local-storage';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+
+const formSchema = z.object({
+    pinningChain: z.enum(['Aeternity', 'Bitcoin']),
+    chainNetworkId: z.string(),
+    chainConnectionUrl: z.string().url(),
+    startTime: z.coerce.date(),
+    finality: z.number().min(0).max(100)
+});
+type FormValues = z.infer<typeof formSchema>;
+
+const INITIATOR_STEP_2_STORAGE_KEY = 'InitiatorStep2';
+
+const InitiatorForm: React.FC<{ initialData: FormValues | null }> = ({ initialData }) => {
+    const router = useRouter();
+
+    const form = useForm<FormValues>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            pinningChain: initialData?.pinningChain || 'Aeternity',
+            chainNetworkId: initialData?.chainNetworkId || '',
+            chainConnectionUrl: initialData?.chainConnectionUrl || '',
+            startTime: initialData?.startTime
+                ? new Date(initialData?.startTime)
+                : new Date(new Date().setMinutes(0, 0, 0)),
+            finality: initialData?.finality || 12
+        }
+    });
+
+    function onBack() {
+        saveToLocalStorage<FormValues>(form.getValues(), INITIATOR_STEP_2_STORAGE_KEY);
+        router.push('/initiate/1');
+    }
+    function onSubmit(values: FormValues) {
+        saveToLocalStorage<FormValues>(values, INITIATOR_STEP_2_STORAGE_KEY);
+        router.push('/initiate/3');
+    }
+
+    return (
+        <Form {...form}>
+            <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className='flex flex-col justify-between gap-10 font-roboto md:min-h-[450px]'>
+                <div className='grid grid-cols-1 gap-x-12 gap-y-8 md:grid-cols-2 md:gap-y-6'>
+                    <FormField
+                        control={form.control}
+                        name='pinningChain'
+                        render={({ field: { value, onChange } }) => (
+                            <FormItem>
+                                <FormLabelWithTooltip label='Pinning Chain' tooltip='Tooltip Text' />
+                                <FormControl>
+                                    <Select value={value} onValueChange={onChange} defaultValue={value}>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder='Choose a parent chain connection' />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value='Aeternity'>Aeternity</SelectItem>
+                                            <SelectItem value='Bitcoin'>Bitcoin</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name='chainNetworkId'
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabelWithTooltip label='Chain Network ID' tooltip='Tooltip Text' />
+                                <FormControl>
+                                    <Input placeholder='Ex: ae_mainnet | ae_uat' {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name='chainConnectionUrl'
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabelWithTooltip label='Chain Connection URL' tooltip='Tooltip Text' />
+                                <FormControl>
+                                    <Input placeholder=' https://user:password@some.address.com:8000' {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name='startTime'
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabelWithTooltip label='Start Time | Height' tooltip='Tooltip Text' />
+                                <div className='flex flex-col gap-4 md:flex-row'>
+                                    <DayPicker value={field.value} onChange={field.onChange} />
+                                    <HoursPicker value={field.value} onChange={field.onChange} />
+                                </div>
+                                <span className='font-roboto text-xs text-muted-foreground'>
+                                    * The start time may vary slightly due to system adjustments.
+                                </span>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name='finality'
+                        render={({ field: { value, onChange } }) => (
+                            <FormItem>
+                                <FormLabelWithTooltip label='Finality' tooltip='Tooltip Text' />
+                                <div className='flex flex-row gap-6'>
+                                    <FormControl>
+                                        <Input value={value} onChange={onChange} className='w-20' placeholder='0' />
+                                    </FormControl>
+                                    <div className='flex w-full flex-col justify-center gap-1'>
+                                        <div className='flex flex-row justify-between font-roboto text-sm text-grey-4'>
+                                            <span>0</span> <span>100</span>
+                                        </div>
+                                        <FormControl>
+                                            <Slider
+                                                onValueChange={(v) => onChange(v[0])}
+                                                value={[value]}
+                                                defaultValue={[value]}
+                                                max={100}
+                                                step={1}
+                                            />
+                                        </FormControl>
+                                    </div>
+                                </div>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                </div>
+                <div className='flex flex-row gap-4 self-center'>
+                    <Button type='button' variant='outline' className='w-24' onClick={onBack}>
+                        Back
+                    </Button>
+                    <Button type='submit' variant='default' className='w-24'>
+                        Next
+                    </Button>
+                </div>
+            </form>
+        </Form>
+    );
+};
+
+const FormWrapper: React.FC = () => {
+    const [initialData, setInitialData] = useState<FormValues | null | undefined>(undefined);
+    useEffect(() => {
+        setInitialData(getFromLocalStorage<FormValues>(INITIATOR_STEP_2_STORAGE_KEY));
+    }, []);
+
+    if (initialData !== undefined) {
+        return <InitiatorForm initialData={initialData} />;
+    }
+
+    return <></>;
+};
 
 const Initiate2Page: React.FC = () => {
     return (
@@ -10,7 +187,7 @@ const Initiate2Page: React.FC = () => {
                 title='Set Up Your Pinning Chain'
                 stepNumber={2}
                 description='Define the key parameters for connecting your hyperchain to the pinning chain. These settings establish the foundation of your network’s relationship with the pinning chain.'
-                form={<InitiatorStep2Form />}
+                form={<FormWrapper />}
             />
         </div>
     );
