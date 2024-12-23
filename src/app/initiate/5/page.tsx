@@ -166,6 +166,11 @@ const InitiatorStep5Form: React.FC = () => {
                             </div>
                         </div>
                     </div>
+                    <img
+                        src='/success_screen.png'
+                        className='hidden object-contain object-top xl:block'
+                        alt='Success Screen'
+                    />
                 </div>
             </div>
         </div>
