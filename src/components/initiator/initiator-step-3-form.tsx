@@ -10,8 +10,8 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useLocalStorage } from '@/lib/useLocalStorage';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useLocalStorage } from '@uidotdev/usehooks';
 
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';

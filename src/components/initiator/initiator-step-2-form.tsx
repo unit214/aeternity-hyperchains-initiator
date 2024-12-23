@@ -12,8 +12,8 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
+import { useLocalStorage } from '@/lib/useLocalStorage';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useLocalStorage } from '@uidotdev/usehooks';
 
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
