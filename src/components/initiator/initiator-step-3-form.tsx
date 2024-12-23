@@ -193,7 +193,7 @@ export const InitiatorStep3Form: React.FC = () => {
     const [initialData, setInitialData] = useState<FormValues | null | undefined>(undefined);
     useEffect(() => {
         setInitialData(getFromLocalStorage<FormValues>(INITIATOR_STEP_3_STORAGE_KEY));
-    }, [window]);
+    }, []);
 
     if (initialData !== undefined) {
         return <PageForm initialData={initialData} />;
