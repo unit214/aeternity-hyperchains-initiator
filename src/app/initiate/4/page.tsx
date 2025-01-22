@@ -51,7 +51,7 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
                             <FormItem>
                                 <FormLabelWithTooltip label='Number Of Validators' tooltip='Tooltip Text' />
                                 <FormControl>
-                                    <Input {...field} placeholder='0' />
+                                    <Input {...field} placeholder='3' />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -64,7 +64,7 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
                             <FormItem>
                                 <FormLabelWithTooltip label='Validator Balance' tooltip='Tooltip Text' />
                                 <FormControl>
-                                    <Input {...field} placeholder='0.0' />
+                                    <Input {...field} placeholder='100.0' />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -77,7 +77,7 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
                             <FormItem>
                                 <FormLabelWithTooltip label='Minimum Staking Amount' tooltip='Tooltip Text' />
                                 <FormControl>
-                                    <Input {...field} placeholder='0.0' />
+                                    <Input {...field} placeholder='100.0' />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>

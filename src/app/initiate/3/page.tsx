@@ -51,7 +51,7 @@ const InitiatorForm: React.FC<{ initialData: Step3FormValues | null }> = ({ init
                             <FormItem>
                                 <FormLabelWithTooltip label='Block Reward' tooltip='Tooltip Text' />
                                 <FormControl>
-                                    <Input {...field} placeholder='0.0' />
+                                    <Input {...field} placeholder='100.0' />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -64,7 +64,7 @@ const InitiatorForm: React.FC<{ initialData: Step3FormValues | null }> = ({ init
                             <FormItem>
                                 <FormLabelWithTooltip label='Pinning Reward' tooltip='Tooltip Text' />
                                 <FormControl>
-                                    <Input {...field} placeholder='0.0' />
+                                    <Input {...field} placeholder='100.0' />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
