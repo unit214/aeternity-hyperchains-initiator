@@ -97,11 +97,12 @@ const InitiatorStep5Form: React.FC = () => {
             } catch (e) {
                 if (e instanceof Error && Steps.find((x) => x === e.message) !== undefined) {
                     toast({
+                        variant: 'destructive',
                         title: 'Incomplete data',
                         description: (
                             <span>
                                 Go back to{' '}
-                                <Link className='text-pink underline' href={`/initiate/${e.message}`}>
+                                <Link className='underline' href={`/initiate/${e.message}`}>
                                     Step {e.message}
                                 </Link>{' '}
                                 to fix the problem.
