@@ -11,7 +11,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { Input } from '@/components/ui/input';
 import { INITIATOR_STEP_2_STORAGE_KEY, INITIATOR_STEP_4_STORAGE_KEY, parentChains } from '@/lib/constants';
 import { getFromLocalStorage, saveToLocalStorage } from '@/lib/local-storage';
-import { Step4FormValues, step4FormSchema, Step2FormValues } from '@/lib/types';
+import { Step2FormValues, Step4FormValues, step4FormSchema } from '@/lib/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { useForm } from 'react-hook-form';
@@ -73,7 +73,17 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
                                     <NumericFormat
                                         {...field}
                                         allowNegative={false}
-                                        decimalScale={parentChains.filter((c) => c.symbol === getFromLocalStorage<Step2FormValues>(INITIATOR_STEP_2_STORAGE_KEY)?.parent).at(0)?.decimals || 18}
+                                        decimalScale={
+                                            parentChains
+                                                .filter(
+                                                    (c) =>
+                                                        c.symbol ===
+                                                        getFromLocalStorage<Step2FormValues>(
+                                                            INITIATOR_STEP_2_STORAGE_KEY
+                                                        )?.parent
+                                                )
+                                                .at(0)?.decimals || 18
+                                        }
                                         placeholder='0.0'
                                         customInput={Input}
                                     />
@@ -92,7 +102,17 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
                                     <NumericFormat
                                         {...field}
                                         allowNegative={false}
-                                        decimalScale={parentChains.filter((c) => c.symbol === getFromLocalStorage<Step2FormValues>(INITIATOR_STEP_2_STORAGE_KEY)?.parent).at(0)?.decimals || 18}
+                                        decimalScale={
+                                            parentChains
+                                                .filter(
+                                                    (c) =>
+                                                        c.symbol ===
+                                                        getFromLocalStorage<Step2FormValues>(
+                                                            INITIATOR_STEP_2_STORAGE_KEY
+                                                        )?.parent
+                                                )
+                                                .at(0)?.decimals || 18
+                                        }
                                         placeholder='0.0'
                                         customInput={Input}
                                     />

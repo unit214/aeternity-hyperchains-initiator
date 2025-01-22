@@ -11,7 +11,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { Input } from '@/components/ui/input';
 import { INITIATOR_STEP_2_STORAGE_KEY, INITIATOR_STEP_3_STORAGE_KEY, parentChains } from '@/lib/constants';
 import { getFromLocalStorage, saveToLocalStorage } from '@/lib/local-storage';
-import { Step3FormValues, step3FormSchema, Step2FormValues } from '@/lib/types';
+import { Step2FormValues, Step3FormValues, step3FormSchema } from '@/lib/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { useForm } from 'react-hook-form';
@@ -23,7 +23,7 @@ const InitiatorForm: React.FC<{ initialData: Step3FormValues | null }> = ({ init
     const form = useForm<Step3FormValues>({
         resolver: zodResolver(step3FormSchema),
         defaultValues: {
-            fixedCoinbase: initialData?.fixedCoinbase || '' ,
+            fixedCoinbase: initialData?.fixedCoinbase || '',
             pinningReward: initialData?.pinningReward || ''
         }
     });
@@ -54,7 +54,17 @@ const InitiatorForm: React.FC<{ initialData: Step3FormValues | null }> = ({ init
                                     <NumericFormat
                                         {...field}
                                         allowNegative={false}
-                                        decimalScale={parentChains.filter((c) => c.symbol === getFromLocalStorage<Step2FormValues>(INITIATOR_STEP_2_STORAGE_KEY)?.parent).at(0)?.decimals || 18}
+                                        decimalScale={
+                                            parentChains
+                                                .filter(
+                                                    (c) =>
+                                                        c.symbol ===
+                                                        getFromLocalStorage<Step2FormValues>(
+                                                            INITIATOR_STEP_2_STORAGE_KEY
+                                                        )?.parent
+                                                )
+                                                .at(0)?.decimals || 18
+                                        }
                                         placeholder='0.0'
                                         customInput={Input}
                                     />
@@ -73,7 +83,17 @@ const InitiatorForm: React.FC<{ initialData: Step3FormValues | null }> = ({ init
                                     <NumericFormat
                                         {...field}
                                         allowNegative={false}
-                                        decimalScale={parentChains.filter((c) => c.symbol === getFromLocalStorage<Step2FormValues>(INITIATOR_STEP_2_STORAGE_KEY)?.parent).at(0)?.decimals || 18}
+                                        decimalScale={
+                                            parentChains
+                                                .filter(
+                                                    (c) =>
+                                                        c.symbol ===
+                                                        getFromLocalStorage<Step2FormValues>(
+                                                            INITIATOR_STEP_2_STORAGE_KEY
+                                                        )?.parent
+                                                )
+                                                .at(0)?.decimals || 18
+                                        }
                                         placeholder='0.0'
                                         customInput={Input}
                                     />

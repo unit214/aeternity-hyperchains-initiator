@@ -15,13 +15,13 @@ import {
 } from '@/lib/constants';
 import { getFromLocalStorage } from '@/lib/local-storage';
 import {
-    CompleteForm,
+    FormSteps,
+    FormValues,
     Step1FormValues,
     Step2FormValues,
     Step3FormValues,
     Step4FormValues,
-    Steps,
-    completeFormSchema
+    formSchema
 } from '@/lib/types';
 
 import { InfoIcon } from 'lucide-react';
@@ -29,7 +29,7 @@ import YAML from 'yaml';
 import { ZodError } from 'zod';
 
 const InitiatorStep5Form: React.FC = () => {
-    const [formData, setFormData] = useState<CompleteForm | undefined>();
+    const [formData, setFormData] = useState<FormValues | undefined>();
     const [error, setError] = useState<ReactNode | undefined>();
 
     useEffect(() => {
@@ -38,7 +38,7 @@ const InitiatorStep5Form: React.FC = () => {
         const step3Data = getFromLocalStorage<Step3FormValues>(INITIATOR_STEP_3_STORAGE_KEY);
         const step4Data = getFromLocalStorage<Step4FormValues>(INITIATOR_STEP_4_STORAGE_KEY);
         try {
-            const form = completeFormSchema.parse({
+            const form = formSchema.parse({
                 ...step1Data,
                 ...step2Data,
                 ...step3Data,
@@ -47,7 +47,7 @@ const InitiatorStep5Form: React.FC = () => {
             setFormData(form);
         } catch (e) {
             const message = (e as ZodError).errors?.at(0)?.message || (e as Error).message;
-            if (Steps.find((x) => x === message) !== undefined) {
+            if (FormSteps.find((x) => x === message) !== undefined) {
                 setError(
                     <span>
                         Go back to{' '}

@@ -7,6 +7,12 @@ export const DEFAULT_FAUCET_INIT_BALANCE = 1000000000000000000000000000n;
 export const DEFAULT_TREASURY_INIT_BALANCE = 1000000000000000000000000000000000000000000000000n;
 
 export const parentChains = [
-    { name: 'Aeternity', symbol: 'AE', blockTime: 180000n, decimals: 18 }
+    {
+        name: 'Aeternity',
+        symbol: 'AE',
+        blockTime: 180000n,
+        decimals: 18,
+        contractSourcesPrefix: 'https://raw.githubusercontent.com/aeternity/aeternity/refs/tags/v7.3.0-rc2/'
+    }
     // { name: 'Bitcoin', symbol: 'BTC', blockTime: 600000n, decimals: 18 }
 ];
