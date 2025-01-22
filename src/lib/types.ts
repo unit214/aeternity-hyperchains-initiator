@@ -1,14 +1,14 @@
 import { z } from 'zod';
 
 export const step1FormSchema = z.object({
-    networkId: z.string(),
+    networkId: z.string().nonempty(),
     childBlockTime: z.coerce.bigint().min(3000n).max(10000n)
 });
 
 export const step2FormSchema = z.object({
     parent: z.string(),
-    parentNetworkId: z.string(),
-    parentNodeUrl: z.string().url(),
+    parentNetworkId: z.string().nonempty(),
+    parentNodeUrl: z.string().nonempty().url(),
     parentEpochLength: z.coerce.bigint().min(0n).max(100n)
 });
 

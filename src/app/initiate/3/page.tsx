@@ -52,7 +52,7 @@ const InitiatorForm: React.FC<{ initialData: Step3FormValues | null }> = ({ init
                                 <FormControl>
                                     <Input
                                         placeholder='Ex: 100000000000000000000'
-                                        value={Number(value)}
+                                        value={value as unknown as number}
                                         onChange={onChange}
                                     />
                                 </FormControl>
@@ -69,7 +69,7 @@ const InitiatorForm: React.FC<{ initialData: Step3FormValues | null }> = ({ init
                                 <FormControl>
                                     <Input
                                         placeholder='Ex: 1000000000000000000000'
-                                        value={Number(value)}
+                                        value={value as unknown as number}
                                         onChange={onChange}
                                     />
                                 </FormControl>
