@@ -1,9 +1,11 @@
 'use client';
 
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 
 import Link from 'next/link';
 
+import { Code } from '@/components/code';
 import { Button } from '@/components/ui/button';
 import {
     DEFAULT_FAUCET_INIT_BALANCE,
@@ -15,12 +17,17 @@ import {
     parentChains
 } from '@/lib/constants';
 import { getFromLocalStorage } from '@/lib/local-storage';
-import { step1FormSchema, step2FormSchema, step3FormSchema, step4FormSchema } from '@/lib/types';
+import { Step1FormValues, step1FormSchema, step2FormSchema, step3FormSchema, step4FormSchema } from '@/lib/types';
 
 import { InfoIcon } from 'lucide-react';
 import YAML from 'yaml';
 
 const InitiatorStep5Form: React.FC = () => {
+    const [networkId, setNetworkId] = useState<string | undefined>();
+    useEffect(() => {
+        setNetworkId(getFromLocalStorage<Step1FormValues>(INITIATOR_STEP_1_STORAGE_KEY)?.networkId);
+    }, []);
+
     const downloadTxtFile = () => {
         // get the content from the local storage
         const step1Data = step1FormSchema.parse(getFromLocalStorage(INITIATOR_STEP_1_STORAGE_KEY));
@@ -97,78 +104,140 @@ const InitiatorStep5Form: React.FC = () => {
                 <div className='mt-8'>
                     <h3 className='text-lg font-semibold'>Next Steps</h3>
                 </div>
-                <ol className='mb-16 mt-6 list-decimal pl-4 font-sans marker:font-sans marker:font-semibold md:mb-24'>
-                    <li className='mb-8'>
+                <ol className='mb-16 mt-6 list-decimal space-y-8 pl-4 font-sans marker:font-sans marker:font-semibold md:mb-24'>
+                    <li className='space-y-2'>
                         <span className='font-semibold'>Prepare Your Environment</span>
-                        <ul className='list-disc'>
+                        <ul className='list-disc space-y-2'>
                             <li>
-                                Ensure your hardware meets the{' '}
-                                <Link className='text-pink underline' href='example.com'>
-                                    Node Requirements
-                                </Link>
+                                Make sure you have{' '}
+                                <Link
+                                    className='text-pink underline'
+                                    target='_blank'
+                                    rel='noopener noreferrer'
+                                    href='https://nodejs.org/en/download'>
+                                    Node.js
+                                </Link>{' '}
+                                installed.
                             </li>
-                            <li>Verify software dependencies are installed (e.g., Docker, Node.js, etc.).</li>
+                            <li>
+                                Make sure you have{' '}
+                                <Link
+                                    className='text-pink underline'
+                                    target='_blank'
+                                    rel='noopener noreferrer'
+                                    href='https://git-scm.com/downloads'>
+                                    Git
+                                </Link>{' '}
+                                installed.
+                            </li>
                         </ul>
                     </li>
-                    <li className='mb-8'>
-                        <span className='font-semibold'>Add Your Private Keys to the Config File</span>
-                        <ul className='list-disc'>
+                    <li className='space-y-2'>
+                        <span className='font-semibold'>Install the Hyperchains Starter Kit</span>
+                        <ul className='list-disc space-y-2'>
                             <li>
-                                Enter your private keys into the configuration file securely.
+                                <Code>git clone https://github.com/aeternity/hyperchain-starter-kit</Code>
+                            </li>
+                            <li>
+                                <Code>cd hyperchain-starter-kit</Code>
+                            </li>
+                            <li>
+                                <Code>npm install </Code>
+                            </li>
+                            <li>
+                                <Code>mkdir {networkId}</Code>
+                            </li>
+                            <li>
+                                Copy the downloaded <Code>init.yaml</Code> to <Code>/{networkId}</Code>
+                            </li>
+                        </ul>
+                    </li>
+                    <li className='space-y-2'>
+                        <span className='font-semibold'>Setup Contracts & Generate Economy</span>
+                        <ul className='list-disc space-y-2'>
+                            <li>
+                                Setup the contracts by running:
                                 <br />
-                                <Link className='text-pink underline' href='example.com'>
-                                    See More
-                                </Link>
+                                <Code>npm run dev retrieve-contracts {networkId}</Code>
                             </li>
-                        </ul>
-                    </li>
-                    <li className='mb-8'>
-                        <span className='font-semibold'>Download and Install Node Software</span>
-                        <ul className='list-disc'>
                             <li>
-                                Obtain the node software package from{' '}
-                                <Link className='text-pink underline' href='example.com'>
-                                    Documentation.
-                                </Link>
-                            </li>
-                            <li>Follow installation instructions for your operating system.</li>
-                        </ul>
-                    </li>
-                    <li className='mb-8'>
-                        <span className='font-semibold'>Connect to the Parent Chain</span>
-                        <ul className='list-disc'>
-                            <li>Verify parent chain configurations in your config file.</li>
-                            <li>
-                                Ensure the parent chain is running and accessible.
+                                Generate the economy by running:
                                 <br />
-                                <Link className='text-pink underline' href='example.com'>
-                                    See More
-                                </Link>
+                                <Code>npm run dev gen-economy {networkId}</Code>
                             </li>
                         </ul>
                     </li>
-                    <li className='mb-8'>
-                        <span className='font-semibold'>Start Your Node</span>
-                        <ul className='list-none'>
+                    <li className='space-y-2'>
+                        <span className='font-semibold'>Generate Configuration Files & Run Node</span>
+                        <ul className='space-y-6'>
                             <li>
-                                Run the node using the command:
+                                Generate the node configuration files by running:
                                 <br />
-                                <code>./start-node --config &lt;path_to_your_config_file&gt;</code>
+                                <Code>npm run dev gen-node-conf {networkId}</Code>
+                            </li>
+                            <li className='space-y-2'>
+                                This will create 3 files in <Code>nodeConfig</Code> directory:
+                                <ul className='list-disc space-y-2 pl-6'>
+                                    <li>
+                                        <Code>aeternity.yaml</Code>
+                                    </li>
+                                    <li>
+                                        <Code>{networkId}_accounts.json</Code>
+                                    </li>
+                                    <li>
+                                        <Code>{networkId}_contracts.json</Code>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li className='space-y-2'>
+                                Copy all of the above files to their node corresponding directory, i.e. assuming
+                                it&#39;s in <Code>~/aeternity/node</Code>:
+                                <ul className='list-disc space-y-2 pl-6'>
+                                    <li>
+                                        <Code>cp ./{networkId}/nodeConfig/aeternity.yaml ~/aeternity/node/</Code>
+                                    </li>
+                                    <li>
+                                        <Code>
+                                            cp ./{networkId}/nodeConfig/{networkId}_*.json ~/aeternity/node/data/aecore/
+                                        </Code>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                Don&#39;t forget to fund all pinners accounts on the parent chain prior starting your
+                                node/validator.
+                            </li>
+                            <li>
+                                Then run your node:
+                                <br />
+                                <Code>~/aeternity/node/bin/aeternity start</Code>
+                            </li>
+                            <li>
+                                IMPORTANT: If you used a known public chain (testnet or mainnet) as parent chain, the
+                                tool will set the start_height as current block + 10, that is 30 minutes in future. Keep
+                                that in mind when verifying your chain, either decrease the number or wait until that
+                                block is produced on the parent chain before you start transacting on the Hyperchain.
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <span className='font-semibold'>Monitor Node Activity</span>
-                        <ul className='list-disc'>
-                            <li>Check logs to confirm successful connection to the parent chain.</li>
+                    <li className='space-y-2'>
+                        <span className='font-semibold'>Verify Node Status</span>
+                        <ul className='space-y-2'>
                             <li>
-                                Use provided monitoring tools to track node performance.
+                                Verify your node is running with:
                                 <br />
-                                <Link className='text-pink underline' href='example.com'>
-                                    See More
-                                </Link>
+                                <Code>~/aeternity/node/bin/aeternity status</Code>
                             </li>
                         </ul>
+                    </li>
+                    <li className='list-none'>
+                        <Link
+                            className='text-pink underline'
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            href='https://docs.aeternity.io/en/v7.3.0-rc3/hyperchains'>
+                            Learn more
+                        </Link>
                     </li>
                 </ol>
             </div>
