@@ -7,6 +7,7 @@ import Link from 'next/link';
 
 import { Code } from '@/components/code';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 import {
     DEFAULT_FAUCET_INIT_BALANCE,
     DEFAULT_TREASURY_INIT_BALANCE,
@@ -22,54 +23,93 @@ import { Step1FormValues, step1FormSchema, step2FormSchema, step3FormSchema, ste
 import { InfoIcon } from 'lucide-react';
 import YAML from 'yaml';
 
+const Steps = ['1', '2', '3', '4'];
+
 const InitiatorStep5Form: React.FC = () => {
     const [networkId, setNetworkId] = useState<string | undefined>();
+    const [yamlFile, setYamlFile] = useState<Blob | undefined>();
+
+    const { toast } = useToast();
+
     useEffect(() => {
         setNetworkId(getFromLocalStorage<Step1FormValues>(INITIATOR_STEP_1_STORAGE_KEY)?.networkId);
     }, []);
-    const [yamlFile, setYamlFile] = useState<Blob | undefined>();
 
-    const createAndDownloadYamlFile = () => {
+    const createAndDownloadYamlFile = async () => {
         if (!yamlFile) {
-            // get the content from the local storage
-            const step1Data = step1FormSchema.parse(getFromLocalStorage(INITIATOR_STEP_1_STORAGE_KEY));
-            const step2Data = step2FormSchema.parse(getFromLocalStorage(INITIATOR_STEP_2_STORAGE_KEY));
-            const step3Data = step3FormSchema.parse(getFromLocalStorage(INITIATOR_STEP_3_STORAGE_KEY));
-            const step4Data = step4FormSchema.parse(getFromLocalStorage(INITIATOR_STEP_4_STORAGE_KEY));
+            try {
+                // get the content from the local storage
+                const step1Data = await step1FormSchema
+                    .parseAsync(getFromLocalStorage(INITIATOR_STEP_1_STORAGE_KEY))
+                    .catch(() => {
+                        throw new Error(Steps[0]);
+                    });
+                const step2Data = await step2FormSchema
+                    .parseAsync(getFromLocalStorage(INITIATOR_STEP_2_STORAGE_KEY))
+                    .catch(() => {
+                        throw new Error(Steps[1]);
+                    });
+                const step3Data = await step3FormSchema
+                    .parseAsync(getFromLocalStorage(INITIATOR_STEP_3_STORAGE_KEY))
+                    .catch(() => {
+                        throw new Error(Steps[2]);
+                    });
+                const step4Data = await step4FormSchema
+                    .parseAsync(getFromLocalStorage(INITIATOR_STEP_4_STORAGE_KEY))
+                    .catch(() => {
+                        throw new Error(Steps[3]);
+                    });
 
-            // create a new file
-            const content = YAML.stringify({
-                childBlockTime: step1Data?.childBlockTime,
-                childEpochLength:
-                    (step2Data!.parentEpochLength *
-                        parentChains.filter((c) => c.symbol === step2Data?.parent).at(0)!.blockTime) /
-                    step1Data!.childBlockTime, // TODO take next higher number for non absolute result?
-                contractSourcesPrefix: 'https://raw.githubusercontent.com/aeternity/aeternity/refs/tags/v7.3.0-rc2/',
-                enablePinning: true,
-                faucetInitBalance: DEFAULT_FAUCET_INIT_BALANCE,
-                fixedCoinbase: step3Data?.fixedCoinbase,
-                networkId: step1Data?.networkId,
-                parentChain: {
-                    epochLength: step2Data?.parentEpochLength,
-                    networkId: step2Data?.parentNetworkId,
-                    nodeURL: step2Data?.parentNodeUrl,
-                    type: `AE2${step2Data?.parent}`
-                },
-                pinningReward: step3Data?.pinningReward,
-                treasuryInitBalance: DEFAULT_TREASURY_INIT_BALANCE,
-                validators: {
-                    count: step4Data?.validatorCount,
-                    balance: step4Data?.validatorBalance,
-                    validatorMinStake: step4Data?.validatorMinStake
+                // create a new file
+                const content = YAML.stringify({
+                    childBlockTime: step1Data?.childBlockTime,
+                    childEpochLength:
+                        (step2Data!.parentEpochLength *
+                            parentChains.filter((c) => c.symbol === step2Data?.parent).at(0)!.blockTime) /
+                        step1Data!.childBlockTime, // TODO take next higher number for non absolute result?
+                    contractSourcesPrefix:
+                        'https://raw.githubusercontent.com/aeternity/aeternity/refs/tags/v7.3.0-rc2/',
+                    enablePinning: true,
+                    faucetInitBalance: DEFAULT_FAUCET_INIT_BALANCE,
+                    fixedCoinbase: step3Data?.fixedCoinbase,
+                    networkId: step1Data?.networkId,
+                    parentChain: {
+                        epochLength: step2Data?.parentEpochLength,
+                        networkId: step2Data?.parentNetworkId,
+                        nodeURL: step2Data?.parentNodeUrl,
+                        type: `AE2${step2Data?.parent}`
+                    },
+                    pinningReward: step3Data?.pinningReward,
+                    treasuryInitBalance: DEFAULT_TREASURY_INIT_BALANCE,
+                    validators: {
+                        count: step4Data?.validatorCount,
+                        balance: step4Data?.validatorBalance,
+                        validatorMinStake: step4Data?.validatorMinStake
+                    }
+                });
+                const file = new Blob([content], { type: 'text/plain' });
+                downloadFile(file);
+                setYamlFile(file);
+                localStorage.removeItem(INITIATOR_STEP_1_STORAGE_KEY);
+                localStorage.removeItem(INITIATOR_STEP_2_STORAGE_KEY);
+                localStorage.removeItem(INITIATOR_STEP_3_STORAGE_KEY);
+                localStorage.removeItem(INITIATOR_STEP_4_STORAGE_KEY);
+            } catch (e) {
+                if (e instanceof Error && Steps.find((x) => x === e.message) !== undefined) {
+                    toast({
+                        title: 'Incomplete data',
+                        description: (
+                            <span>
+                                Go back to{' '}
+                                <Link className='text-pink underline' href={`/initiate/${e.message}`}>
+                                    Step {e.message}
+                                </Link>{' '}
+                                to fix the problem.
+                            </span>
+                        )
+                    });
                 }
-            });
-            const file = new Blob([content], { type: 'text/plain' });
-            downloadFile(file);
-            setYamlFile(file);
-            localStorage.removeItem(INITIATOR_STEP_1_STORAGE_KEY);
-            localStorage.removeItem(INITIATOR_STEP_2_STORAGE_KEY);
-            localStorage.removeItem(INITIATOR_STEP_3_STORAGE_KEY);
-            localStorage.removeItem(INITIATOR_STEP_4_STORAGE_KEY);
+            }
         } else {
             downloadFile(yamlFile);
         }
