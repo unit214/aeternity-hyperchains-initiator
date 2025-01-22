@@ -53,12 +53,14 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
             suppressHydrationWarning
             lang='en'
             className={`${geistSans.variable} ${geistMono.variable} ${clashDisplay.variable} ${roboto.variable}`}>
-            <body className='flex min-h-screen flex-col bg-background font-clash text-foreground antialiased'>
+            <body className='flex min-h-screen justify-center bg-background font-clash text-foreground antialiased'>
                 <ThemeProvider attribute='class' forcedTheme={'light'}>
-                    <NavBar />
-                    <main className='flex-1 px-4'>{children}</main>
-                    <FAQ />
-                    <Footer />
+                    <div className='flex max-w-screen-2xl flex-col'>
+                        <NavBar />
+                        <main className='flex-1 px-4 xl:px-0'>{children}</main>
+                        <FAQ />
+                        <Footer />
+                    </div>
                 </ThemeProvider>
             </body>
         </html>

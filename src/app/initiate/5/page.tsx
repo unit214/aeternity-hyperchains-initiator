@@ -86,14 +86,15 @@ const InitiatorStep5Form: React.FC = () => {
     };
 
     return (
-        <div className='flex flex-row justify-center gap-20'>
-            <div className='mt-11 flex flex-col md:ml-28 md:mt-20'>
-                {error ? (
+        <div className='flex flex-row justify-between gap-20'>
+            <div className='mt-11 flex flex-col md:mx-28 md:mt-20 xl:mr-0'>
+                {error && (
                     <>
                         <div className='mb-4 text-2xl font-semibold md:text-4xl'>Error parsing form data</div>
-                        <span className='font-sans text-base text-muted-foreground'>{error}</span>
+                        <span className='mb-16 font-sans text-base text-muted-foreground md:mb-24'>{error}</span>
                     </>
-                ) : (
+                )}
+                {!error && formData && (
                     <>
                         <div className='mb-4 text-2xl font-semibold md:text-4xl'>Success! Your Chain is Ready</div>
                         <span className='font-sans text-base text-muted-foreground'>
