@@ -10,6 +10,12 @@ import { expandDecimals } from '@/lib/utils';
 import BigNumber from 'bignumber.js';
 import { z } from 'zod';
 
+const getParentChainFromLocalStorage = () =>
+    localStorage &&
+    parentChains
+        .filter((c) => c.symbol === getFromLocalStorage<Step2FormValues>(INITIATOR_STEP_2_STORAGE_KEY)?.parent)
+        .at(0);
+
 const bigNumberGreaterThanZeroSchema = ({
     fieldName = undefined,
     withDecimals = true,
@@ -23,18 +29,8 @@ const bigNumberGreaterThanZeroSchema = ({
         .string({ message: errorMessage ? errorMessage : `${fieldName} is required` })
         .nonempty(errorMessage ? errorMessage : `${fieldName} is required`)
         .transform((n, ctx) => {
-            const decimals =
-                (withDecimals &&
-                    ((localStorage &&
-                        parentChains
-                            .filter(
-                                (c) =>
-                                    c.symbol ===
-                                    getFromLocalStorage<Step2FormValues>(INITIATOR_STEP_2_STORAGE_KEY)?.parent
-                            )
-                            .at(0)?.decimals) ||
-                        18)) ||
-                0;
+            const decimals = withDecimals ? getParentChainFromLocalStorage()?.decimals || 18 : 0;
+
             if (!BigNumber(n).c) {
                 ctx.addIssue({
                     code: z.ZodIssueCode.custom,
