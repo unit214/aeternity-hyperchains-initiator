@@ -55,7 +55,7 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
             className={`${geistSans.variable} ${geistMono.variable} ${clashDisplay.variable} ${roboto.variable}`}>
             <body className='flex min-h-screen justify-center bg-background font-clash text-foreground antialiased'>
                 <ThemeProvider attribute='class' forcedTheme={'light'}>
-                    <div className='flex max-w-screen-2xl flex-col'>
+                    <div className='flex w-full max-w-screen-2xl flex-col'>
                         <NavBar />
                         <main className='flex-1 px-4 xl:px-0'>{children}</main>
                         <FAQ />

@@ -35,7 +35,7 @@ const Step: React.FC<StepProps> = ({ stepNumber, title, description, imageSrc, a
 
 const HomePage: React.FC = () => {
     return (
-        <div className='mb-9 mt-12 flex size-full items-center justify-center font-clash md:my-20'>
+        <div className='mb-9 mt-12 flex items-center justify-center font-clash md:mb-24 md:mt-20'>
             <div className='flex flex-col'>
                 <div className='mb-4 text-4xl font-semibold'>Welcome to Your Chain Builder</div>
                 <div className='mb-10 font-roboto text-muted-foreground'>
