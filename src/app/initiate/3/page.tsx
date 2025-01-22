@@ -9,12 +9,13 @@ import { InitiatorStep } from '@/components/initiator-step';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { INITIATOR_STEP_3_STORAGE_KEY } from '@/lib/constants';
+import { INITIATOR_STEP_2_STORAGE_KEY, INITIATOR_STEP_3_STORAGE_KEY, parentChains } from '@/lib/constants';
 import { getFromLocalStorage, saveToLocalStorage } from '@/lib/local-storage';
-import { Step3FormValues, step3FormSchema } from '@/lib/types';
+import { Step3FormValues, step3FormSchema, Step2FormValues } from '@/lib/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { useForm } from 'react-hook-form';
+import { NumericFormat } from 'react-number-format';
 
 const InitiatorForm: React.FC<{ initialData: Step3FormValues | null }> = ({ initialData }) => {
     const router = useRouter();
@@ -22,8 +23,8 @@ const InitiatorForm: React.FC<{ initialData: Step3FormValues | null }> = ({ init
     const form = useForm<Step3FormValues>({
         resolver: zodResolver(step3FormSchema),
         defaultValues: {
-            fixedCoinbase: initialData?.fixedCoinbase || ('' as unknown as bigint),
-            pinningReward: initialData?.pinningReward || ('' as unknown as bigint)
+            fixedCoinbase: initialData?.fixedCoinbase || '' ,
+            pinningReward: initialData?.pinningReward || ''
         }
     });
 
@@ -46,14 +47,16 @@ const InitiatorForm: React.FC<{ initialData: Step3FormValues | null }> = ({ init
                     <FormField
                         control={form.control}
                         name='fixedCoinbase'
-                        render={({ field: { value, onChange } }) => (
+                        render={({ field }) => (
                             <FormItem>
                                 <FormLabelWithTooltip label='Block Reward' tooltip='Tooltip Text' />
                                 <FormControl>
-                                    <Input
-                                        placeholder='Ex: 100000000000000000000'
-                                        value={value as unknown as number}
-                                        onChange={onChange}
+                                    <NumericFormat
+                                        {...field}
+                                        allowNegative={false}
+                                        decimalScale={parentChains.filter((c) => c.symbol === getFromLocalStorage<Step2FormValues>(INITIATOR_STEP_2_STORAGE_KEY)?.parent).at(0)?.decimals || 18}
+                                        placeholder='0.0'
+                                        customInput={Input}
                                     />
                                 </FormControl>
                                 <FormMessage />
@@ -63,14 +66,16 @@ const InitiatorForm: React.FC<{ initialData: Step3FormValues | null }> = ({ init
                     <FormField
                         control={form.control}
                         name='pinningReward'
-                        render={({ field: { value, onChange } }) => (
+                        render={({ field }) => (
                             <FormItem>
                                 <FormLabelWithTooltip label='Pinning Reward' tooltip='Tooltip Text' />
                                 <FormControl>
-                                    <Input
-                                        placeholder='Ex: 1000000000000000000000'
-                                        value={value as unknown as number}
-                                        onChange={onChange}
+                                    <NumericFormat
+                                        {...field}
+                                        allowNegative={false}
+                                        decimalScale={parentChains.filter((c) => c.symbol === getFromLocalStorage<Step2FormValues>(INITIATOR_STEP_2_STORAGE_KEY)?.parent).at(0)?.decimals || 18}
+                                        placeholder='0.0'
+                                        customInput={Input}
                                     />
                                 </FormControl>
                                 <FormMessage />

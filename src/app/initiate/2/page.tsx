@@ -26,7 +26,7 @@ const InitiatorForm: React.FC<{ initialData: Step2FormValues | null }> = ({ init
         defaultValues: {
             parent: initialData?.parent || 'AE',
             parentNetworkId: initialData?.parentNetworkId || '',
-            parentNodeUrl: initialData?.parentNodeUrl || '',
+            parentNodeURL: initialData?.parentNodeURL || '',
             parentEpochLength: initialData?.parentEpochLength || 10n
         }
     });
@@ -85,7 +85,7 @@ const InitiatorForm: React.FC<{ initialData: Step2FormValues | null }> = ({ init
                     />
                     <FormField
                         control={form.control}
-                        name='parentNodeUrl'
+                        name='parentNodeURL'
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabelWithTooltip label='Parent Node URL' tooltip='Tooltip Text' />

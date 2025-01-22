@@ -10,7 +10,6 @@ import '@/app/globals.css';
 import { FAQ } from '@/components/faq';
 import { Footer } from '@/components/footer';
 import { NavBar } from '@/components/nav-bar';
-import { Toaster } from '@/components/ui/toaster';
 
 const geistSans = localFont({
     src: './fonts/GeistVF.woff',
@@ -60,7 +59,6 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
                     <main className='flex-1 px-4'>{children}</main>
                     <FAQ />
                     <Footer />
-                    <Toaster />
                 </ThemeProvider>
             </body>
         </html>

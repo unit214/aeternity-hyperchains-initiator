@@ -9,12 +9,13 @@ import { InitiatorStep } from '@/components/initiator-step';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { INITIATOR_STEP_4_STORAGE_KEY } from '@/lib/constants';
+import { INITIATOR_STEP_2_STORAGE_KEY, INITIATOR_STEP_4_STORAGE_KEY, parentChains } from '@/lib/constants';
 import { getFromLocalStorage, saveToLocalStorage } from '@/lib/local-storage';
-import { Step4FormValues, step4FormSchema } from '@/lib/types';
+import { Step4FormValues, step4FormSchema, Step2FormValues } from '@/lib/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { useForm } from 'react-hook-form';
+import { NumericFormat } from 'react-number-format';
 
 const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ initialData }) => {
     const router = useRouter();
@@ -22,9 +23,9 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
     const form = useForm<Step4FormValues>({
         resolver: zodResolver(step4FormSchema),
         defaultValues: {
-            validatorCount: initialData?.validatorCount || ('' as unknown as bigint),
-            validatorBalance: initialData?.validatorBalance || ('' as unknown as bigint),
-            validatorMinStake: initialData?.validatorMinStake || ('' as unknown as bigint)
+            validatorCount: initialData?.validatorCount || '',
+            validatorBalance: initialData?.validatorBalance || '',
+            validatorMinStake: initialData?.validatorMinStake || ''
         }
     });
 
@@ -46,11 +47,17 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
                     <FormField
                         control={form.control}
                         name='validatorCount'
-                        render={({ field: { value, onChange } }) => (
+                        render={({ field }) => (
                             <FormItem>
                                 <FormLabelWithTooltip label='Number Of Validators' tooltip='Tooltip Text' />
                                 <FormControl>
-                                    <Input placeholder='Ex: 3' value={value as unknown as number} onChange={onChange} />
+                                    <NumericFormat
+                                        {...field}
+                                        allowNegative={false}
+                                        decimalScale={0}
+                                        placeholder='0'
+                                        customInput={Input}
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -59,14 +66,16 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
                     <FormField
                         control={form.control}
                         name='validatorBalance'
-                        render={({ field: { value, onChange } }) => (
+                        render={({ field }) => (
                             <FormItem>
                                 <FormLabelWithTooltip label='Validator Balance' tooltip='Tooltip Text' />
                                 <FormControl>
-                                    <Input
-                                        placeholder='Ex: 3100000000000000000000000000'
-                                        value={value as unknown as number}
-                                        onChange={onChange}
+                                    <NumericFormat
+                                        {...field}
+                                        allowNegative={false}
+                                        decimalScale={parentChains.filter((c) => c.symbol === getFromLocalStorage<Step2FormValues>(INITIATOR_STEP_2_STORAGE_KEY)?.parent).at(0)?.decimals || 18}
+                                        placeholder='0.0'
+                                        customInput={Input}
                                     />
                                 </FormControl>
                                 <FormMessage />
@@ -76,14 +85,16 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
                     <FormField
                         control={form.control}
                         name='validatorMinStake'
-                        render={({ field: { value, onChange } }) => (
+                        render={({ field }) => (
                             <FormItem>
                                 <FormLabelWithTooltip label='Minimum Staking Amount' tooltip='Tooltip Text' />
                                 <FormControl>
-                                    <Input
-                                        placeholder='Ex: 1000'
-                                        value={value as unknown as number}
-                                        onChange={onChange}
+                                    <NumericFormat
+                                        {...field}
+                                        allowNegative={false}
+                                        decimalScale={parentChains.filter((c) => c.symbol === getFromLocalStorage<Step2FormValues>(INITIATOR_STEP_2_STORAGE_KEY)?.parent).at(0)?.decimals || 18}
+                                        placeholder='0.0'
+                                        customInput={Input}
                                     />
                                 </FormControl>
                                 <FormMessage />
