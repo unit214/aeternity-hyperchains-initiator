@@ -12,8 +12,8 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
 import { INITIATOR_STEP_2_STORAGE_KEY, parentChains } from '@/lib/constants';
+import { Step2FormValues, step2FormSchema } from '@/lib/form-schema';
 import { getFromLocalStorage, saveToLocalStorage } from '@/lib/local-storage';
-import { Step2FormValues, step2FormSchema } from '@/lib/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { useForm } from 'react-hook-form';
@@ -28,7 +28,8 @@ const InitiatorForm: React.FC<{ initialData: Step2FormValues | null }> = ({ init
             parentNetworkId: initialData?.parentNetworkId || '',
             parentNodeURL: initialData?.parentNodeURL || '',
             parentEpochLength: initialData?.parentEpochLength || 10n
-        }
+        },
+        mode: 'onBlur'
     });
 
     function onBack() {

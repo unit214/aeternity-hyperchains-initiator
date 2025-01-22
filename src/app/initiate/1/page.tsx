@@ -11,8 +11,8 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
 import { INITIATOR_STEP_1_STORAGE_KEY } from '@/lib/constants';
+import { Step1FormValues, step1FormSchema } from '@/lib/form-schema';
 import { getFromLocalStorage, saveToLocalStorage } from '@/lib/local-storage';
-import { Step1FormValues, step1FormSchema } from '@/lib/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { useForm } from 'react-hook-form';
@@ -24,7 +24,8 @@ const InitiatorForm: React.FC<{ initialData: Step1FormValues | null }> = ({ init
         defaultValues: {
             networkId: initialData?.networkId || '',
             childBlockTime: initialData?.childBlockTime || 3000n
-        }
+        },
+        mode: 'onBlur'
     });
 
     function onBack() {

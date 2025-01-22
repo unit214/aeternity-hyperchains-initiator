@@ -11,10 +11,4 @@ BigInt.prototype.toJSON = function () {
     return this.toString();
 };
 
-export const expandDecimals = (val: string, decimals: number, errorMessage: string) => {
-    try {
-        return BigInt(BigNumber(val).shiftedBy(decimals).toFixed(0));
-    } catch {
-        throw new Error(errorMessage);
-    }
-};
+export const expandDecimals = (val: string, decimals: number) => BigInt(BigNumber(val).shiftedBy(decimals).toFixed(0));

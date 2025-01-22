@@ -9,13 +9,12 @@ import { InitiatorStep } from '@/components/initiator-step';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { INITIATOR_STEP_2_STORAGE_KEY, INITIATOR_STEP_4_STORAGE_KEY, parentChains } from '@/lib/constants';
+import { INITIATOR_STEP_4_STORAGE_KEY } from '@/lib/constants';
+import { Step4FormValues, step4FormSchema } from '@/lib/form-schema';
 import { getFromLocalStorage, saveToLocalStorage } from '@/lib/local-storage';
-import { Step2FormValues, Step4FormValues, step4FormSchema } from '@/lib/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { useForm } from 'react-hook-form';
-import { NumericFormat } from 'react-number-format';
 
 const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ initialData }) => {
     const router = useRouter();
@@ -26,7 +25,8 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
             validatorCount: initialData?.validatorCount || '',
             validatorBalance: initialData?.validatorBalance || '',
             validatorMinStake: initialData?.validatorMinStake || ''
-        }
+        },
+        mode: 'onBlur'
     });
 
     function onBack() {
@@ -51,13 +51,7 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
                             <FormItem>
                                 <FormLabelWithTooltip label='Number Of Validators' tooltip='Tooltip Text' />
                                 <FormControl>
-                                    <NumericFormat
-                                        {...field}
-                                        allowNegative={false}
-                                        decimalScale={0}
-                                        placeholder='0'
-                                        customInput={Input}
-                                    />
+                                    <Input {...field} placeholder='0' />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -70,23 +64,7 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
                             <FormItem>
                                 <FormLabelWithTooltip label='Validator Balance' tooltip='Tooltip Text' />
                                 <FormControl>
-                                    <NumericFormat
-                                        {...field}
-                                        allowNegative={false}
-                                        decimalScale={
-                                            parentChains
-                                                .filter(
-                                                    (c) =>
-                                                        c.symbol ===
-                                                        getFromLocalStorage<Step2FormValues>(
-                                                            INITIATOR_STEP_2_STORAGE_KEY
-                                                        )?.parent
-                                                )
-                                                .at(0)?.decimals || 18
-                                        }
-                                        placeholder='0.0'
-                                        customInput={Input}
-                                    />
+                                    <Input {...field} placeholder='0.0' />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -99,23 +77,7 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
                             <FormItem>
                                 <FormLabelWithTooltip label='Minimum Staking Amount' tooltip='Tooltip Text' />
                                 <FormControl>
-                                    <NumericFormat
-                                        {...field}
-                                        allowNegative={false}
-                                        decimalScale={
-                                            parentChains
-                                                .filter(
-                                                    (c) =>
-                                                        c.symbol ===
-                                                        getFromLocalStorage<Step2FormValues>(
-                                                            INITIATOR_STEP_2_STORAGE_KEY
-                                                        )?.parent
-                                                )
-                                                .at(0)?.decimals || 18
-                                        }
-                                        placeholder='0.0'
-                                        customInput={Input}
-                                    />
+                                    <Input {...field} placeholder='0.0' />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>

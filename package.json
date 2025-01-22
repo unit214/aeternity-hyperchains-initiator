@@ -32,7 +32,6 @@
         "react-day-picker": "^8.10.1",
         "react-dom": "19.0.0",
         "react-hook-form": "^7.54.2",
-        "react-number-format": "^5.4.3",
         "tailwind-merge": "^2.6.0",
         "yaml": "^2.7.0",
         "zod": "^3.24.1"

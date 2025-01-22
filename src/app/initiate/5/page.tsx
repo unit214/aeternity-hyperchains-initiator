@@ -13,7 +13,6 @@ import {
     INITIATOR_STEP_3_STORAGE_KEY,
     INITIATOR_STEP_4_STORAGE_KEY
 } from '@/lib/constants';
-import { getFromLocalStorage } from '@/lib/local-storage';
 import {
     FormSteps,
     FormValues,
@@ -22,7 +21,8 @@ import {
     Step3FormValues,
     Step4FormValues,
     formSchema
-} from '@/lib/types';
+} from '@/lib/form-schema';
+import { getFromLocalStorage } from '@/lib/local-storage';
 
 import { InfoIcon } from 'lucide-react';
 import YAML from 'yaml';
