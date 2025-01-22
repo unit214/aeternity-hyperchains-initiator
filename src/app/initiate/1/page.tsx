@@ -23,7 +23,7 @@ const InitiatorForm: React.FC<{ initialData: Step1FormValues | null }> = ({ init
         resolver: zodResolver(step1FormSchema),
         defaultValues: {
             networkId: initialData?.networkId || '',
-            childBlockTime: initialData?.childBlockTime || 3000n
+            childBlockTime: initialData?.childBlockTime || 6500n
         },
         mode: 'onBlur'
     });
@@ -42,13 +42,16 @@ const InitiatorForm: React.FC<{ initialData: Step1FormValues | null }> = ({ init
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
                 className='flex flex-col justify-between gap-10 font-roboto md:gap-36'>
-                <div className='grid grid-cols-1 gap-x-12 gap-y-8 md:grid-cols-2 md:gap-y-6'>
+                <div className='grid grid-cols-1 gap-y-8 md:gap-y-6'>
                     <FormField
                         control={form.control}
                         name='networkId'
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabelWithTooltip label='Hyperchain ID' tooltip='Tooltip Text' />
+                                <FormLabelWithTooltip
+                                    label='Hyperchain ID'
+                                    tooltip='A unique identifier for your Hyperchain network.'
+                                />
                                 <FormControl>
                                     <Input placeholder='hc_test' {...field} />
                                 </FormControl>
@@ -61,14 +64,17 @@ const InitiatorForm: React.FC<{ initialData: Step1FormValues | null }> = ({ init
                         name='childBlockTime'
                         render={({ field: { value, onChange } }) => (
                             <FormItem>
-                                <FormLabelWithTooltip label='Hyperchain Block Time' tooltip='Tooltip Text' />
+                                <FormLabelWithTooltip
+                                    label='Hyperchain Block Time'
+                                    tooltip='The time (in milliseconds) between each key block creation.'
+                                />
                                 <div className='flex flex-row gap-6'>
                                     <FormControl>
                                         <Input
                                             value={Number(value)}
                                             onChange={onChange}
                                             className='w-20'
-                                            placeholder='0'
+                                            placeholder='6500'
                                         />
                                     </FormControl>
                                     <div className='flex w-full flex-col justify-center gap-1'>

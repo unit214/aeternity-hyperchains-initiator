@@ -43,13 +43,16 @@ const InitiatorForm: React.FC<{ initialData: Step3FormValues | null }> = ({ init
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
                 className='flex flex-col justify-between gap-10 font-roboto md:gap-36'>
-                <div className='grid grid-cols-1 gap-x-12 gap-y-8 md:grid-cols-2 md:gap-y-6'>
+                <div className='grid grid-cols-1 gap-y-8 md:gap-y-6'>
                     <FormField
                         control={form.control}
                         name='fixedCoinbase'
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabelWithTooltip label='Block Reward' tooltip='Tooltip Text' />
+                                <FormLabelWithTooltip
+                                    label='Block Reward'
+                                    tooltip='The amount of native Hyperchain tokens rewarded to the validator for producing a new block.'
+                                />
                                 <FormControl>
                                     <Input {...field} placeholder='100.0' />
                                 </FormControl>
@@ -62,7 +65,10 @@ const InitiatorForm: React.FC<{ initialData: Step3FormValues | null }> = ({ init
                         name='pinningReward'
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabelWithTooltip label='Pinning Reward' tooltip='Tooltip Text' />
+                                <FormLabelWithTooltip
+                                    label='Pinning Reward'
+                                    tooltip='The amount of native Hyperchain tokens rewarded to validators for successfully committing the Hyperchain state to the pinning chain.'
+                                />
                                 <FormControl>
                                     <Input {...field} placeholder='100.0' />
                                 </FormControl>

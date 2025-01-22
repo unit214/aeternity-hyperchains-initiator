@@ -43,13 +43,16 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
                 className='flex flex-col justify-between gap-10 font-roboto md:gap-36'>
-                <div className='grid grid-cols-1 gap-x-12 gap-y-8 md:grid-cols-2 md:gap-y-6'>
+                <div className='grid grid-cols-1 gap-y-8 md:gap-y-6'>
                     <FormField
                         control={form.control}
                         name='validatorCount'
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabelWithTooltip label='Number Of Validators' tooltip='Tooltip Text' />
+                                <FormLabelWithTooltip
+                                    label='Number Of Validators'
+                                    tooltip='The initial number of validators to participate in the Hyperchain network.'
+                                />
                                 <FormControl>
                                     <Input {...field} placeholder='3' />
                                 </FormControl>
@@ -62,7 +65,10 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
                         name='validatorBalance'
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabelWithTooltip label='Validator Balance' tooltip='Tooltip Text' />
+                                <FormLabelWithTooltip
+                                    label='Validator Balance'
+                                    tooltip='The initial balance allocated to validators at the genesis of the Hyperchain.'
+                                />
                                 <FormControl>
                                     <Input {...field} placeholder='100.0' />
                                 </FormControl>
@@ -75,7 +81,10 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
                         name='validatorMinStake'
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabelWithTooltip label='Minimum Staking Amount' tooltip='Tooltip Text' />
+                                <FormLabelWithTooltip
+                                    label='Minimum Staking Amount'
+                                    tooltip='The minimum number of native Hyperchain tokens required to stake and become a validator.'
+                                />
                                 <FormControl>
                                     <Input {...field} placeholder='100.0' />
                                 </FormControl>

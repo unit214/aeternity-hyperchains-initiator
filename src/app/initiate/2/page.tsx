@@ -27,7 +27,7 @@ const InitiatorForm: React.FC<{ initialData: Step2FormValues | null }> = ({ init
             parent: initialData?.parent || 'AE',
             parentNetworkId: initialData?.parentNetworkId || '',
             parentNodeURL: initialData?.parentNodeURL || '',
-            parentEpochLength: initialData?.parentEpochLength || 10n
+            parentEpochLength: initialData?.parentEpochLength || 12n
         },
         mode: 'onBlur'
     });
@@ -52,7 +52,10 @@ const InitiatorForm: React.FC<{ initialData: Step2FormValues | null }> = ({ init
                         name='parent'
                         render={({ field: { value, onChange } }) => (
                             <FormItem>
-                                <FormLabelWithTooltip label='Pinning Chain' tooltip='Tooltip Text' />
+                                <FormLabelWithTooltip
+                                    label='Pinning Chain'
+                                    tooltip='The parent blockchain where the Hyperchain commits its states.'
+                                />
                                 <FormControl>
                                     <Select value={value} onValueChange={onChange} defaultValue={value}>
                                         <SelectTrigger>
@@ -76,7 +79,10 @@ const InitiatorForm: React.FC<{ initialData: Step2FormValues | null }> = ({ init
                         name='parentNetworkId'
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabelWithTooltip label='Chain Network ID' tooltip='Tooltip Text' />
+                                <FormLabelWithTooltip
+                                    label='Chain Network ID'
+                                    tooltip='The unique identifier for the parent chain network the Hyperchain connects to.'
+                                />
                                 <FormControl>
                                     <Input placeholder='Ex: ae_mainnet | ae_uat' {...field} />
                                 </FormControl>
@@ -89,7 +95,10 @@ const InitiatorForm: React.FC<{ initialData: Step2FormValues | null }> = ({ init
                         name='parentNodeURL'
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabelWithTooltip label='Parent Node URL' tooltip='Tooltip Text' />
+                                <FormLabelWithTooltip
+                                    label='Parent Node URL'
+                                    tooltip='The API endpoint of a node in the parent chain for syncing and block updates.'
+                                />
                                 <FormControl>
                                     <Input placeholder='https://testnet.aeternity.io' {...field} />
                                 </FormControl>
@@ -102,14 +111,17 @@ const InitiatorForm: React.FC<{ initialData: Step2FormValues | null }> = ({ init
                         name='parentEpochLength'
                         render={({ field: { value, onChange } }) => (
                             <FormItem>
-                                <FormLabelWithTooltip label='Parent epoch length' tooltip='Tooltip Text' />
+                                <FormLabelWithTooltip
+                                    label='Parent epoch length'
+                                    tooltip='The number of blocks that make up an epoch on the parent chain.'
+                                />
                                 <div className='flex flex-row gap-6'>
                                     <FormControl>
                                         <Input
                                             value={Number(value)}
                                             onChange={onChange}
                                             className='w-20'
-                                            placeholder='0'
+                                            placeholder='12'
                                         />
                                     </FormControl>
                                     <div className='flex w-full flex-col justify-center gap-1'>
