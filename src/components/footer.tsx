@@ -79,8 +79,8 @@ const footerSections = [
 
 export const Footer: React.FC = () => {
     return (
-        <div className='flex flex-col justify-center bg-neutral-800 px-20 text-sm max-md:px-5'>
-            <div className='flex w-full flex-col justify-center px-8 py-10 max-md:max-w-full max-md:px-5'>
+        <div className='flex flex-col items-center justify-center bg-neutral-800 px-20 text-sm max-md:px-5'>
+            <div className='flex w-full max-w-screen-2xl flex-col justify-center px-8 py-10 max-md:max-w-full max-md:px-5'>
                 <div className='relative flex w-full flex-col items-start max-md:max-w-full md:flex-row'>
                     <LogoSection />
                     <div className='z-0 flex min-w-[240px] flex-1 shrink basis-0 flex-col leading-loose max-md:max-w-full'>

@@ -4,8 +4,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 
 export const FAQ: React.FC = () => {
     return (
-        <div className='flex flex-col justify-center bg-stone-50 px-32 py-16 text-neutral-800 max-md:px-5 lg:px-52'>
-            <div className='flex max-w-full flex-col flex-wrap items-start gap-10 md:flex-row'>
+        <div className='flex w-full flex-col items-center justify-center bg-stone-50 py-16 text-neutral-800 max-md:px-5'>
+            <div className='flex w-full max-w-screen-2xl flex-col flex-wrap items-start gap-10 px-32 max-md:px-5 md:flex-row'>
                 <div className='pt-4 text-4xl font-semibold leading-none'>FAQ</div>
                 <Accordion type='single' collapsible className='w-full flex-1'>
                     <AccordionItem value='item-1'>
