@@ -1,7 +1,6 @@
 'use client';
 
 import * as React from 'react';
-import { ReactNode } from 'react';
 
 import Link from 'next/link';
 
@@ -20,10 +19,6 @@ import { step1FormSchema, step2FormSchema, step3FormSchema, step4FormSchema } fr
 
 import { InfoIcon } from 'lucide-react';
 import YAML from 'yaml';
-
-const LineItem = ({ children }: { children?: ReactNode | string }) => {
-    return <span className='inline-block w-3 text-center'>{children}</span>;
-};
 
 const InitiatorStep5Form: React.FC = () => {
     const downloadTxtFile = () => {
@@ -69,134 +64,115 @@ const InitiatorStep5Form: React.FC = () => {
     };
 
     return (
-        <div className='mt-20 flex size-full items-center justify-center'>
-            <div className='flex flex-col'>
-                <div className='mb-12 flex flex-row justify-between gap-7'>
-                    <div className='flex flex-col'>
-                        <div className='mb-4 text-4xl font-semibold'>Success! Your Chain is Ready</div>
-                        <span className='font-sans text-sm text-muted-foreground'>
-                            Start your chain and take it live or Save your chain configuration as a JSON file for future
-                            use
-                        </span>
-                        <div className='rounded-xl bg-gray-50 p-3'>
-                            <div className='flex items-center'>
-                                <img src='/yaml_icon.svg' alt='Yaml Icon' />
-                                <div className='pl-2'>
-                                    <h2 className='text-xl font-semibold'>Download Your Config File</h2>
-                                    <span className='font-sans text-sm text-muted-foreground'>
-                                        Config YAML file contains all the parameters you’ve set is
-                                    </span>
-                                </div>
-                                <Button variant='default' className='ml-auto w-32' onClick={downloadTxtFile}>
-                                    Download
-                                </Button>
-                            </div>
-                            <div className='flex rounded-xl bg-pink-2 p-3'>
-                                <InfoIcon size={24} className='text-pink' />
-                                <span className='pl-2 text-pink'>
-                                    Please note that after downloading the file you will not have access to this page.
-                                </span>
-                            </div>
+        <div className='flex flex-row justify-center gap-20'>
+            <div className='mt-11 flex flex-col md:ml-28 md:mt-20'>
+                <div className='mb-4 text-2xl font-semibold md:text-4xl'>Success! Your Chain is Ready</div>
+                <span className='font-sans text-base text-muted-foreground'>
+                    Start your chain and take it live or Save your chain configuration as a JSON file for future use
+                </span>
+                <div className='mt-8 rounded-xl bg-gray-50 p-3'>
+                    <div className='flex items-center'>
+                        <img src='/yaml_icon.svg' alt='Yaml Icon' />
+                        <div className='pl-2'>
+                            <h2 className='text-lg font-semibold'>Download Your Config File</h2>
+                            <span className='font-sans text-sm text-muted-foreground'>
+                                Config YAML file contains all the parameters you’ve set is
+                            </span>
                         </div>
-                        <div className='mt-12'>
-                            <h3 className='text-2xl font-semibold'>Next Steps</h3>
-                        </div>
-                        <div className='font-sans'>
-                            <div className='mb-4'>
-                                <div className='font-semibold'>
-                                    <LineItem>1.</LineItem> Prepare Your Environment
-                                </div>
-                                <div>
-                                    <LineItem>&#8226;</LineItem> Ensure your hardware meets the{' '}
-                                    <Link href='example.com'>Node Requirements</Link>
-                                </div>
-                                <div>
-                                    <LineItem>&#8226;</LineItem> Verify software dependencies are installed (e.g.,
-                                    Docker, Node.js, etc.).
-                                </div>
-                            </div>
-
-                            <div className='mb-4'>
-                                <div className='font-semibold'>
-                                    <LineItem>2.</LineItem> Add Your Private Keys to the Config File
-                                </div>
-                                <div>
-                                    <LineItem>&#8226;</LineItem> Enter your private keys into the configuration file
-                                    securely.
-                                </div>
-                                <div className='mt-2'>
-                                    <LineItem></LineItem> <Link href='example.com'>See More</Link>
-                                </div>
-                            </div>
-
-                            <div className='mb-4'>
-                                <div className='font-semibold'>
-                                    <LineItem>3.</LineItem> Download and Install Node Software
-                                </div>
-                                <div>
-                                    <LineItem>&#8226;</LineItem> Obtain the node software package from{' '}
-                                    <Link href='example.com'>Documentation.</Link>
-                                </div>
-                                <div>
-                                    <LineItem>&#8226;</LineItem> Follow installation instructions for your operating
-                                    system.
-                                </div>
-                            </div>
-
-                            <div className='mb-4'>
-                                <div className='font-semibold'>
-                                    <LineItem>4.</LineItem> Connect to the Parent Chain
-                                </div>
-                                <div>
-                                    <LineItem>&#8226;</LineItem> Verify parent chain configurations in your config file.
-                                </div>
-                                <div>
-                                    <LineItem>&#8226;</LineItem> Ensure the parent chain is running and accessible.
-                                </div>
-                                <div className='mt-2'>
-                                    <LineItem></LineItem> <Link href='example.com'>See More</Link>
-                                </div>
-                            </div>
-
-                            <div className='mb-4'>
-                                <div className='font-semibold'>
-                                    <LineItem>5.</LineItem> Start Your Node
-                                </div>
-                                <div>
-                                    <LineItem>&#8226;</LineItem> Run the node using the command:
-                                </div>
-                                <div>
-                                    <pre className='ml-3 mt-2'>
-                                        ./start-node --config &lt;path_to_your_config_file&gt;
-                                    </pre>
-                                </div>
-                            </div>
-
-                            <div className='mb-4'>
-                                <div className='font-semibold'>
-                                    <LineItem>6.</LineItem> Monitor Node Activity
-                                </div>
-                                <div>
-                                    <LineItem>&#8226;</LineItem> Check logs to confirm successful connection to the
-                                    parent chain.
-                                </div>
-                                <div>
-                                    <LineItem>&#8226;</LineItem> Use provided monitoring tools to track node
-                                    performance.
-                                </div>
-                                <div className='mt-2'>
-                                    <LineItem></LineItem> <Link href='example.com'>See More</Link>
-                                </div>
-                            </div>
-                        </div>
+                        <Button variant='default' className='ml-auto hidden w-32 md:flex' onClick={downloadTxtFile}>
+                            Download
+                        </Button>
                     </div>
-                    <img
-                        src='/success_screen.png'
-                        className='hidden object-contain object-top xl:block'
-                        alt='Success Screen'
-                    />
+                    <Button variant='default' className='mt-2 w-full md:hidden' onClick={downloadTxtFile}>
+                        Download
+                    </Button>
                 </div>
+
+                <div className='mt-2 flex rounded-xl bg-pink-2 p-3'>
+                    <InfoIcon size={24} className='text-pink' />
+                    <span className='pl-2 font-sans text-sm text-pink'>
+                        Once you download the file and leave this page, it won&#39;t be accessible again.
+                    </span>
+                </div>
+                <div className='mt-8'>
+                    <h3 className='text-lg font-semibold'>Next Steps</h3>
+                </div>
+                <ol className='mb-16 mt-6 list-decimal pl-4 font-sans marker:font-sans marker:font-semibold md:mb-24'>
+                    <li className='mb-8'>
+                        <span className='font-semibold'>Prepare Your Environment</span>
+                        <ul className='list-disc'>
+                            <li>
+                                Ensure your hardware meets the{' '}
+                                <Link className='text-pink underline' href='example.com'>
+                                    Node Requirements
+                                </Link>
+                            </li>
+                            <li>Verify software dependencies are installed (e.g., Docker, Node.js, etc.).</li>
+                        </ul>
+                    </li>
+                    <li className='mb-8'>
+                        <span className='font-semibold'>Add Your Private Keys to the Config File</span>
+                        <ul className='list-disc'>
+                            <li>
+                                Enter your private keys into the configuration file securely.
+                                <br />
+                                <Link className='text-pink underline' href='example.com'>
+                                    See More
+                                </Link>
+                            </li>
+                        </ul>
+                    </li>
+                    <li className='mb-8'>
+                        <span className='font-semibold'>Download and Install Node Software</span>
+                        <ul className='list-disc'>
+                            <li>
+                                Obtain the node software package from{' '}
+                                <Link className='text-pink underline' href='example.com'>
+                                    Documentation.
+                                </Link>
+                            </li>
+                            <li>Follow installation instructions for your operating system.</li>
+                        </ul>
+                    </li>
+                    <li className='mb-8'>
+                        <span className='font-semibold'>Connect to the Parent Chain</span>
+                        <ul className='list-disc'>
+                            <li>Verify parent chain configurations in your config file.</li>
+                            <li>
+                                Ensure the parent chain is running and accessible.
+                                <br />
+                                <Link className='text-pink underline' href='example.com'>
+                                    See More
+                                </Link>
+                            </li>
+                        </ul>
+                    </li>
+                    <li className='mb-8'>
+                        <span className='font-semibold'>Start Your Node</span>
+                        <ul className='list-none'>
+                            <li>
+                                Run the node using the command:
+                                <br />
+                                <code>./start-node --config &lt;path_to_your_config_file&gt;</code>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span className='font-semibold'>Monitor Node Activity</span>
+                        <ul className='list-disc'>
+                            <li>Check logs to confirm successful connection to the parent chain.</li>
+                            <li>
+                                Use provided monitoring tools to track node performance.
+                                <br />
+                                <Link className='text-pink underline' href='example.com'>
+                                    See More
+                                </Link>
+                            </li>
+                        </ul>
+                    </li>
+                </ol>
             </div>
+            <img src='/success_screen.png' className='hidden object-contain object-top xl:block' alt='Success Screen' />
         </div>
     );
 };
