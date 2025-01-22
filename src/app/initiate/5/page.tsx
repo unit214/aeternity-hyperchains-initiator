@@ -7,14 +7,19 @@ import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import {
+    DEFAULT_FAUCET_INIT_BALANCE,
+    DEFAULT_TREASURY_INIT_BALANCE,
     INITIATOR_STEP_1_STORAGE_KEY,
     INITIATOR_STEP_2_STORAGE_KEY,
     INITIATOR_STEP_3_STORAGE_KEY,
-    INITIATOR_STEP_4_STORAGE_KEY
+    INITIATOR_STEP_4_STORAGE_KEY,
+    parentChains
 } from '@/lib/constants';
 import { getFromLocalStorage } from '@/lib/local-storage';
+import { step1FormSchema, step2FormSchema, step3FormSchema, step4FormSchema } from '@/lib/types';
 
 import { InfoIcon } from 'lucide-react';
+import YAML from 'yaml';
 
 const LineItem = ({ children }: { children?: ReactNode | string }) => {
     return <span className='inline-block w-3 text-center'>{children}</span>;
@@ -23,22 +28,41 @@ const LineItem = ({ children }: { children?: ReactNode | string }) => {
 const InitiatorStep5Form: React.FC = () => {
     const downloadTxtFile = () => {
         // get the content from the local storage
-        const step1Data = getFromLocalStorage(INITIATOR_STEP_1_STORAGE_KEY);
-        const step2Data = getFromLocalStorage(INITIATOR_STEP_2_STORAGE_KEY);
-        const step3Data = getFromLocalStorage(INITIATOR_STEP_3_STORAGE_KEY);
-        const step4Data = getFromLocalStorage(INITIATOR_STEP_4_STORAGE_KEY);
+        const step1Data = step1FormSchema.parse(getFromLocalStorage(INITIATOR_STEP_1_STORAGE_KEY));
+        const step2Data = step2FormSchema.parse(getFromLocalStorage(INITIATOR_STEP_2_STORAGE_KEY));
+        const step3Data = step3FormSchema.parse(getFromLocalStorage(INITIATOR_STEP_3_STORAGE_KEY));
+        const step4Data = step4FormSchema.parse(getFromLocalStorage(INITIATOR_STEP_4_STORAGE_KEY));
 
         // create a new file
-        const content = JSON.stringify({
-            step1: step1Data,
-            step2: step2Data,
-            step3: step3Data,
-            step4: step4Data
+        const content = YAML.stringify({
+            childBlockTime: step1Data?.childBlockTime,
+            childEpochLength:
+                (step2Data!.parentEpochLength *
+                    parentChains.filter((c) => c.symbol === step2Data?.parent).at(0)!.blockTime) /
+                step1Data!.childBlockTime, // TODO take next higher number for non absolute result?
+            contractSourcesPrefix: 'https://raw.githubusercontent.com/aeternity/aeternity/refs/tags/v7.3.0-rc2/',
+            enablePinning: true,
+            faucetInitBalance: DEFAULT_FAUCET_INIT_BALANCE,
+            fixedCoinbase: step3Data?.fixedCoinbase,
+            networkId: step1Data?.networkId,
+            parentChain: {
+                epochLength: step2Data?.parentEpochLength,
+                networkId: step2Data?.parentNetworkId,
+                nodeURL: step2Data?.parentNodeUrl,
+                type: `AE2${step2Data?.parent}`
+            },
+            pinningReward: step3Data?.pinningReward,
+            treasuryInitBalance: DEFAULT_TREASURY_INIT_BALANCE,
+            validators: {
+                count: step4Data?.validatorCount,
+                balance: step4Data?.validatorBalance,
+                validatorMinStake: step4Data?.validatorMinStake
+            }
         });
         const element = document.createElement('a');
         const file = new Blob([content], { type: 'text/plain' });
         element.href = URL.createObjectURL(file);
-        element.download = 'myFile.txt';
+        element.download = 'init.yaml';
         document.body.appendChild(element); // Required for Firefox
         element.click();
         document.body.removeChild(element); // Clean up

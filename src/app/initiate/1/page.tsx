@@ -12,35 +12,27 @@ import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
 import { INITIATOR_STEP_1_STORAGE_KEY } from '@/lib/constants';
 import { getFromLocalStorage, saveToLocalStorage } from '@/lib/local-storage';
+import { Step1FormValues, step1FormSchema } from '@/lib/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 
-const formSchema = z.object({
-    id: z.string(),
-    blockTime: z.number().min(0).max(10000),
-    blockProductionTime: z.number().min(0).max(10000)
-});
-type FormValues = z.infer<typeof formSchema>;
-
-const InitiatorForm: React.FC<{ initialData: FormValues | null }> = ({ initialData }) => {
+const InitiatorForm: React.FC<{ initialData: Step1FormValues | null }> = ({ initialData }) => {
     const router = useRouter();
-    const form = useForm<FormValues>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<Step1FormValues>({
+        resolver: zodResolver(step1FormSchema),
         defaultValues: {
-            id: initialData?.id || '0x3F2d4E7ftdrey764dygJUGeC89f',
-            blockTime: initialData?.blockTime || 6500,
-            blockProductionTime: initialData?.blockProductionTime || 6500
+            networkId: initialData?.networkId || '',
+            childBlockTime: initialData?.childBlockTime || 3000n
         }
     });
 
     function onBack() {
-        saveToLocalStorage<FormValues>(form.getValues(), INITIATOR_STEP_1_STORAGE_KEY);
+        saveToLocalStorage<Step1FormValues>(form.getValues(), INITIATOR_STEP_1_STORAGE_KEY);
         router.push('/');
     }
-    function onSubmit(values: FormValues) {
-        saveToLocalStorage<FormValues>(values, INITIATOR_STEP_1_STORAGE_KEY);
+    function onSubmit(values: Step1FormValues) {
+        saveToLocalStorage<Step1FormValues>(values, INITIATOR_STEP_1_STORAGE_KEY);
         router.push('/initiate/2');
     }
 
@@ -48,16 +40,16 @@ const InitiatorForm: React.FC<{ initialData: FormValues | null }> = ({ initialDa
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className='flex flex-col justify-between gap-10 font-roboto md:min-h-[450px]'>
+                className='flex flex-col justify-between gap-10 font-roboto md:gap-36'>
                 <div className='grid grid-cols-1 gap-x-12 gap-y-8 md:grid-cols-2 md:gap-y-6'>
                     <FormField
                         control={form.control}
-                        name='id'
+                        name='networkId'
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabelWithTooltip label='Hyperchain ID' tooltip='Tooltip Text' />
                                 <FormControl>
-                                    <Input disabled placeholder='id' {...field} />
+                                    <Input placeholder='hc_test' {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -65,52 +57,29 @@ const InitiatorForm: React.FC<{ initialData: FormValues | null }> = ({ initialDa
                     />
                     <FormField
                         control={form.control}
-                        name='blockTime'
+                        name='childBlockTime'
                         render={({ field: { value, onChange } }) => (
                             <FormItem>
                                 <FormLabelWithTooltip label='Hyperchain Block Time' tooltip='Tooltip Text' />
                                 <div className='flex flex-row gap-6'>
                                     <FormControl>
-                                        <Input value={value} onChange={onChange} className='w-20' placeholder='0' />
+                                        <Input
+                                            value={Number(value)}
+                                            onChange={onChange}
+                                            className='w-20'
+                                            placeholder='0'
+                                        />
                                     </FormControl>
                                     <div className='flex w-full flex-col justify-center gap-1'>
                                         <div className='flex flex-row justify-between font-roboto text-sm text-grey-4'>
-                                            <span>0</span> <span>10000</span>
+                                            <span>3000 ms</span> <span>10000 ms</span>
                                         </div>
                                         <FormControl>
                                             <Slider
                                                 onValueChange={(v) => onChange(v[0])}
-                                                value={[value]}
-                                                defaultValue={[value]}
-                                                max={10000}
-                                                step={1}
-                                            />
-                                        </FormControl>
-                                    </div>
-                                </div>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name='blockProductionTime'
-                        render={({ field: { value, onChange } }) => (
-                            <FormItem>
-                                <FormLabelWithTooltip label='Hyperchain Block Production Time' tooltip='Tooltip Text' />
-                                <div className='flex flex-row gap-6'>
-                                    <FormControl>
-                                        <Input value={value} onChange={onChange} className='w-20' placeholder='0' />
-                                    </FormControl>
-                                    <div className='flex w-full flex-col justify-center gap-1'>
-                                        <div className='flex flex-row justify-between font-roboto text-sm text-grey-4'>
-                                            <span>0</span> <span>10000</span>
-                                        </div>
-                                        <FormControl>
-                                            <Slider
-                                                onValueChange={(v) => onChange(v[0])}
-                                                value={[value]}
-                                                defaultValue={[value]}
+                                                value={[Number(value)]}
+                                                defaultValue={[Number(value)]}
+                                                min={3000}
                                                 max={10000}
                                                 step={1}
                                             />
@@ -136,9 +105,9 @@ const InitiatorForm: React.FC<{ initialData: FormValues | null }> = ({ initialDa
 };
 
 const FormWrapper: React.FC = () => {
-    const [initialData, setInitialData] = useState<FormValues | null | undefined>(undefined);
+    const [initialData, setInitialData] = useState<Step1FormValues | null | undefined>(undefined);
     useEffect(() => {
-        setInitialData(getFromLocalStorage<FormValues>(INITIATOR_STEP_1_STORAGE_KEY));
+        setInitialData(getFromLocalStorage<Step1FormValues>(INITIATOR_STEP_1_STORAGE_KEY));
     }, []);
 
     if (initialData !== undefined) {

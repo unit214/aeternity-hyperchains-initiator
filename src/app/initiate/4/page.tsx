@@ -11,36 +11,29 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { Input } from '@/components/ui/input';
 import { INITIATOR_STEP_4_STORAGE_KEY } from '@/lib/constants';
 import { getFromLocalStorage, saveToLocalStorage } from '@/lib/local-storage';
+import { Step4FormValues, step4FormSchema } from '@/lib/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 
-const formSchema = z.object({
-    unstakeDelay: z.coerce.number().gt(0),
-    validatorMinStake: z.coerce.number().gt(0),
-    validatorMinPercentage: z.coerce.number().gt(0)
-});
-type FormValues = z.infer<typeof formSchema>;
-
-const InitiatorForm: React.FC<{ initialData: FormValues | null }> = ({ initialData }) => {
+const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ initialData }) => {
     const router = useRouter();
 
-    const form = useForm<FormValues>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<Step4FormValues>({
+        resolver: zodResolver(step4FormSchema),
         defaultValues: {
-            unstakeDelay: initialData?.unstakeDelay || ('' as unknown as number),
-            validatorMinStake: initialData?.validatorMinStake || ('' as unknown as number),
-            validatorMinPercentage: initialData?.validatorMinPercentage || ('' as unknown as number)
+            validatorCount: initialData?.validatorCount || ('' as unknown as bigint),
+            validatorBalance: initialData?.validatorBalance || ('' as unknown as bigint),
+            validatorMinStake: initialData?.validatorMinStake || ('' as unknown as bigint)
         }
     });
 
     function onBack() {
-        saveToLocalStorage<FormValues>(form.getValues(), INITIATOR_STEP_4_STORAGE_KEY);
+        saveToLocalStorage<Step4FormValues>(form.getValues(), INITIATOR_STEP_4_STORAGE_KEY);
         router.push('/initiate/3');
     }
-    function onSubmit(values: FormValues) {
-        saveToLocalStorage<FormValues>(values, INITIATOR_STEP_4_STORAGE_KEY);
+    function onSubmit(values: Step4FormValues) {
+        saveToLocalStorage<Step4FormValues>(values, INITIATOR_STEP_4_STORAGE_KEY);
         router.push('/initiate/5');
     }
 
@@ -48,16 +41,33 @@ const InitiatorForm: React.FC<{ initialData: FormValues | null }> = ({ initialDa
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className='flex flex-col justify-between gap-10 font-roboto md:min-h-[450px]'>
+                className='flex flex-col justify-between gap-10 font-roboto md:gap-36'>
                 <div className='grid grid-cols-1 gap-x-12 gap-y-8 md:grid-cols-2 md:gap-y-6'>
                     <FormField
                         control={form.control}
-                        name='unstakeDelay'
-                        render={({ field }) => (
+                        name='validatorCount'
+                        render={({ field: { value, onChange } }) => (
                             <FormItem>
-                                <FormLabelWithTooltip label='Unstake Delay' tooltip='Tooltip Text' />
+                                <FormLabelWithTooltip label='Number Of Validators' tooltip='Tooltip Text' />
                                 <FormControl>
-                                    <Input placeholder='Ex: 7 days' {...field} />
+                                    <Input placeholder='Ex: 3' value={value as unknown as number} onChange={onChange} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name='validatorBalance'
+                        render={({ field: { value, onChange } }) => (
+                            <FormItem>
+                                <FormLabelWithTooltip label='Validator Balance' tooltip='Tooltip Text' />
+                                <FormControl>
+                                    <Input
+                                        placeholder='Ex: 3100000000000000000000000000'
+                                        value={value as unknown as number}
+                                        onChange={onChange}
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -66,24 +76,15 @@ const InitiatorForm: React.FC<{ initialData: FormValues | null }> = ({ initialDa
                     <FormField
                         control={form.control}
                         name='validatorMinStake'
-                        render={({ field }) => (
+                        render={({ field: { value, onChange } }) => (
                             <FormItem>
-                                <FormLabelWithTooltip label='Validator min Stake' tooltip='Tooltip Text' />
+                                <FormLabelWithTooltip label='Minimum Staking Amount' tooltip='Tooltip Text' />
                                 <FormControl>
-                                    <Input placeholder='Ex: 1000' {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name='validatorMinPercentage'
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabelWithTooltip label='Validator Min Percentage' tooltip='Tooltip Text' />
-                                <FormControl>
-                                    <Input placeholder='Ex: 5000' {...field} />
+                                    <Input
+                                        placeholder='Ex: 1000'
+                                        value={value as unknown as number}
+                                        onChange={onChange}
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -104,9 +105,9 @@ const InitiatorForm: React.FC<{ initialData: FormValues | null }> = ({ initialDa
 };
 
 const FormWrapper: React.FC = () => {
-    const [initialData, setInitialData] = useState<FormValues | null | undefined>(undefined);
+    const [initialData, setInitialData] = useState<Step4FormValues | null | undefined>(undefined);
     useEffect(() => {
-        setInitialData(getFromLocalStorage<FormValues>(INITIATOR_STEP_4_STORAGE_KEY));
+        setInitialData(getFromLocalStorage<Step4FormValues>(INITIATOR_STEP_4_STORAGE_KEY));
     }, []);
 
     if (initialData !== undefined) {

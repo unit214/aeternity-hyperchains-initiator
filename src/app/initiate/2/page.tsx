@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import { DayPicker, HoursPicker } from '@/components/form/date-picker';
 import { FormLabelWithTooltip } from '@/components/form/form-label-with-tooltip';
 import { InitiatorStep } from '@/components/initiator-step';
 import { Button } from '@/components/ui/button';
@@ -12,44 +11,32 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
-import { INITIATOR_STEP_2_STORAGE_KEY } from '@/lib/constants';
+import { INITIATOR_STEP_2_STORAGE_KEY, parentChains } from '@/lib/constants';
 import { getFromLocalStorage, saveToLocalStorage } from '@/lib/local-storage';
+import { Step2FormValues, step2FormSchema } from '@/lib/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 
-const formSchema = z.object({
-    pinningChain: z.enum(['Aeternity', 'Bitcoin']),
-    chainNetworkId: z.string(),
-    chainConnectionUrl: z.string().url(),
-    startTime: z.coerce.date(),
-    finality: z.number().min(0).max(100)
-});
-type FormValues = z.infer<typeof formSchema>;
-
-const InitiatorForm: React.FC<{ initialData: FormValues | null }> = ({ initialData }) => {
+const InitiatorForm: React.FC<{ initialData: Step2FormValues | null }> = ({ initialData }) => {
     const router = useRouter();
 
-    const form = useForm<FormValues>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<Step2FormValues>({
+        resolver: zodResolver(step2FormSchema),
         defaultValues: {
-            pinningChain: initialData?.pinningChain || 'Aeternity',
-            chainNetworkId: initialData?.chainNetworkId || '',
-            chainConnectionUrl: initialData?.chainConnectionUrl || '',
-            startTime: initialData?.startTime
-                ? new Date(initialData?.startTime)
-                : new Date(new Date().setMinutes(0, 0, 0)),
-            finality: initialData?.finality || 12
+            parent: initialData?.parent || 'AE',
+            parentNetworkId: initialData?.parentNetworkId || '',
+            parentNodeUrl: initialData?.parentNodeUrl || '',
+            parentEpochLength: initialData?.parentEpochLength || 10n
         }
     });
 
     function onBack() {
-        saveToLocalStorage<FormValues>(form.getValues(), INITIATOR_STEP_2_STORAGE_KEY);
+        saveToLocalStorage<Step2FormValues>(form.getValues(), INITIATOR_STEP_2_STORAGE_KEY);
         router.push('/initiate/1');
     }
-    function onSubmit(values: FormValues) {
-        saveToLocalStorage<FormValues>(values, INITIATOR_STEP_2_STORAGE_KEY);
+    function onSubmit(values: Step2FormValues) {
+        saveToLocalStorage<Step2FormValues>(values, INITIATOR_STEP_2_STORAGE_KEY);
         router.push('/initiate/3');
     }
 
@@ -57,11 +44,11 @@ const InitiatorForm: React.FC<{ initialData: FormValues | null }> = ({ initialDa
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className='flex flex-col justify-between gap-10 font-roboto md:min-h-[450px]'>
+                className='flex flex-col justify-between gap-10 font-roboto md:gap-36'>
                 <div className='grid grid-cols-1 gap-x-12 gap-y-8 md:grid-cols-2 md:gap-y-6'>
                     <FormField
                         control={form.control}
-                        name='pinningChain'
+                        name='parent'
                         render={({ field: { value, onChange } }) => (
                             <FormItem>
                                 <FormLabelWithTooltip label='Pinning Chain' tooltip='Tooltip Text' />
@@ -71,8 +58,11 @@ const InitiatorForm: React.FC<{ initialData: FormValues | null }> = ({ initialDa
                                             <SelectValue placeholder='Choose a parent chain connection' />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem value='Aeternity'>Aeternity</SelectItem>
-                                            <SelectItem value='Bitcoin'>Bitcoin</SelectItem>
+                                            {parentChains.map((c, index) => (
+                                                <SelectItem key={index} value={c.symbol}>
+                                                    {c.name}
+                                                </SelectItem>
+                                            ))}
                                         </SelectContent>
                                     </Select>
                                 </FormControl>
@@ -82,7 +72,7 @@ const InitiatorForm: React.FC<{ initialData: FormValues | null }> = ({ initialDa
                     />
                     <FormField
                         control={form.control}
-                        name='chainNetworkId'
+                        name='parentNetworkId'
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabelWithTooltip label='Chain Network ID' tooltip='Tooltip Text' />
@@ -95,12 +85,12 @@ const InitiatorForm: React.FC<{ initialData: FormValues | null }> = ({ initialDa
                     />
                     <FormField
                         control={form.control}
-                        name='chainConnectionUrl'
+                        name='parentNodeUrl'
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabelWithTooltip label='Chain Connection URL' tooltip='Tooltip Text' />
+                                <FormLabelWithTooltip label='Parent Node URL' tooltip='Tooltip Text' />
                                 <FormControl>
-                                    <Input placeholder=' https://user:password@some.address.com:8000' {...field} />
+                                    <Input placeholder='https://testnet.aeternity.io' {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -108,30 +98,18 @@ const InitiatorForm: React.FC<{ initialData: FormValues | null }> = ({ initialDa
                     />
                     <FormField
                         control={form.control}
-                        name='startTime'
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabelWithTooltip label='Start Time | Height' tooltip='Tooltip Text' />
-                                <div className='flex flex-col gap-4 md:flex-row'>
-                                    <DayPicker value={field.value} onChange={field.onChange} />
-                                    <HoursPicker value={field.value} onChange={field.onChange} />
-                                </div>
-                                <span className='font-roboto text-xs text-muted-foreground'>
-                                    * The start time may vary slightly due to system adjustments.
-                                </span>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name='finality'
+                        name='parentEpochLength'
                         render={({ field: { value, onChange } }) => (
                             <FormItem>
-                                <FormLabelWithTooltip label='Finality' tooltip='Tooltip Text' />
+                                <FormLabelWithTooltip label='Parent epoch length' tooltip='Tooltip Text' />
                                 <div className='flex flex-row gap-6'>
                                     <FormControl>
-                                        <Input value={value} onChange={onChange} className='w-20' placeholder='0' />
+                                        <Input
+                                            value={Number(value)}
+                                            onChange={onChange}
+                                            className='w-20'
+                                            placeholder='0'
+                                        />
                                     </FormControl>
                                     <div className='flex w-full flex-col justify-center gap-1'>
                                         <div className='flex flex-row justify-between font-roboto text-sm text-grey-4'>
@@ -140,8 +118,8 @@ const InitiatorForm: React.FC<{ initialData: FormValues | null }> = ({ initialDa
                                         <FormControl>
                                             <Slider
                                                 onValueChange={(v) => onChange(v[0])}
-                                                value={[value]}
-                                                defaultValue={[value]}
+                                                value={[Number(value)]}
+                                                defaultValue={[Number(value)]}
                                                 max={100}
                                                 step={1}
                                             />
@@ -167,9 +145,9 @@ const InitiatorForm: React.FC<{ initialData: FormValues | null }> = ({ initialDa
 };
 
 const FormWrapper: React.FC = () => {
-    const [initialData, setInitialData] = useState<FormValues | null | undefined>(undefined);
+    const [initialData, setInitialData] = useState<Step2FormValues | null | undefined>(undefined);
     useEffect(() => {
-        setInitialData(getFromLocalStorage<FormValues>(INITIATOR_STEP_2_STORAGE_KEY));
+        setInitialData(getFromLocalStorage<Step2FormValues>(INITIATOR_STEP_2_STORAGE_KEY));
     }, []);
 
     if (initialData !== undefined) {

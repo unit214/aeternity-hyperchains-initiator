@@ -1,5 +1,8 @@
-export const saveToLocalStorage = <T>(value: T, localStorageKey: string) => {
-    localStorage.setItem(localStorageKey, JSON.stringify(value));
+export const saveToLocalStorage = <T>(data: T, localStorageKey: string) => {
+    localStorage.setItem(
+        localStorageKey,
+        JSON.stringify(data, (key, value) => (typeof value === 'bigint' ? value.toString() : value))
+    );
 };
 
 export const getFromLocalStorage = <T>(localStorageKey: string): T | null => {
