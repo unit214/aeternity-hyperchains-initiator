@@ -1,0 +1,25 @@
+name: pull-request-cleanup
+
+on:
+  pull_request:
+    branches: [main]
+    types: [closed]
+
+jobs:
+  rollback:
+    uses: aeternity/github-actions/.github/workflows/_rollback-gitops.yml@v2.3.1
+    secrets: inherit
+    with:
+      DEPLOY_ENV: stg
+      DEPLOY_APP: aepp-hyperchains-initiator
+      DEPLOY_VERSION: 'pr-${{ github.event.number }}'
+      DEPLOY_SUBDOMAIN: 'pr-${{ github.event.number }}-hyperchains-initiator'
+  delete-tag:
+    uses: aeternity/github-actions/.github/workflows/_delete-tag-ecr.yml@v2.3.1
+    secrets: inherit
+    with:
+      TAG: 'pr-${{ github.event.number }}'
+  cleanup:
+    uses: aeternity/github-actions/.github/workflows/_cleanup-ecr.yml@v2.3.1
+    needs: [delete-tag]
+    secrets: inherit
