@@ -1,9 +1,4 @@
-import {
-    DEFAULT_FAUCET_INIT_BALANCE,
-    DEFAULT_TREASURY_INIT_BALANCE,
-    INITIATOR_STEP_2_STORAGE_KEY,
-    parentChains
-} from '@/lib/constants';
+import { INITIATOR_STEP_2_STORAGE_KEY, parentChains } from '@/lib/constants';
 import { getFromLocalStorage } from '@/lib/local-storage';
 import { ParentChain } from '@/lib/types';
 import { expandDecimals } from '@/lib/utils';
@@ -97,7 +92,9 @@ export const step4FormSchema = z
     .object({
         validatorCount: bigNumberSchema({ fieldName: 'Number Of Validators', gt: 0n }),
         validatorBalance: bigNumberSchema({ fieldName: 'Validator Balance', gt: 0n, dec: parentDecimals }),
-        validatorMinStake: bigNumberSchema({ fieldName: 'Minimum Staking Amount', gt: 0n, dec: parentDecimals })
+        validatorMinStake: bigNumberSchema({ fieldName: 'Minimum Staking Amount', gt: 0n, dec: parentDecimals }),
+        faucetInitBalance: bigNumberSchema({ fieldName: 'Faucet Init Balance', gt: 0n, dec: parentDecimals }),
+        treasuryInitBalance: bigNumberSchema({ fieldName: 'Treasury Init Balance', gt: 0n, dec: parentDecimals })
     })
     .transform((data, ctx) => {
         if (BigNumber(data.validatorBalance).isLessThan(data.validatorMinStake)) {
@@ -131,7 +128,9 @@ export const formSchema = z
         fixedCoinbase: bigNumberSchema({ errorMessage: FormSteps[2], gt: 0n, dec: parentDecimals }),
         validatorCount: bigNumberSchema({ errorMessage: FormSteps[3], gt: 0n }),
         validatorBalance: bigNumberSchema({ errorMessage: FormSteps[3], gt: 0n, dec: parentDecimals }),
-        validatorMinStake: bigNumberSchema({ errorMessage: FormSteps[3], gt: 0n, dec: parentDecimals })
+        validatorMinStake: bigNumberSchema({ errorMessage: FormSteps[3], gt: 0n, dec: parentDecimals }),
+        faucetInitBalance: bigNumberSchema({ errorMessage: FormSteps[3], gt: 0n, dec: parentDecimals }),
+        treasuryInitBalance: bigNumberSchema({ errorMessage: FormSteps[3], gt: 0n, dec: parentDecimals })
     })
     .transform((data, ctx) => {
         if (BigNumber(data.validatorBalance).isLessThan(data.validatorMinStake)) {
@@ -154,7 +153,7 @@ export const formSchema = z
             ), // TODO take next higher number for non absolute result?
             contractSourcesPrefix: parentChain.contractSourcesPrefix,
             enablePinning: true,
-            faucetInitBalance: DEFAULT_FAUCET_INIT_BALANCE,
+            faucetInitBalance: expandDecimals(data.faucetInitBalance, parentChain.decimals),
             fixedCoinbase: expandDecimals(data.fixedCoinbase, parentChain.decimals),
             networkId: data.networkId,
             parentChain: {
@@ -164,7 +163,7 @@ export const formSchema = z
                 type: `AE2${parentChain.symbol}`
             },
             pinningReward: expandDecimals(data.pinningReward, parentChain.decimals),
-            treasuryInitBalance: DEFAULT_TREASURY_INIT_BALANCE,
+            treasuryInitBalance: expandDecimals(data.treasuryInitBalance, parentChain.decimals),
             validators: {
                 count: BigInt(data.validatorCount),
                 balance: expandDecimals(data.validatorBalance, parentChain.decimals),
