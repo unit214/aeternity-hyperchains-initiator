@@ -93,11 +93,28 @@ export const step3FormSchema = z.object({
     pinningReward: bigNumberSchema({ fieldName: 'Pinning Reward', gt: 0n, dec: parentDecimals })
 });
 
-export const step4FormSchema = z.object({
-    validatorCount: bigNumberSchema({ fieldName: 'Number Of Validators', gt: 0n }),
-    validatorBalance: bigNumberSchema({ fieldName: 'Validator Balance', gt: 0n, dec: parentDecimals }),
-    validatorMinStake: bigNumberSchema({ fieldName: 'Minimum Staking Amount', gt: 0n, dec: parentDecimals })
-});
+export const step4FormSchema = z
+    .object({
+        validatorCount: bigNumberSchema({ fieldName: 'Number Of Validators', gt: 0n }),
+        validatorBalance: bigNumberSchema({ fieldName: 'Validator Balance', gt: 0n, dec: parentDecimals }),
+        validatorMinStake: bigNumberSchema({ fieldName: 'Minimum Staking Amount', gt: 0n, dec: parentDecimals })
+    })
+    .transform((data, ctx) => {
+        if (BigNumber(data.validatorBalance).isLessThan(data.validatorMinStake)) {
+            ctx.addIssue({
+                path: ['validatorBalance'],
+                code: z.ZodIssueCode.custom,
+                message: 'Validator Balance can not be smaller than Minimum Staking Amount'
+            });
+            ctx.addIssue({
+                path: ['validatorMinStake'],
+                code: z.ZodIssueCode.custom,
+                message: 'Minimum Staking Amount can not be greater than Validator Balance'
+            });
+        }
+
+        return data;
+    });
 
 export const FormSteps = ['1', '2', '3', '4'];
 
@@ -115,6 +132,13 @@ export const formSchema = z
         validatorCount: bigNumberSchema({ errorMessage: FormSteps[3], gt: 0n }),
         validatorBalance: bigNumberSchema({ errorMessage: FormSteps[3], gt: 0n, dec: parentDecimals }),
         validatorMinStake: bigNumberSchema({ errorMessage: FormSteps[3], gt: 0n, dec: parentDecimals })
+    })
+    .transform((data, ctx) => {
+        if (BigNumber(data.validatorBalance).isLessThan(data.validatorMinStake)) {
+            ctx.addIssue({ code: z.ZodIssueCode.custom, message: FormSteps[3] });
+        }
+
+        return data;
     })
     // convert into desired output
     .transform((data) => {
