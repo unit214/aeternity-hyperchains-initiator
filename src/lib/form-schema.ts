@@ -66,7 +66,7 @@ export const step2FormSchema = z.object({
     parent: z.string(),
     parentNetworkId: z.string().nonempty('Chain Network ID is required'),
     parentNodeURL: z.string().nonempty('Parent Node URL is required').url(),
-    parentEpochLength: z.coerce.bigint().min(0n).max(100n)
+    parentEpochLength: z.coerce.bigint().min(10n).max(100n)
 });
 
 export const step3FormSchema = z.object({
@@ -90,7 +90,7 @@ export const formSchema = z
         parent: z.string({ message: FormSteps[1] }).nonempty(FormSteps[1]),
         parentNetworkId: z.string({ message: FormSteps[1] }).nonempty(FormSteps[1]),
         parentNodeURL: z.string({ message: FormSteps[1] }).nonempty(FormSteps[1]).url(FormSteps[1]),
-        parentEpochLength: z.coerce.bigint({ message: FormSteps[1] }).min(0n, FormSteps[1]).max(100n, FormSteps[1]),
+        parentEpochLength: z.coerce.bigint({ message: FormSteps[1] }).min(10n, FormSteps[1]).max(100n, FormSteps[1]),
         pinningReward: bigNumberGreaterThanZeroSchema({ errorMessage: FormSteps[2] }),
         fixedCoinbase: bigNumberGreaterThanZeroSchema({ errorMessage: FormSteps[2] }),
         validatorCount: bigNumberGreaterThanZeroSchema({ withDecimals: false, errorMessage: FormSteps[3] }),
