@@ -23,7 +23,7 @@ const InitiatorForm: React.FC<{ initialData: Step1FormValues | null }> = ({ init
         resolver: zodResolver(step1FormSchema),
         defaultValues: {
             networkId: initialData?.networkId || '',
-            childBlockTime: initialData?.childBlockTime || 6500n
+            childBlockTime: initialData?.childBlockTime || 3000n
         },
         mode: 'onBlur'
     });
@@ -74,7 +74,7 @@ const InitiatorForm: React.FC<{ initialData: Step1FormValues | null }> = ({ init
                                             value={Number(value)}
                                             onChange={onChange}
                                             className='w-20'
-                                            placeholder='6500'
+                                            placeholder='3000'
                                         />
                                     </FormControl>
                                     <div className='flex w-full flex-col justify-center gap-1'>
