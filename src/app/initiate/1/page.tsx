@@ -23,7 +23,7 @@ const InitiatorForm: React.FC<{ initialData: Step1FormValues | null }> = ({ init
         resolver: zodResolver(step1FormSchema),
         defaultValues: {
             networkId: initialData?.networkId || '',
-            childBlockTime: initialData?.childBlockTime || 3000n
+            childBlockTime: initialData?.childBlockTime || '3000'
         },
         mode: 'onBlur'
     });
@@ -70,12 +70,7 @@ const InitiatorForm: React.FC<{ initialData: Step1FormValues | null }> = ({ init
                                 />
                                 <div className='flex flex-row gap-6'>
                                     <FormControl>
-                                        <Input
-                                            value={Number(value)}
-                                            onChange={onChange}
-                                            className='w-20'
-                                            placeholder='3000'
-                                        />
+                                        <Input value={value} onChange={onChange} className='w-20' placeholder='3000' />
                                     </FormControl>
                                     <div className='flex w-full flex-col justify-center gap-1'>
                                         <div className='flex flex-row justify-between font-roboto text-sm text-grey-4'>
@@ -84,8 +79,8 @@ const InitiatorForm: React.FC<{ initialData: Step1FormValues | null }> = ({ init
                                         <FormControl>
                                             <Slider
                                                 onValueChange={(v) => onChange(v[0])}
-                                                value={[Number(value)]}
-                                                defaultValue={[Number(value)]}
+                                                value={[value as unknown as number]}
+                                                defaultValue={[value as unknown as number]}
                                                 min={3000}
                                                 max={10000}
                                                 step={1}
