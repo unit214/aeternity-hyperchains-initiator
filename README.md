@@ -1,10 +1,10 @@
-# Hyperchains UI
+# Hyperchains Initiator
 
-This repo contains an user interface that simplifies the process of setting up a custom Hyperchain.
+This repo contains a user interface that simplifies the process of setting up a custom Hyperchain.
 
 ## Access
 
-Find a hosted version of the interface over at [hyperchains.ae](https://hyperchains.ae) or
+Find a hosted version of the interface over at [init.hyperchains.ae](https://init.hyperchains.ae/) or
 feel free to run it on your own machine using the instructions in the following section.
 
 ## Local development
@@ -19,8 +19,8 @@ feel free to run it on your own machine using the instructions in the following 
 1. **Clone the Repository**:
 
     ```bash
-    git clone https://github.com/aeternity/hyperchains-ui.git
-    cd hyperchains-ui
+    git clone https://github.com/aeternity/aepp-hyperchains-initiator/.git
+    cd aepp-hyperchains-initiator
     ```
 
 2. **Install Dependencies**:
@@ -47,14 +47,14 @@ feel free to run it on your own machine using the instructions in the following 
 To use Docker, make sure Docker is installed on your machine. Then, build and run the Docker container:
 
 ```bash
-docker build -t hyperchains-ui .
-docker run --name hyperchains-ui -p 3000:3000 hyperchains-ui
+docker build -t aepp-hyperchains-initiator .
+docker run --name aepp-hyperchains-initiator -p 3000:3000 aepp-hyperchains-initiator
 ```
 
 ## Feedback
 
-For bug reports or feature requests, please use the issues: [https://github.com/aeternity/hyperchains-ui/issues/new/choose](https://github.com/aeternity/hyperchains-uii/issues/new/choose)
+For bug reports or feature requests, please use the issues: [https://github.com/aeternity/aepp-hyperchains-initiator/issues/new/choose](https://github.com/aeternity/aepp-hyperchains-initiator/issues/new/choose)
 
 ## License
 
-This repository is licensed using the [ISC license](https://github.com/aeternity/hyperchains-ui/blob/main/LICENSE.md)
+This repository is licensed using the [ISC license](https://github.com/aeternity/aepp-hyperchains-initiator/blob/main/LICENSE.md)
