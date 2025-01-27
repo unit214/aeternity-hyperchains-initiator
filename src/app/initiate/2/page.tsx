@@ -27,7 +27,7 @@ const InitiatorForm: React.FC<{ initialData: Step2FormValues | null }> = ({ init
             parent: initialData?.parent || 'AE',
             parentNetworkId: initialData?.parentNetworkId || '',
             parentNodeURL: initialData?.parentNodeURL || '',
-            parentEpochLength: initialData?.parentEpochLength || 10n
+            parentEpochLength: initialData?.parentEpochLength || '10'
         },
         mode: 'onBlur'
     });
@@ -112,17 +112,12 @@ const InitiatorForm: React.FC<{ initialData: Step2FormValues | null }> = ({ init
                         render={({ field: { value, onChange } }) => (
                             <FormItem>
                                 <FormLabelWithTooltip
-                                    label='Parent epoch length'
+                                    label='Parent Epoch Length'
                                     tooltip='The number of blocks that make up an epoch on the parent chain.'
                                 />
                                 <div className='flex flex-row gap-6'>
                                     <FormControl>
-                                        <Input
-                                            value={Number(value)}
-                                            onChange={onChange}
-                                            className='w-20'
-                                            placeholder='10'
-                                        />
+                                        <Input value={value} onChange={onChange} className='w-20' placeholder='10' />
                                     </FormControl>
                                     <div className='flex w-full flex-col justify-center gap-1'>
                                         <div className='flex flex-row justify-between font-roboto text-sm text-grey-4'>
@@ -131,8 +126,8 @@ const InitiatorForm: React.FC<{ initialData: Step2FormValues | null }> = ({ init
                                         <FormControl>
                                             <Slider
                                                 onValueChange={(v) => onChange(v[0])}
-                                                value={[Number(value)]}
-                                                defaultValue={[Number(value)]}
+                                                value={[value as unknown as number]}
+                                                defaultValue={[value as unknown as number]}
                                                 min={10}
                                                 max={100}
                                                 step={1}
