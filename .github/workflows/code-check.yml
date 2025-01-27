@@ -1,5 +1,13 @@
+name: Code Check
 on:
-  workflow_call:
+  push:
+    branches:
+      - main
+  pull_request: {}
+
+concurrency:
+  group: ${{ github.job }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   lint:
