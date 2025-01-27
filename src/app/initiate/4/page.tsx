@@ -24,7 +24,9 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
         defaultValues: {
             validatorCount: initialData?.validatorCount || '',
             validatorBalance: initialData?.validatorBalance || '',
-            validatorMinStake: initialData?.validatorMinStake || ''
+            validatorMinStake: initialData?.validatorMinStake || '',
+            faucetInitBalance: initialData?.faucetInitBalance || '',
+            treasuryInitBalance: initialData?.treasuryInitBalance || ''
         },
         mode: 'onBlur'
     });
@@ -43,7 +45,7 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
                 className='flex flex-col justify-between gap-10 font-roboto md:gap-36'>
-                <div className='grid grid-cols-1 gap-y-8 md:gap-y-6'>
+                <div className='grid grid-cols-1 gap-x-12 gap-y-8 md:grid-cols-2 md:gap-y-6'>
                     <FormField
                         control={form.control}
                         name='validatorCount'
@@ -85,6 +87,32 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
                                     label='Minimum Staking Amount'
                                     tooltip='The minimum number of native Hyperchain tokens required to stake and become a validator.'
                                 />
+                                <FormControl>
+                                    <Input {...field} placeholder='100.0' />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name='faucetInitBalance'
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabelWithTooltip label='Faucet Init Balance' tooltip='Tooltip TBD' />
+                                <FormControl>
+                                    <Input {...field} placeholder='100.0' />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name='treasuryInitBalance'
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabelWithTooltip label='Treasury Init Balance' tooltip='Tooltip TBD' />
                                 <FormControl>
                                     <Input {...field} placeholder='100.0' />
                                 </FormControl>
