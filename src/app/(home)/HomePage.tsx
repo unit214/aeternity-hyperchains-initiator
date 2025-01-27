@@ -5,6 +5,16 @@ import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 
+const BetaLabel: React.FC = () => {
+    return (
+        <span className='inline-flex align-middle'>
+            <div className='ml-2 rounded-lg bg-violet-2 px-2.5 py-1 text-lg font-medium uppercase text-white md:ml-4'>
+                beta
+            </div>
+        </span>
+    );
+};
+
 interface StepProps {
     stepNumber: number;
     title: string;
@@ -37,7 +47,10 @@ const HomePage: React.FC = () => {
     return (
         <div className='mb-9 mt-12 flex items-center justify-center font-clash md:mb-24 md:mt-20'>
             <div className='flex flex-col'>
-                <div className='mb-4 text-4xl font-semibold'>Welcome to Your Chain Builder</div>
+                <div className='mb-4 text-4xl font-semibold'>
+                    Welcome to Your Chain Builder
+                    <BetaLabel />
+                </div>
                 <div className='mb-10 font-roboto text-muted-foreground'>
                     Ready to create your own blockchain? With just a few onboarding steps, you will receive your chain
                 </div>
