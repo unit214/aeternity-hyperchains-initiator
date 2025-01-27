@@ -112,13 +112,13 @@ export const formSchema = z
             parentChain: {
                 epochLength: data.parentEpochLength,
                 networkId: data.parentNetworkId,
-                nodeURL: data.parentEpochLength,
+                nodeURL: data.parentNodeURL,
                 type: `AE2${parentChain.symbol}`
             },
             pinningReward: expandDecimals(data.pinningReward, parentChain.decimals),
             treasuryInitBalance: DEFAULT_TREASURY_INIT_BALANCE,
             validators: {
-                count: data.validatorCount,
+                count: expandDecimals(data.validatorCount, 0),
                 balance: expandDecimals(data.validatorBalance, parentChain.decimals),
                 validatorMinStake: expandDecimals(data.validatorMinStake, parentChain.decimals)
             }
