@@ -99,7 +99,10 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
                         name='faucetInitBalance'
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabelWithTooltip label='Faucet Init Balance' tooltip='Tooltip TBD' />
+                                <FormLabelWithTooltip
+                                    label='Faucet Init Balance'
+                                    tooltip='The initial balance of the faucet which can be employed to automatically fund accounts on the chain.'
+                                />
                                 <FormControl>
                                     <Input {...field} placeholder='100.0' />
                                 </FormControl>
@@ -112,7 +115,10 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
                         name='treasuryInitBalance'
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabelWithTooltip label='Treasury Init Balance' tooltip='Tooltip TBD' />
+                                <FormLabelWithTooltip
+                                    label='Treasury Init Balance'
+                                    tooltip='The initial balance of the treasury which is used for manually funding accounts on the chain.'
+                                />
                                 <FormControl>
                                     <Input {...field} placeholder='100.0' />
                                 </FormControl>
