@@ -11,7 +11,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
-import { INITIATOR_STEP_2_STORAGE_KEY, parentChains } from '@/lib/constants';
+import { INITIATOR_STEP_2_STORAGE_KEY, StepFieldName, pinningChains, stepFields } from '@/lib/constants';
 import { Step2FormValues, step2FormSchema } from '@/lib/form-schema';
 import { getFromLocalStorage, saveToLocalStorage } from '@/lib/local-storage';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -24,10 +24,10 @@ const InitiatorForm: React.FC<{ initialData: Step2FormValues | null }> = ({ init
     const form = useForm<Step2FormValues>({
         resolver: zodResolver(step2FormSchema),
         defaultValues: {
-            parent: initialData?.parent || 'AE',
-            parentNetworkId: initialData?.parentNetworkId || '',
-            parentNodeURL: initialData?.parentNodeURL || '',
-            parentEpochLength: initialData?.parentEpochLength || '10'
+            pinningChain: initialData?.pinningChain || 'AE',
+            pinningChainNetworkId: initialData?.pinningChainNetworkId || '',
+            pinningChainNodeUrl: initialData?.pinningChainNodeUrl || '',
+            pinningChainEpochLength: initialData?.pinningChainEpochLength || '10'
         },
         mode: 'onBlur'
     });
@@ -49,12 +49,12 @@ const InitiatorForm: React.FC<{ initialData: Step2FormValues | null }> = ({ init
                 <div className='grid grid-cols-1 gap-x-12 gap-y-8 md:grid-cols-2 md:gap-y-6'>
                     <FormField
                         control={form.control}
-                        name='parent'
+                        name={StepFieldName.pinningChain}
                         render={({ field: { value, onChange } }) => (
                             <FormItem>
                                 <FormLabelWithTooltip
-                                    label='Pinning Chain'
-                                    tooltip='The pinning blockchain where the Hyperchain commits its states.'
+                                    label={stepFields[StepFieldName.pinningChain].label}
+                                    tooltip={stepFields[StepFieldName.pinningChain].tooltip}
                                 />
                                 <FormControl>
                                     <Select value={value} onValueChange={onChange} defaultValue={value}>
@@ -62,7 +62,7 @@ const InitiatorForm: React.FC<{ initialData: Step2FormValues | null }> = ({ init
                                             <SelectValue placeholder='Choose a pinning chain connection' />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            {parentChains.map((c, index) => (
+                                            {pinningChains.map((c, index) => (
                                                 <SelectItem key={index} value={c.symbol}>
                                                     {c.name}
                                                 </SelectItem>
@@ -76,12 +76,12 @@ const InitiatorForm: React.FC<{ initialData: Step2FormValues | null }> = ({ init
                     />
                     <FormField
                         control={form.control}
-                        name='parentNetworkId'
+                        name={StepFieldName.pinningChainNetworkId}
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabelWithTooltip
-                                    label='Pinning Chain Network ID'
-                                    tooltip='The unique identifier for the pinning chain network the Hyperchain connects to.'
+                                    label={stepFields[StepFieldName.pinningChainNetworkId].label}
+                                    tooltip={stepFields[StepFieldName.pinningChainNetworkId].tooltip}
                                 />
                                 <FormControl>
                                     <Input placeholder='Ex: ae_mainnet | ae_uat' {...field} />
@@ -92,12 +92,12 @@ const InitiatorForm: React.FC<{ initialData: Step2FormValues | null }> = ({ init
                     />
                     <FormField
                         control={form.control}
-                        name='parentNodeURL'
+                        name={StepFieldName.pinningChainNodeUrl}
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabelWithTooltip
-                                    label='Pinning Chain Node URL'
-                                    tooltip='The API endpoint of a node in the pinning chain for syncing and block updates.'
+                                    label={stepFields[StepFieldName.pinningChainNodeUrl].label}
+                                    tooltip={stepFields[StepFieldName.pinningChainNodeUrl].tooltip}
                                 />
                                 <FormControl>
                                     <Input placeholder='https://testnet.aeternity.io' {...field} />
@@ -108,12 +108,12 @@ const InitiatorForm: React.FC<{ initialData: Step2FormValues | null }> = ({ init
                     />
                     <FormField
                         control={form.control}
-                        name='parentEpochLength'
+                        name={StepFieldName.pinningChainEpochLength}
                         render={({ field: { value, onChange } }) => (
                             <FormItem>
                                 <FormLabelWithTooltip
-                                    label='Pinning Chain Epoch Length'
-                                    tooltip='The number of blocks that make up an epoch on the pinning chain.'
+                                    label={stepFields[StepFieldName.pinningChainEpochLength].label}
+                                    tooltip={stepFields[StepFieldName.pinningChainEpochLength].tooltip}
                                 />
                                 <div className='flex flex-row gap-6'>
                                     <FormControl>

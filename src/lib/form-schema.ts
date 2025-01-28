@@ -1,100 +1,141 @@
-import { INITIATOR_STEP_2_STORAGE_KEY, parentChains } from '@/lib/constants';
+import { INITIATOR_STEP_2_STORAGE_KEY, Step, StepFieldName, pinningChains, stepFields } from '@/lib/constants';
 import { getFromLocalStorage } from '@/lib/local-storage';
-import { ParentChain } from '@/lib/types';
+import { PinningChain } from '@/lib/types';
 import { expandDecimals } from '@/lib/utils';
 
 import BigNumber from 'bignumber.js';
 import { z } from 'zod';
 
-const getParentChainFromLocalStorage = (): ParentChain | undefined =>
+const getPinningChainFromLocalStorage = (): PinningChain | undefined =>
     localStorage &&
-    parentChains
-        .filter((c) => c.symbol === getFromLocalStorage<Step2FormValues>(INITIATOR_STEP_2_STORAGE_KEY)?.parent)
+    pinningChains
+        .filter((c) => c.symbol === getFromLocalStorage<Step2FormValues>(INITIATOR_STEP_2_STORAGE_KEY)?.pinningChain)
         .at(0);
 
-const parentDecimals = () => getParentChainFromLocalStorage()?.decimals || 18;
+const pinningChainDecimals = () => getPinningChainFromLocalStorage()?.decimals || 18;
 
 const bigNumberSchema = ({
     fieldName = undefined,
-    errorMessage = undefined,
     gt,
     min,
     max,
-    dec = () => 0
+    dec = () => 0,
+    step = undefined
 }: {
     fieldName?: string;
-    errorMessage?: string;
     gt?: bigint;
     min?: bigint;
     max?: bigint;
     dec?: () => number;
-}) =>
-    z.coerce
-        .string({ message: errorMessage ? errorMessage : `${fieldName} is required` })
-        .nonempty(errorMessage ? errorMessage : `${fieldName} is required`)
+    step?: Step;
+}) => {
+    return z.coerce
+        .string({ message: step ? step : `${fieldName} is required` })
+        .nonempty(step ? step : `${fieldName} is required`)
         .transform((n, ctx) => {
             if (!BigNumber(n).c) {
                 ctx.addIssue({
                     code: z.ZodIssueCode.custom,
-                    message: errorMessage
-                        ? errorMessage
+                    message: step
+                        ? step
                         : `${fieldName} is not a valid number${dec() > 0 ? ' (use . as a separator)' : ''}`
                 });
             }
             if (gt && !BigNumber(n).isGreaterThan(gt.toString())) {
                 ctx.addIssue({
                     code: z.ZodIssueCode.custom,
-                    message: errorMessage ? errorMessage : `${fieldName} must be greater than ${gt}`
+                    message: step ? step : `${fieldName} must be greater than ${gt}`
                 });
             }
             if (min && !BigNumber(n).isGreaterThanOrEqualTo(min.toString())) {
                 ctx.addIssue({
                     code: z.ZodIssueCode.custom,
-                    message: errorMessage ? errorMessage : `${fieldName} must be at least ${min}`
+                    message: step ? step : `${fieldName} must be at least ${min}`
                 });
             }
             if (max && !BigNumber(n).isLessThanOrEqualTo(max.toString())) {
                 ctx.addIssue({
                     code: z.ZodIssueCode.custom,
-                    message: errorMessage ? errorMessage : `${fieldName} must not be greater than ${max}`
+                    message: step ? step : `${fieldName} must not be greater than ${max}`
                 });
             }
             if (BigNumber(n).decimalPlaces()! > dec()) {
                 ctx.addIssue({
                     code: z.ZodIssueCode.custom,
-                    message: errorMessage
-                        ? errorMessage
+                    message: step
+                        ? step
                         : `${dec() > 0 ? `Only up to ${dec} decimal places are allowed` : 'Only whole numbers are allowed'}`
                 });
             }
 
             return n;
         });
+};
 
 export const step1FormSchema = z.object({
-    networkId: z.string().nonempty('Hyperchain ID is required'),
-    childBlockTime: bigNumberSchema({ fieldName: 'Hyperchain Block Time', min: 3000n, max: 10000n })
+    [StepFieldName.networkId]: z.string().nonempty(`${stepFields[StepFieldName.networkId].label} is required`),
+    [StepFieldName.childBlockTime]: bigNumberSchema({
+        fieldName: stepFields[StepFieldName.childBlockTime].label,
+        min: 3000n,
+        max: 10000n
+    })
 });
 
 export const step2FormSchema = z.object({
-    parent: z.string(),
-    parentNetworkId: z.string().nonempty('Chain Network ID is required'),
-    parentNodeURL: z.string().nonempty('Parent Node URL is required').url(),
-    parentEpochLength: bigNumberSchema({ fieldName: 'Parent Epoch Length', min: 10n, max: 100n })
+    [StepFieldName.pinningChain]: z.string(),
+    [StepFieldName.pinningChainNetworkId]: z
+        .string()
+        .nonempty(`${stepFields[StepFieldName.pinningChainNetworkId].label} is required`),
+    [StepFieldName.pinningChainNodeUrl]: z
+        .string()
+        .nonempty(`${stepFields[StepFieldName.pinningChainNodeUrl].label} is required`)
+        .url(`${stepFields[StepFieldName.pinningChainNodeUrl].label} is not a valid URL`),
+    [StepFieldName.pinningChainEpochLength]: bigNumberSchema({
+        fieldName: stepFields[StepFieldName.pinningChainEpochLength].label,
+        min: 10n,
+        max: 100n
+    })
 });
 
 export const step3FormSchema = z.object({
-    fixedCoinbase: bigNumberSchema({ fieldName: 'Block Reward', gt: 0n, dec: parentDecimals }),
-    pinningReward: bigNumberSchema({ fieldName: 'Pinning Reward', gt: 0n, dec: parentDecimals })
+    [StepFieldName.blockReward]: bigNumberSchema({
+        fieldName: stepFields[StepFieldName.blockReward].label,
+        gt: 0n,
+        dec: pinningChainDecimals
+    }),
+    [StepFieldName.pinningReward]: bigNumberSchema({
+        fieldName: stepFields[StepFieldName.pinningReward].label,
+        gt: 0n,
+        dec: pinningChainDecimals
+    })
 });
 
 export const step4FormSchema = z
     .object({
-        validatorCount: bigNumberSchema({ fieldName: 'Number Of Validators', gt: 0n }),
-        validatorBalance: bigNumberSchema({ fieldName: 'Validator Balance', gt: 0n, dec: parentDecimals }),
-        validatorMinStake: bigNumberSchema({ fieldName: 'Minimum Staking Amount', gt: 0n, dec: parentDecimals }),
-        faucetInitBalance: bigNumberSchema({ fieldName: 'Faucet Init Balance', gt: 0n, dec: parentDecimals }),
-        treasuryInitBalance: bigNumberSchema({ fieldName: 'Treasury Init Balance', gt: 0n, dec: parentDecimals })
+        [StepFieldName.validatorCount]: bigNumberSchema({
+            fieldName: stepFields[StepFieldName.validatorCount].label,
+            gt: 0n
+        }),
+        [StepFieldName.validatorBalance]: bigNumberSchema({
+            fieldName: stepFields[StepFieldName.validatorBalance].label,
+            gt: 0n,
+            dec: pinningChainDecimals
+        }),
+        [StepFieldName.validatorMinStake]: bigNumberSchema({
+            fieldName: stepFields[StepFieldName.validatorMinStake].label,
+            gt: 0n,
+            dec: pinningChainDecimals
+        }),
+        [StepFieldName.faucetInitBalance]: bigNumberSchema({
+            fieldName: stepFields[StepFieldName.faucetInitBalance].label,
+            gt: 0n,
+            dec: pinningChainDecimals
+        }),
+        [StepFieldName.treasuryInitBalance]: bigNumberSchema({
+            fieldName: stepFields[StepFieldName.treasuryInitBalance].label,
+            gt: 0n,
+            dec: pinningChainDecimals
+        })
     })
     .transform((data, ctx) => {
         if (BigNumber(data.validatorBalance).isLessThan(data.validatorMinStake)) {
@@ -113,61 +154,103 @@ export const step4FormSchema = z
         return data;
     });
 
-export const FormSteps = ['1', '2', '3', '4'];
-
 export const formSchema = z
     // validate input
     .object({
-        networkId: z.string({ message: FormSteps[0] }).nonempty(FormSteps[0]),
-        childBlockTime: bigNumberSchema({ errorMessage: FormSteps[0], min: 3000n, max: 10000n }),
-        parent: z.string({ message: FormSteps[1] }).nonempty(FormSteps[1]),
-        parentNetworkId: z.string({ message: FormSteps[1] }).nonempty(FormSteps[1]),
-        parentNodeURL: z.string({ message: FormSteps[1] }).nonempty(FormSteps[1]).url(FormSteps[1]),
-        parentEpochLength: bigNumberSchema({ errorMessage: FormSteps[1], min: 10n, max: 100n }),
-        pinningReward: bigNumberSchema({ errorMessage: FormSteps[2], gt: 0n, dec: parentDecimals }),
-        fixedCoinbase: bigNumberSchema({ errorMessage: FormSteps[2], gt: 0n, dec: parentDecimals }),
-        validatorCount: bigNumberSchema({ errorMessage: FormSteps[3], gt: 0n }),
-        validatorBalance: bigNumberSchema({ errorMessage: FormSteps[3], gt: 0n, dec: parentDecimals }),
-        validatorMinStake: bigNumberSchema({ errorMessage: FormSteps[3], gt: 0n, dec: parentDecimals }),
-        faucetInitBalance: bigNumberSchema({ errorMessage: FormSteps[3], gt: 0n, dec: parentDecimals }),
-        treasuryInitBalance: bigNumberSchema({ errorMessage: FormSteps[3], gt: 0n, dec: parentDecimals })
+        [StepFieldName.networkId]: z
+            .string({ message: stepFields[StepFieldName.networkId].step })
+            .nonempty(stepFields[StepFieldName.networkId].step),
+        [StepFieldName.childBlockTime]: bigNumberSchema({
+            min: 3000n,
+            max: 10000n,
+            step: stepFields[StepFieldName.childBlockTime].step
+        }),
+        [StepFieldName.pinningChain]: z
+            .string({ message: stepFields[StepFieldName.pinningChain].step })
+            .nonempty(stepFields[StepFieldName.pinningChain].step),
+        [StepFieldName.pinningChainNetworkId]: z
+            .string({ message: stepFields[StepFieldName.pinningChainNetworkId].step })
+            .nonempty(stepFields[StepFieldName.pinningChainNetworkId].step),
+        [StepFieldName.pinningChainNodeUrl]: z
+            .string({ message: stepFields[StepFieldName.pinningChainNodeUrl].step })
+            .nonempty(stepFields[StepFieldName.pinningChainNodeUrl].step)
+            .url(stepFields[StepFieldName.pinningChainNodeUrl].step),
+        [StepFieldName.pinningChainEpochLength]: bigNumberSchema({
+            min: 10n,
+            max: 100n,
+            step: stepFields[StepFieldName.pinningChainEpochLength].step
+        }),
+        [StepFieldName.blockReward]: bigNumberSchema({
+            gt: 0n,
+            dec: pinningChainDecimals,
+            step: stepFields[StepFieldName.blockReward].step
+        }),
+        [StepFieldName.pinningReward]: bigNumberSchema({
+            gt: 0n,
+            dec: pinningChainDecimals,
+            step: stepFields[StepFieldName.pinningReward].step
+        }),
+        [StepFieldName.validatorCount]: bigNumberSchema({
+            gt: 0n,
+            step: stepFields[StepFieldName.validatorCount].step
+        }),
+        [StepFieldName.validatorBalance]: bigNumberSchema({
+            gt: 0n,
+            dec: pinningChainDecimals,
+            step: stepFields[StepFieldName.validatorBalance].step
+        }),
+        [StepFieldName.validatorMinStake]: bigNumberSchema({
+            gt: 0n,
+            dec: pinningChainDecimals,
+            step: stepFields[StepFieldName.validatorMinStake].step
+        }),
+        [StepFieldName.faucetInitBalance]: bigNumberSchema({
+            gt: 0n,
+            dec: pinningChainDecimals,
+            step: stepFields[StepFieldName.faucetInitBalance].step
+        }),
+        [StepFieldName.treasuryInitBalance]: bigNumberSchema({
+            gt: 0n,
+            dec: pinningChainDecimals,
+            step: stepFields[StepFieldName.treasuryInitBalance].step
+        })
     })
     .transform((data, ctx) => {
         if (BigNumber(data.validatorBalance).isLessThan(data.validatorMinStake)) {
-            ctx.addIssue({ code: z.ZodIssueCode.custom, message: FormSteps[3] });
+            ctx.addIssue({ code: z.ZodIssueCode.custom, message: stepFields[StepFieldName.treasuryInitBalance].step });
         }
 
         return data;
     })
     // convert into desired output
     .transform((data) => {
-        const parentChain = parentChains.filter((c) => c.symbol === data.parent).at(0)!;
+        const pinningChain = pinningChains.filter((c) => c.symbol === data.pinningChain).at(0)!;
 
         return {
             childBlockTime: BigInt(data.childBlockTime),
             childEpochLength: BigInt(
-                BigNumber(data.parentEpochLength)
-                    .multipliedBy(parentChain.blockTime)
+                BigNumber(data.pinningChainEpochLength)
+                    .multipliedBy(pinningChain.blockTime)
                     .dividedBy(data.childBlockTime)
                     .toString()
             ), // TODO take next higher number for non absolute result?
-            contractSourcesPrefix: parentChain.contractSourcesPrefix,
+            contractSourcesPrefix: pinningChain.contractSourcesPrefix,
             enablePinning: true,
-            faucetInitBalance: expandDecimals(data.faucetInitBalance, parentChain.decimals),
-            fixedCoinbase: expandDecimals(data.fixedCoinbase, parentChain.decimals),
+            faucetInitBalance: expandDecimals(data.faucetInitBalance, pinningChain.decimals),
+            fixedCoinbase: expandDecimals(data.blockReward, pinningChain.decimals),
             networkId: data.networkId,
             parentChain: {
-                epochLength: BigInt(data.parentEpochLength),
-                networkId: data.parentNetworkId,
-                nodeURL: data.parentNodeURL,
-                type: `AE2${parentChain.symbol}`
+                epochLength: BigInt(data.pinningChainEpochLength),
+                networkId: data.pinningChainNetworkId,
+                nodeURL: data.pinningChainNodeUrl,
+                type: `AE2${pinningChain.symbol}`
             },
-            pinningReward: expandDecimals(data.pinningReward, parentChain.decimals),
-            treasuryInitBalance: expandDecimals(data.treasuryInitBalance, parentChain.decimals),
+            pinningReward: expandDecimals(data.pinningReward, pinningChain.decimals),
+            treasuryInitBalance: expandDecimals(data.treasuryInitBalance, pinningChain.decimals),
             validators: {
                 count: BigInt(data.validatorCount),
-                balance: expandDecimals(data.validatorBalance, parentChain.decimals),
-                validatorMinStake: expandDecimals(data.validatorMinStake, parentChain.decimals)
+                balance: expandDecimals(data.validatorBalance, pinningChain.decimals),
+                validatorMinStake: expandDecimals(data.validatorMinStake, pinningChain.decimals)
             }
         };
     });
