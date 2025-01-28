@@ -37,6 +37,7 @@
         --grey-5: 0 0% 46%; /* muted-foreground */
         --grey-6: 0 0% 24%;
         --violet-2: 266, 100%, 64%;
+        --black-1: 0, 0%, 13%;
         --radius: 0.5rem;
     }
     .dark {
