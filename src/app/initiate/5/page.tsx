@@ -11,10 +11,10 @@ import {
     INITIATOR_STEP_1_STORAGE_KEY,
     INITIATOR_STEP_2_STORAGE_KEY,
     INITIATOR_STEP_3_STORAGE_KEY,
-    INITIATOR_STEP_4_STORAGE_KEY
+    INITIATOR_STEP_4_STORAGE_KEY,
+    Step
 } from '@/lib/constants';
 import {
-    FormSteps,
     FormValues,
     Step1FormValues,
     Step2FormValues,
@@ -47,7 +47,8 @@ const InitiatorStep5Form: React.FC = () => {
             setFormData(form);
         } catch (e) {
             const message = (e as ZodError).errors?.at(0)?.message || (e as Error).message;
-            if (FormSteps.find((x) => x === message) !== undefined) {
+            console.log(message);
+            if (message in Object.values(Step)) {
                 setError(
                     <span>
                         Go back to{' '}

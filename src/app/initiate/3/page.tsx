@@ -9,7 +9,7 @@ import { InitiatorStep } from '@/components/initiator-step';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { INITIATOR_STEP_3_STORAGE_KEY } from '@/lib/constants';
+import { INITIATOR_STEP_3_STORAGE_KEY, StepFieldName, stepFields } from '@/lib/constants';
 import { Step3FormValues, step3FormSchema } from '@/lib/form-schema';
 import { getFromLocalStorage, saveToLocalStorage } from '@/lib/local-storage';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -22,7 +22,7 @@ const InitiatorForm: React.FC<{ initialData: Step3FormValues | null }> = ({ init
     const form = useForm<Step3FormValues>({
         resolver: zodResolver(step3FormSchema),
         defaultValues: {
-            fixedCoinbase: initialData?.fixedCoinbase || '',
+            blockReward: initialData?.blockReward || '',
             pinningReward: initialData?.pinningReward || ''
         },
         mode: 'onBlur'
@@ -46,12 +46,12 @@ const InitiatorForm: React.FC<{ initialData: Step3FormValues | null }> = ({ init
                 <div className='grid grid-cols-1 gap-y-8 md:gap-y-6'>
                     <FormField
                         control={form.control}
-                        name='fixedCoinbase'
+                        name={StepFieldName.blockReward}
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabelWithTooltip
-                                    label='Block Reward'
-                                    tooltip='The amount of native Hyperchain tokens rewarded to the validator for producing a new block.'
+                                    label={stepFields[StepFieldName.blockReward].label}
+                                    tooltip={stepFields[StepFieldName.blockReward].tooltip}
                                 />
                                 <FormControl>
                                     <Input {...field} placeholder='100.0' />
@@ -62,12 +62,12 @@ const InitiatorForm: React.FC<{ initialData: Step3FormValues | null }> = ({ init
                     />
                     <FormField
                         control={form.control}
-                        name='pinningReward'
+                        name={StepFieldName.pinningReward}
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabelWithTooltip
-                                    label='Pinning Reward'
-                                    tooltip='The amount of native Hyperchain tokens rewarded to validators for successfully committing the Hyperchain state to the pinning chain.'
+                                    label={stepFields[StepFieldName.pinningReward].label}
+                                    tooltip={stepFields[StepFieldName.pinningReward].tooltip}
                                 />
                                 <FormControl>
                                     <Input {...field} placeholder='100.0' />

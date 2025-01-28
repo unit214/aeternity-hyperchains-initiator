@@ -1,4 +1,4 @@
-export type ParentChain = {
+export type PinningChain = {
     name: string;
     symbol: string;
     blockTime: number;

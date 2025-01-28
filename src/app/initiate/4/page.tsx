@@ -9,7 +9,7 @@ import { InitiatorStep } from '@/components/initiator-step';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { INITIATOR_STEP_4_STORAGE_KEY } from '@/lib/constants';
+import { INITIATOR_STEP_4_STORAGE_KEY, StepFieldName, stepFields } from '@/lib/constants';
 import { Step4FormValues, step4FormSchema } from '@/lib/form-schema';
 import { getFromLocalStorage, saveToLocalStorage } from '@/lib/local-storage';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -48,12 +48,12 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
                 <div className='grid grid-cols-1 gap-x-12 gap-y-8 md:grid-cols-2 md:gap-y-6'>
                     <FormField
                         control={form.control}
-                        name='validatorCount'
+                        name={StepFieldName.validatorCount}
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabelWithTooltip
-                                    label='Number Of Validators'
-                                    tooltip='The initial number of validators to participate in the Hyperchain network.'
+                                    label={stepFields[StepFieldName.validatorCount].label}
+                                    tooltip={stepFields[StepFieldName.validatorCount].tooltip}
                                 />
                                 <FormControl>
                                     <Input {...field} placeholder='3' />
@@ -64,12 +64,12 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
                     />
                     <FormField
                         control={form.control}
-                        name='validatorBalance'
+                        name={StepFieldName.validatorBalance}
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabelWithTooltip
-                                    label='Validator Balance'
-                                    tooltip='The initial balance allocated to validators at the genesis of the Hyperchain.'
+                                    label={stepFields[StepFieldName.validatorBalance].label}
+                                    tooltip={stepFields[StepFieldName.validatorBalance].tooltip}
                                 />
                                 <FormControl>
                                     <Input {...field} placeholder='100.0' />
@@ -80,12 +80,12 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
                     />
                     <FormField
                         control={form.control}
-                        name='validatorMinStake'
+                        name={StepFieldName.validatorMinStake}
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabelWithTooltip
-                                    label='Minimum Staking Amount'
-                                    tooltip='The minimum number of native Hyperchain tokens required to stake and become a validator.'
+                                    label={stepFields[StepFieldName.validatorMinStake].label}
+                                    tooltip={stepFields[StepFieldName.validatorMinStake].tooltip}
                                 />
                                 <FormControl>
                                     <Input {...field} placeholder='100.0' />
@@ -96,12 +96,12 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
                     />
                     <FormField
                         control={form.control}
-                        name='faucetInitBalance'
+                        name={StepFieldName.faucetInitBalance}
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabelWithTooltip
-                                    label='Faucet Init Balance'
-                                    tooltip='The initial balance of the faucet which can be employed to automatically fund accounts on the chain.'
+                                    label={stepFields[StepFieldName.faucetInitBalance].label}
+                                    tooltip={stepFields[StepFieldName.faucetInitBalance].tooltip}
                                 />
                                 <FormControl>
                                     <Input {...field} placeholder='100.0' />
@@ -112,12 +112,12 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
                     />
                     <FormField
                         control={form.control}
-                        name='treasuryInitBalance'
+                        name={StepFieldName.treasuryInitBalance}
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabelWithTooltip
-                                    label='Treasury Init Balance'
-                                    tooltip='The initial balance of the treasury which is used for manually funding accounts on the chain.'
+                                    label={stepFields[StepFieldName.treasuryInitBalance].label}
+                                    tooltip={stepFields[StepFieldName.treasuryInitBalance].tooltip}
                                 />
                                 <FormControl>
                                     <Input {...field} placeholder='100.0' />
