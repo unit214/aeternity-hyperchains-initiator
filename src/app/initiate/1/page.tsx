@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
-import { INITIATOR_STEP_1_STORAGE_KEY } from '@/lib/constants';
+import { INITIATOR_STEP_1_STORAGE_KEY, StepFieldName, stepFields } from '@/lib/constants';
 import { Step1FormValues, step1FormSchema } from '@/lib/form-schema';
 import { getFromLocalStorage, saveToLocalStorage } from '@/lib/local-storage';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -45,12 +45,12 @@ const InitiatorForm: React.FC<{ initialData: Step1FormValues | null }> = ({ init
                 <div className='grid grid-cols-1 gap-y-8 md:gap-y-6'>
                     <FormField
                         control={form.control}
-                        name='networkId'
+                        name={StepFieldName.networkId}
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabelWithTooltip
-                                    label='Hyperchain ID'
-                                    tooltip='A unique identifier for your Hyperchain network.'
+                                    label={stepFields[StepFieldName.networkId].label}
+                                    tooltip={stepFields[StepFieldName.networkId].tooltip}
                                 />
                                 <FormControl>
                                     <Input placeholder='hc_test' {...field} />
@@ -61,12 +61,12 @@ const InitiatorForm: React.FC<{ initialData: Step1FormValues | null }> = ({ init
                     />
                     <FormField
                         control={form.control}
-                        name='childBlockTime'
+                        name={StepFieldName.childBlockTime}
                         render={({ field: { value, onChange } }) => (
                             <FormItem>
                                 <FormLabelWithTooltip
-                                    label='Hyperchain Block Time'
-                                    tooltip='The time (in milliseconds) between each key block creation.'
+                                    label={stepFields[StepFieldName.childBlockTime].label}
+                                    tooltip={stepFields[StepFieldName.childBlockTime].tooltip}
                                 />
                                 <div className='flex flex-row gap-6'>
                                     <FormControl>
