@@ -14,7 +14,7 @@ export const InitiatorStep: React.FC<InitiatorStepProps> = ({ title, stepNumber,
             <div className='flex flex-row justify-between gap-7 md:mb-12'>
                 <div className='flex flex-col'>
                     <div className='mb-4 text-4xl font-semibold'>{title}</div>
-                    <span className='hidden font-roboto text-sm text-muted-foreground'>{description}</span>
+                    <span className='hidden font-roboto text-sm text-muted-foreground md:flex'>{description}</span>
                 </div>
                 <div className='text-4xl font-normal'>
                     <span>{stepNumber}</span>
