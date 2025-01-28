@@ -54,12 +54,12 @@ const InitiatorForm: React.FC<{ initialData: Step2FormValues | null }> = ({ init
                             <FormItem>
                                 <FormLabelWithTooltip
                                     label='Pinning Chain'
-                                    tooltip='The parent blockchain where the Hyperchain commits its states.'
+                                    tooltip='The pinning blockchain where the Hyperchain commits its states.'
                                 />
                                 <FormControl>
                                     <Select value={value} onValueChange={onChange} defaultValue={value}>
                                         <SelectTrigger>
-                                            <SelectValue placeholder='Choose a parent chain connection' />
+                                            <SelectValue placeholder='Choose a pinning chain connection' />
                                         </SelectTrigger>
                                         <SelectContent>
                                             {parentChains.map((c, index) => (
@@ -80,8 +80,8 @@ const InitiatorForm: React.FC<{ initialData: Step2FormValues | null }> = ({ init
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabelWithTooltip
-                                    label='Chain Network ID'
-                                    tooltip='The unique identifier for the parent chain network the Hyperchain connects to.'
+                                    label='Pinning Chain Network ID'
+                                    tooltip='The unique identifier for the pinning chain network the Hyperchain connects to.'
                                 />
                                 <FormControl>
                                     <Input placeholder='Ex: ae_mainnet | ae_uat' {...field} />
@@ -96,8 +96,8 @@ const InitiatorForm: React.FC<{ initialData: Step2FormValues | null }> = ({ init
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabelWithTooltip
-                                    label='Parent Node URL'
-                                    tooltip='The API endpoint of a node in the parent chain for syncing and block updates.'
+                                    label='Pinning Chain Node URL'
+                                    tooltip='The API endpoint of a node in the pinning chain for syncing and block updates.'
                                 />
                                 <FormControl>
                                     <Input placeholder='https://testnet.aeternity.io' {...field} />
@@ -112,8 +112,8 @@ const InitiatorForm: React.FC<{ initialData: Step2FormValues | null }> = ({ init
                         render={({ field: { value, onChange } }) => (
                             <FormItem>
                                 <FormLabelWithTooltip
-                                    label='Parent Epoch Length'
-                                    tooltip='The number of blocks that make up an epoch on the parent chain.'
+                                    label='Pinning Chain Epoch Length'
+                                    tooltip='The number of blocks that make up an epoch on the pinning chain.'
                                 />
                                 <div className='flex flex-row gap-6'>
                                     <FormControl>
