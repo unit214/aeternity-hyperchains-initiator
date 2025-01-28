@@ -7,7 +7,7 @@ export function NavBar() {
     return (
         <div className='flex flex-col md:flex'>
             <div className='border-b'>
-                <div className='flex h-16 items-center justify-between md:px-10'>
+                <div className='flex h-16 items-center justify-between md:px-20'>
                     <Link href='/'>
                         <Image
                             className='h-6 md:h-8'
@@ -19,24 +19,27 @@ export function NavBar() {
                         />
                     </Link>
                     <nav className='hidden items-center space-x-4 md:mx-6 md:flex lg:space-x-10'>
-                        <Link href='/' className=''>
+                        <Link href='https://hyperchains.ae' target='_blank' rel='noopener noreferrer'>
                             Home
                         </Link>
-                        <Link href='#' className=''>
-                            All Chains
+                        <Link href='https://hyperchains.ae/#how-it-works' target='_blank' rel='noopener noreferrer'>
+                            About
                         </Link>
-                        <Link href='#' className=''>
-                            My Delegations
-                        </Link>
-                        <Link href='#' className=''>
-                            Validators
-                        </Link>
-                        <Link href='#' className=''>
+                        <Link
+                            href='https://docs.aeternity.io/en/v7.3.0-rc3/hyperchains/'
+                            target='_blank'
+                            rel='noopener noreferrer'>
                             Documentation
+                        </Link>
+                        <Link href='https://hyperchains.ae/how-to' target='_blank' rel='noopener noreferrer'>
+                            How to start
+                        </Link>
+                        <Link href='https://hyperchains.ae/faqs' target='_blank' rel='noopener noreferrer'>
+                            FAQs
                         </Link>
                     </nav>
                     <Button className='hidden md:flex' variant='outline'>
-                        Create a Hyperchain
+                        <Link href='/'>Create a Hyperchain</Link>
                     </Button>
                 </div>
             </div>

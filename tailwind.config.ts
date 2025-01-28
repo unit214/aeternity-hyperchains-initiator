@@ -64,8 +64,10 @@ const config: Config = {
                 'grey-2': 'hsl(var(--grey-2))',
                 'grey-3': 'hsl(var(--grey-3))',
                 'grey-4': 'hsl(var(--grey-4))',
+                'grey-5': 'hsl(var(--grey-5))',
                 'grey-6': 'hsl(var(--grey-6))',
-                'violet-2': 'hsl(var(--violet-2))'
+                'violet-2': 'hsl(var(--violet-2))',
+                'black-1': 'hsl(var(--black-1))'
             },
             fontFamily: {
                 sans: ['var(--font-geist-sans)'],
