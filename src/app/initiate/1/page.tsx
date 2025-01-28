@@ -93,11 +93,11 @@ const InitiatorForm: React.FC<{ initialData: Step1FormValues | null }> = ({ init
                         )}
                     />
                 </div>
-                <div className='flex flex-row gap-4 self-center'>
-                    <Button type='button' variant='outline' className='w-24' onClick={onBack}>
+                <div className='flex w-full flex-row gap-4 self-center md:w-fit'>
+                    <Button type='button' variant='outline' className='w-full md:w-24' onClick={onBack}>
                         Back
                     </Button>
-                    <Button type='submit' variant='default' className='w-24'>
+                    <Button type='submit' variant='default' className='w-full md:w-24'>
                         Next
                     </Button>
                 </div>
