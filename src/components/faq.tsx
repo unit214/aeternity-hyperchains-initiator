@@ -3,7 +3,6 @@ import * as React from 'react';
 import Link from 'next/link';
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { DOCUMENTATION_URL } from '@/lib/constants';
 
 export const FAQ: React.FC = () => {
     return (
@@ -41,7 +40,7 @@ export const FAQ: React.FC = () => {
                             Guide{' '}
                             <Link
                                 className='text-pink underline'
-                                href={DOCUMENTATION_URL}
+                                href='https://hyperchains.ae/how-to'
                                 target='_blank'
                                 rel='noopener noreferrer'>
                                 here

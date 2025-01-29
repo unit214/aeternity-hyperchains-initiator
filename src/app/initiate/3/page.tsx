@@ -109,7 +109,7 @@ const Initiate3Page: React.FC = () => {
             <InitiatorStep
                 title='Set Token Economics'
                 stepNumber={3}
-                description='Establish the rules for validators on your child chain to ensure network security and efficiency.'
+                description='Establish the rules for validators on your Hyperchain to ensure network security and efficiency.'
                 form={<FormWrapper />}
             />
         </div>
