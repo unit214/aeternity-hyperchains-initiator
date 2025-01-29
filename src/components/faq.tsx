@@ -3,6 +3,7 @@ import * as React from 'react';
 import Link from 'next/link';
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { DOCUMENTATION_URL } from '@/lib/constants';
 
 export const FAQ: React.FC = () => {
     return (
@@ -38,7 +39,11 @@ export const FAQ: React.FC = () => {
                             After generating configs, install required software, deploy your node, set up monitoring,
                             and verify network connectivity before starting node operations. See the detailed How-To
                             Guide{' '}
-                            <Link className='text-pink underline' href={`/`}>
+                            <Link
+                                className='text-pink underline'
+                                href={DOCUMENTATION_URL}
+                                target='_blank'
+                                rel='noopener noreferrer'>
                                 here
                             </Link>
                             .
