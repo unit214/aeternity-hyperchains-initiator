@@ -1,5 +1,40 @@
 # Changelog
 
+## [1.1.0](https://github.com/aeternity/aepp-hyperchains-initiator/compare/v1.0.0...v1.1.0) (2025-01-29)
+
+
+### Features
+
+* add beta label ([197a571](https://github.com/aeternity/aepp-hyperchains-initiator/commit/197a57147eb53be8a775c5b318d68a248867a8cc))
+* add disclaimer dialog to main page and adjust button text ([cc93065](https://github.com/aeternity/aepp-hyperchains-initiator/commit/cc930652ce8eb1d85f3886e18a70f8987f81fa67))
+* add docker to tutorial steps ([ba8c3c7](https://github.com/aeternity/aepp-hyperchains-initiator/commit/ba8c3c7aac06c0afddf982ad5ba1a11892f2bf2a))
+* add faucetInitBalance and treasuryInitBalance form fields ([9215404](https://github.com/aeternity/aepp-hyperchains-initiator/commit/92154048e233d89f30f7849ba697d65492c01b55))
+* adjust font in faq content ([7ae435f](https://github.com/aeternity/aepp-hyperchains-initiator/commit/7ae435f79a4ceb5460ade45ac93d6b4ba3c236db))
+* adjust header and footer ([8b26676](https://github.com/aeternity/aepp-hyperchains-initiator/commit/8b266765abf33b22d527e882119f85b57fb4af09))
+* adjust link in faq section ([1a4517c](https://github.com/aeternity/aepp-hyperchains-initiator/commit/1a4517cc1c1a917b76ec563f4bea03dd4d3d4a79))
+* adjust main page subtitle text ([0e26890](https://github.com/aeternity/aepp-hyperchains-initiator/commit/0e268900080d229eaf56525d0b7200c91d280df8))
+* remove terms of services link ([7bf25c1](https://github.com/aeternity/aepp-hyperchains-initiator/commit/7bf25c1bed690538aee579f6dd733121a681b1c9))
+* **tooltips:** add tooltips for faucet and treasury init balance ([9f8af5e](https://github.com/aeternity/aepp-hyperchains-initiator/commit/9f8af5ea66b6d03a290b2e2293c6f5f5013a9491))
+* update external links ([26225e2](https://github.com/aeternity/aepp-hyperchains-initiator/commit/26225e2ab9c629b5185c2f8726b3eb4e3302e28d))
+* update faq texts ([6e09ce4](https://github.com/aeternity/aepp-hyperchains-initiator/commit/6e09ce438a08a8cceb34cbeb84a72c1202114b68))
+* update favicon ([dc79614](https://github.com/aeternity/aepp-hyperchains-initiator/commit/dc7961485a16c64b0665bf6abc214c32b86ee9a6))
+
+
+### Bug Fixes
+
+* add break-all to code component to fix layout on last page ([17c68d3](https://github.com/aeternity/aepp-hyperchains-initiator/commit/17c68d358a80ee41ed01cd6a36e4242ec3e9f4c6))
+* add cross field validation for validatorBalance and validatorMinStake ([b281b02](https://github.com/aeternity/aepp-hyperchains-initiator/commit/b281b02830e74af083dbc05704a7fab6303a27ac))
+* adjust page three text, adjust faq and last page link ([057b1fd](https://github.com/aeternity/aepp-hyperchains-initiator/commit/057b1fd1af40ae93c50eb932735b995f5f8640a5))
+* change default value of childBlockTime ([daa1c43](https://github.com/aeternity/aepp-hyperchains-initiator/commit/daa1c439484cd2e28e02435958fb9e4c11c11c10))
+* disable validatorBalance vs validatorMinStake validation if validatorCount is 0 ([c7dcc4c](https://github.com/aeternity/aepp-hyperchains-initiator/commit/c7dcc4cd3c177177c710d4b3d457a54ab8fb2db3))
+* fix rounding of child epoch length ([b0d8c67](https://github.com/aeternity/aepp-hyperchains-initiator/commit/b0d8c674be5cffc37afc0d16f3374cbbb92b588f))
+* improve form validation and error messages ([db7b429](https://github.com/aeternity/aepp-hyperchains-initiator/commit/db7b429b8609704657d72082e06c4a8973fd4465))
+* **init.yaml:** use correct parent.nodeURL, fix type of validators.count ([4fd0586](https://github.com/aeternity/aepp-hyperchains-initiator/commit/4fd058693b592ff2460531f2493f14ca81417365))
+* **mobile:** fix step and faq layout on mobile ([25c482b](https://github.com/aeternity/aepp-hyperchains-initiator/commit/25c482baebb5d68222782ba4ba0a9f0e85f1e845))
+* set minimum and default parent epoch length to 10 ([b828c67](https://github.com/aeternity/aepp-hyperchains-initiator/commit/b828c673e61fd6825d0c184c90d19dc7dc963f71))
+* show step descriptions also on md+ screens ([393b8ca](https://github.com/aeternity/aepp-hyperchains-initiator/commit/393b8cad5e2993404ca58fc3fe70279ebc0e549f))
+* **texts:** change wording to pinning chain in step 2 ([8f86c24](https://github.com/aeternity/aepp-hyperchains-initiator/commit/8f86c24c2b8b3a3e27523d3bb77098e5333f3c02))
+
 ## 1.0.0 (2025-01-24)
 
 
