@@ -276,7 +276,7 @@ const InitiatorStep5Form: React.FC = () => {
                                     target='_blank'
                                     rel='noopener noreferrer'
                                     href='https://hyperchains.ae/how-to'>
-                                    Learn more
+                                    See the complete Guide here
                                 </Link>
                             </li>
                         </ol>
