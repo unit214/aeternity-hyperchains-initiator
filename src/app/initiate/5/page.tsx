@@ -161,6 +161,17 @@ const InitiatorStep5Form: React.FC = () => {
                                         </Link>{' '}
                                         installed.
                                     </li>
+                                    <li>
+                                        Make sure you have{' '}
+                                        <Link
+                                            className='text-pink underline'
+                                            target='_blank'
+                                            rel='noopener noreferrer'
+                                            href='https://www.docker.com/'>
+                                            Docker
+                                        </Link>{' '}
+                                        installed.
+                                    </li>
                                 </ul>
                             </li>
                             <li className='space-y-2'>
@@ -176,11 +187,10 @@ const InitiatorStep5Form: React.FC = () => {
                                         <Code>npm install </Code>
                                     </li>
                                     <li>
-                                        <Code>mkdir {formData?.networkId}</Code>
+                                        <Code>mkdir {formData.networkId}</Code>
                                     </li>
                                     <li>
-                                        Copy the downloaded <Code>init.yaml</Code> to{' '}
-                                        <Code>/{formData?.networkId}</Code>
+                                        Copy the downloaded <Code>init.yaml</Code> to <Code>/{formData.networkId}</Code>
                                     </li>
                                 </ul>
                             </li>
@@ -190,12 +200,12 @@ const InitiatorStep5Form: React.FC = () => {
                                     <li>
                                         Setup the contracts by running:
                                         <br />
-                                        <Code>npm run dev retrieve-contracts {formData?.networkId}</Code>
+                                        <Code>npm run dev retrieve-contracts {formData.networkId}</Code>
                                     </li>
                                     <li>
                                         Generate the economy by running:
                                         <br />
-                                        <Code>npm run dev gen-economy {formData?.networkId}</Code>
+                                        <Code>npm run dev gen-economy {formData.networkId}</Code>
                                     </li>
                                 </ul>
                             </li>
@@ -205,7 +215,7 @@ const InitiatorStep5Form: React.FC = () => {
                                     <li>
                                         Generate the node configuration files by running:
                                         <br />
-                                        <Code>npm run dev gen-node-conf {formData?.networkId}</Code>
+                                        <Code>npm run dev gen-node-conf {formData.networkId}</Code>
                                     </li>
                                     <li className='space-y-2'>
                                         This will create 3 files in <Code>nodeConfig</Code> directory:
@@ -214,39 +224,33 @@ const InitiatorStep5Form: React.FC = () => {
                                                 <Code>aeternity.yaml</Code>
                                             </li>
                                             <li>
-                                                <Code>{formData?.networkId}_accounts.json</Code>
+                                                <Code>{formData.networkId}_accounts.json</Code>
                                             </li>
                                             <li>
-                                                <Code>{formData?.networkId}_contracts.json</Code>
+                                                <Code>{formData.networkId}_contracts.json</Code>
                                             </li>
                                         </ul>
-                                    </li>
-                                    <li className='space-y-2'>
-                                        Copy all of the above files to their node corresponding directory, i.e. assuming
-                                        it&#39;s in <Code>~/aeternity/node</Code>:
-                                        <ul className='list-disc space-y-2 pl-6'>
-                                            <li>
-                                                <Code>
-                                                    cp ./{formData?.networkId}/nodeConfig/aeternity.yaml
-                                                    ~/aeternity/node/
-                                                </Code>
-                                            </li>
-                                            <li>
-                                                <Code>
-                                                    cp ./{formData?.networkId}/nodeConfig/{formData?.networkId}_*.json
-                                                    ~/aeternity/node/data/aecore/
-                                                </Code>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        Don&#39;t forget to fund all pinners accounts on the parent chain prior starting
-                                        your node/validator.
                                     </li>
                                     <li>
                                         Then run your node:
                                         <br />
-                                        <Code>~/aeternity/node/bin/aeternity start</Code>
+                                        <Code>
+                                            docker run -p 3013:3013 {'\\'}
+                                            <br />
+                                            -v ${'{PWD}'}/{formData.networkId}
+                                            /nodeConfig/aeternity.yaml:/home/aeternity/.aeternity/aeternity/aeternity.yaml{' '}
+                                            {'\\'}
+                                            <br />
+                                            -v ${'{PWD}'}/{formData.networkId}/nodeConfig/{formData.networkId}
+                                            _accounts.json:/home/aeternity/node/data/aecore/{formData.networkId}
+                                            _accounts.json {'\\'}
+                                            <br />
+                                            -v ${'{PWD}'}/{formData.networkId}/nodeConfig/{formData.networkId}
+                                            _contracts.json:/home/aeternity/node/data/aecore/{formData.networkId}
+                                            _contracts.json {'\\'}
+                                            <br />
+                                            aeternity/aeternity:v7.3.0-rc3
+                                        </Code>
                                     </li>
                                     <li>
                                         IMPORTANT: If you used a known public chain (testnet or mainnet) as parent
@@ -263,7 +267,7 @@ const InitiatorStep5Form: React.FC = () => {
                                     <li>
                                         Verify your node is running with:
                                         <br />
-                                        <Code>~/aeternity/node/bin/aeternity status</Code>
+                                        <Code>curl -s localhost:3013/v3/status | jq</Code>
                                     </li>
                                 </ul>
                             </li>
