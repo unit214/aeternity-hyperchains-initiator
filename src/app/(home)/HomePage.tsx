@@ -88,7 +88,7 @@ const HomePage: React.FC = () => {
                 </div>
                 <Dialog>
                     <DialogTrigger asChild>
-                        <Button className='w-fit self-center' variant='default'>
+                        <Button data-cy='button-get-started' className='w-fit self-center' variant='default'>
                             Get Started
                         </Button>
                     </DialogTrigger>
@@ -111,7 +111,9 @@ const HomePage: React.FC = () => {
                         </DialogHeader>
                         <DialogFooter>
                             <Link href='/initiate/1' className='w-fit'>
-                                <Button type='submit'>Agree &amp; Continue</Button>
+                                <Button data-cy='button-agree' type='submit'>
+                                    Agree &amp; Continue
+                                </Button>
                             </Link>
                         </DialogFooter>
                     </DialogContent>
