@@ -47,8 +47,7 @@ const InitiatorStep5Form: React.FC = () => {
             setFormData(form);
         } catch (e) {
             const message = (e as ZodError).errors?.at(0)?.message || (e as Error).message;
-            console.log(message);
-            if (message in Object.values(Step)) {
+            if (Object.values(Step).includes(message as Step)) {
                 setError(
                     <span>
                         Go back to{' '}

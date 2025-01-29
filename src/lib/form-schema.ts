@@ -138,7 +138,7 @@ export const step4FormSchema = z
         })
     })
     .transform((data, ctx) => {
-        if (BigNumber(data.validatorBalance).isLessThan(data.validatorMinStake)) {
+        if (BigNumber(data.validatorBalance).isLessThan(data.validatorMinStake) && BigInt(data.validatorCount) > 0n) {
             ctx.addIssue({
                 path: ['validatorBalance'],
                 code: z.ZodIssueCode.custom,
@@ -216,8 +216,8 @@ export const formSchema = z
         })
     })
     .transform((data, ctx) => {
-        if (BigNumber(data.validatorBalance).isLessThan(data.validatorMinStake)) {
-            ctx.addIssue({ code: z.ZodIssueCode.custom, message: stepFields[StepFieldName.treasuryInitBalance].step });
+        if (BigNumber(data.validatorBalance).isLessThan(data.validatorMinStake) && BigInt(data.validatorCount) > 0n) {
+            ctx.addIssue({ code: z.ZodIssueCode.custom, message: Step.Four });
         }
 
         return data;
