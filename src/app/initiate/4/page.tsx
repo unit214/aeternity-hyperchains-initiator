@@ -56,7 +56,7 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
                                     tooltip={stepFields[StepFieldName.validatorCount].tooltip}
                                 />
                                 <FormControl>
-                                    <Input {...field} placeholder='3' />
+                                    <Input data-cy='input-validator-count' {...field} placeholder='3' />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -72,7 +72,7 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
                                     tooltip={stepFields[StepFieldName.validatorBalance].tooltip}
                                 />
                                 <FormControl>
-                                    <Input {...field} placeholder='100.0' />
+                                    <Input data-cy='input-validator-balance' {...field} placeholder='100.0' />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -88,7 +88,7 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
                                     tooltip={stepFields[StepFieldName.validatorMinStake].tooltip}
                                 />
                                 <FormControl>
-                                    <Input {...field} placeholder='100.0' />
+                                    <Input data-cy='input-minimum-staking-amount' {...field} placeholder='100.0' />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -104,7 +104,7 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
                                     tooltip={stepFields[StepFieldName.faucetInitBalance].tooltip}
                                 />
                                 <FormControl>
-                                    <Input {...field} placeholder='100.0' />
+                                    <Input data-cy='input-faucet-init-balance' {...field} placeholder='100.0' />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -120,7 +120,7 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
                                     tooltip={stepFields[StepFieldName.treasuryInitBalance].tooltip}
                                 />
                                 <FormControl>
-                                    <Input {...field} placeholder='100.0' />
+                                    <Input data-cy='input-treasury-init-balance' {...field} placeholder='100.0' />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -131,7 +131,7 @@ const InitiatorForm: React.FC<{ initialData: Step4FormValues | null }> = ({ init
                     <Button type='button' variant='outline' className='w-full md:w-24' onClick={onBack}>
                         Back
                     </Button>
-                    <Button type='submit' variant='default' className='w-full md:w-24'>
+                    <Button data-cy='button-finish' type='submit' variant='default' className='w-full md:w-24'>
                         Finish
                     </Button>
                 </div>

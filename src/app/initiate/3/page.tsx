@@ -54,7 +54,7 @@ const InitiatorForm: React.FC<{ initialData: Step3FormValues | null }> = ({ init
                                     tooltip={stepFields[StepFieldName.blockReward].tooltip}
                                 />
                                 <FormControl>
-                                    <Input {...field} placeholder='100.0' />
+                                    <Input data-cy='input-block-reward' {...field} placeholder='100.0' />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -70,7 +70,7 @@ const InitiatorForm: React.FC<{ initialData: Step3FormValues | null }> = ({ init
                                     tooltip={stepFields[StepFieldName.pinningReward].tooltip}
                                 />
                                 <FormControl>
-                                    <Input {...field} placeholder='100.0' />
+                                    <Input data-cy='input-pinning-reward' {...field} placeholder='100.0' />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -81,7 +81,7 @@ const InitiatorForm: React.FC<{ initialData: Step3FormValues | null }> = ({ init
                     <Button type='button' variant='outline' className='w-full md:w-24' onClick={onBack}>
                         Back
                     </Button>
-                    <Button type='submit' variant='default' className='w-full md:w-24'>
+                    <Button data-cy='button-next' type='submit' variant='default' className='w-full md:w-24'>
                         Next
                     </Button>
                 </div>

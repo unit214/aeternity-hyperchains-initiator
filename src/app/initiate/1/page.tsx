@@ -53,7 +53,7 @@ const InitiatorForm: React.FC<{ initialData: Step1FormValues | null }> = ({ init
                                     tooltip={stepFields[StepFieldName.networkId].tooltip}
                                 />
                                 <FormControl>
-                                    <Input placeholder='hc_test' {...field} />
+                                    <Input data-cy='input-hyperchain-id' placeholder='hc_test' {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -62,7 +62,7 @@ const InitiatorForm: React.FC<{ initialData: Step1FormValues | null }> = ({ init
                     <FormField
                         control={form.control}
                         name={StepFieldName.childBlockTime}
-                        render={({ field: { value, onChange } }) => (
+                        render={({ field }) => (
                             <FormItem>
                                 <FormLabelWithTooltip
                                     label={stepFields[StepFieldName.childBlockTime].label}
@@ -70,7 +70,12 @@ const InitiatorForm: React.FC<{ initialData: Step1FormValues | null }> = ({ init
                                 />
                                 <div className='flex flex-row gap-6'>
                                     <FormControl>
-                                        <Input value={value} onChange={onChange} className='w-20' placeholder='3000' />
+                                        <Input
+                                            data-cy='input-hyperchain-block-time'
+                                            className='w-20'
+                                            placeholder='3000'
+                                            {...field}
+                                        />
                                     </FormControl>
                                     <div className='flex w-full flex-col justify-center gap-1'>
                                         <div className='flex flex-row justify-between font-roboto text-sm text-grey-4'>
@@ -78,9 +83,9 @@ const InitiatorForm: React.FC<{ initialData: Step1FormValues | null }> = ({ init
                                         </div>
                                         <FormControl>
                                             <Slider
-                                                onValueChange={(v) => onChange(v[0])}
-                                                value={[value as unknown as number]}
-                                                defaultValue={[value as unknown as number]}
+                                                onValueChange={(v) => field.onChange(v[0])}
+                                                value={[field.value as unknown as number]}
+                                                defaultValue={[field.value as unknown as number]}
                                                 min={3000}
                                                 max={10000}
                                                 step={1}
@@ -97,7 +102,7 @@ const InitiatorForm: React.FC<{ initialData: Step1FormValues | null }> = ({ init
                     <Button type='button' variant='outline' className='w-full md:w-24' onClick={onBack}>
                         Back
                     </Button>
-                    <Button type='submit' variant='default' className='w-full md:w-24'>
+                    <Button data-cy='button-next' type='submit' variant='default' className='w-full md:w-24'>
                         Next
                     </Button>
                 </div>
