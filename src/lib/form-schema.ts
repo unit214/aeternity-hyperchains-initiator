@@ -232,7 +232,7 @@ export const formSchema = z
                 BigNumber(data.pinningChainEpochLength)
                     .multipliedBy(pinningChain.blockTime)
                     .dividedBy(data.childBlockTime)
-                    .toString()
+                    .toFixed(0)
             ), // TODO take next higher number for non absolute result?
             contractSourcesPrefix: pinningChain.contractSourcesPrefix,
             enablePinning: true,
