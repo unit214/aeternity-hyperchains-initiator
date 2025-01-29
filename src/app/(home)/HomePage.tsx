@@ -111,7 +111,7 @@ const HomePage: React.FC = () => {
                         </DialogHeader>
                         <DialogFooter>
                             <Link href='/initiate/1' className='w-fit'>
-                                <Button type='submit'>Agree & Continue</Button>
+                                <Button type='submit'>Agree &amp; Continue</Button>
                             </Link>
                         </DialogFooter>
                     </DialogContent>
