@@ -78,10 +78,7 @@ const footerSections = [
     },
     {
         title: 'LEGAL',
-        links: [
-            { label: 'Terms of services', url: 'https://example.com' },
-            { label: 'Privacy policy', url: 'https://aeternity.com/legal-privacy' }
-        ]
+        links: [{ label: 'Privacy policy', url: 'https://aeternity.com/legal-privacy' }]
     }
 ];
 
