@@ -52,7 +52,7 @@ const HomePage: React.FC = () => {
                     <BetaLabel />
                 </div>
                 <div className='mb-10 font-roboto text-muted-foreground'>
-                    Ready to create your own blockchain? With just a few onboarding steps, you will receive your chain
+                    Ready to create your custom Hyperchain? Use this chain builder to do it in just a few steps.
                 </div>
                 <div className='mb-14 flex flex-col gap-2 md:flex-row md:gap-6'>
                     <Step
