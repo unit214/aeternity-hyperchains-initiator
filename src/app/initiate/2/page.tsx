@@ -84,7 +84,11 @@ const InitiatorForm: React.FC<{ initialData: Step2FormValues | null }> = ({ init
                                     tooltip={stepFields[StepFieldName.pinningChainNetworkId].tooltip}
                                 />
                                 <FormControl>
-                                    <Input placeholder='Ex: ae_mainnet | ae_uat' {...field} />
+                                    <Input
+                                        data-cy='input-pinning-chain-network-id'
+                                        placeholder='Ex: ae_mainnet | ae_uat'
+                                        {...field}
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -100,7 +104,11 @@ const InitiatorForm: React.FC<{ initialData: Step2FormValues | null }> = ({ init
                                     tooltip={stepFields[StepFieldName.pinningChainNodeUrl].tooltip}
                                 />
                                 <FormControl>
-                                    <Input placeholder='https://testnet.aeternity.io' {...field} />
+                                    <Input
+                                        data-cy='input-pinning-chain-node-url'
+                                        placeholder='https://testnet.aeternity.io'
+                                        {...field}
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -109,7 +117,7 @@ const InitiatorForm: React.FC<{ initialData: Step2FormValues | null }> = ({ init
                     <FormField
                         control={form.control}
                         name={StepFieldName.pinningChainEpochLength}
-                        render={({ field: { value, onChange } }) => (
+                        render={({ field }) => (
                             <FormItem>
                                 <FormLabelWithTooltip
                                     label={stepFields[StepFieldName.pinningChainEpochLength].label}
@@ -117,7 +125,12 @@ const InitiatorForm: React.FC<{ initialData: Step2FormValues | null }> = ({ init
                                 />
                                 <div className='flex flex-row gap-6'>
                                     <FormControl>
-                                        <Input value={value} onChange={onChange} className='w-20' placeholder='10' />
+                                        <Input
+                                            data-cy='input-pinning-chain-epoch-length'
+                                            className='w-20'
+                                            placeholder='10'
+                                            {...field}
+                                        />
                                     </FormControl>
                                     <div className='flex w-full flex-col justify-center gap-1'>
                                         <div className='flex flex-row justify-between font-roboto text-sm text-grey-4'>
@@ -125,9 +138,9 @@ const InitiatorForm: React.FC<{ initialData: Step2FormValues | null }> = ({ init
                                         </div>
                                         <FormControl>
                                             <Slider
-                                                onValueChange={(v) => onChange(v[0])}
-                                                value={[value as unknown as number]}
-                                                defaultValue={[value as unknown as number]}
+                                                onValueChange={(v) => field.onChange(v[0])}
+                                                value={[field.value as unknown as number]}
+                                                defaultValue={[field.value as unknown as number]}
                                                 min={10}
                                                 max={100}
                                                 step={1}
@@ -144,7 +157,7 @@ const InitiatorForm: React.FC<{ initialData: Step2FormValues | null }> = ({ init
                     <Button type='button' variant='outline' className='w-full md:w-24' onClick={onBack}>
                         Back
                     </Button>
-                    <Button type='submit' variant='default' className='w-full md:w-24'>
+                    <Button data-cy='button-next' type='submit' variant='default' className='w-full md:w-24'>
                         Next
                     </Button>
                 </div>
