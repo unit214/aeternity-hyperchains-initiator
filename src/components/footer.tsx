@@ -10,7 +10,7 @@ export interface FooterSectionProps {
 export const FooterSection: React.FC<FooterSectionProps> = ({ title, links }) => {
     return (
         <div className='flex w-1/2 flex-col md:w-auto'>
-            <div className='w-full whitespace-nowrap text-grey-5'>{title}</div>
+            <div className='w-full whitespace-nowrap text-muted-foreground'>{title}</div>
             <div className='mt-3 flex w-full flex-col items-start text-white'>
                 {links.map((link, index) => {
                     const linkProps = link.url.startsWith('/') ? {} : { target: '_blank', rel: 'noopener noreferrer' };
@@ -30,7 +30,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ title, links }) =>
 
 export const LogoSection: React.FC = () => {
     return (
-        <div className='z-0 flex w-64 flex-col items-start text-grey-5'>
+        <div className='z-0 flex w-64 flex-col items-start text-muted-foreground'>
             <Link href='https://hyperchains.ae' target='_blank' rel='noopener noreferrer'>
                 <img
                     loading='lazy'
@@ -95,7 +95,7 @@ export const Footer: React.FC = () => {
                         ))}
                     </div>
                 </div>
-                <div className='w-full text-center text-grey-5 md:text-right'>
+                <div className='w-full text-center text-muted-foreground md:text-right'>
                     Copyright © {new Date().getFullYear()} - All rights reserved
                 </div>
             </div>

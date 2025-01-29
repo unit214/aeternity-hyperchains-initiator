@@ -4,6 +4,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger
+} from '@/components/ui/dialog';
 
 const BetaLabel: React.FC = () => {
     return (
@@ -77,9 +86,36 @@ const HomePage: React.FC = () => {
                         alt='Home illustration 3'
                     />
                 </div>
-                <Link href='/initiate/1' className='w-fit self-center'>
-                    <Button variant='default'>Start Build Chain</Button>
-                </Link>
+                <Dialog>
+                    <DialogTrigger asChild>
+                        <Button className='w-fit self-center' variant='default'>
+                            Get Started
+                        </Button>
+                    </DialogTrigger>
+                    <DialogContent className='max-w-[425px] font-sans'>
+                        <DialogHeader>
+                            <DialogTitle className='font-clash text-2xl'>We&#39;re in Beta Mode</DialogTitle>
+                            <DialogDescription>
+                                Hyperchains is currently in Beta Mode, intended solely for testing.
+                                <br />
+                                <br />
+                                Stable Version 1.0 with enhanced reliability will soon be released, allowing users to
+                                transfer value onto the chain.
+                                <br />
+                                <br />
+                                Users are cautioned against any transfer of value to a Hyperchain until the official
+                                release due to potential for instability. Said transfers shall be the sole
+                                responsibility of any relevant user. We shall bear no liability in case of loss value by
+                                the users.
+                            </DialogDescription>
+                        </DialogHeader>
+                        <DialogFooter>
+                            <Link href='/initiate/1' className='w-fit'>
+                                <Button type='submit'>Agree & Continue</Button>
+                            </Link>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
             </div>
         </div>
     );
