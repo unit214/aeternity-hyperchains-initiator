@@ -5,6 +5,8 @@ export const INITIATOR_STEP_2_STORAGE_KEY = 'InitiatorStep2';
 export const INITIATOR_STEP_3_STORAGE_KEY = 'InitiatorStep3';
 export const INITIATOR_STEP_4_STORAGE_KEY = 'InitiatorStep4';
 
+export const DOCUMENTATION_URL = 'https://github.com/aeternity/aeternity/blob/master/docs/hyperchains.md';
+
 export const pinningChains: PinningChain[] = [
     {
         name: 'Aeternity',
