@@ -8,7 +8,6 @@ import Link from 'next/link';
 import { Code } from '@/components/code';
 import { Button } from '@/components/ui/button';
 import {
-    DOCUMENTATION_URL,
     INITIATOR_STEP_1_STORAGE_KEY,
     INITIATOR_STEP_2_STORAGE_KEY,
     INITIATOR_STEP_3_STORAGE_KEY,
@@ -276,7 +275,7 @@ const InitiatorStep5Form: React.FC = () => {
                                     className='text-pink underline'
                                     target='_blank'
                                     rel='noopener noreferrer'
-                                    href={DOCUMENTATION_URL}>
+                                    href='https://hyperchains.ae/how-to'>
                                     Learn more
                                 </Link>
                             </li>
