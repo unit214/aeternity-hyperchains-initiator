@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
+import { DOCUMENTATION_URL } from '@/lib/constants';
 
 export function NavBar() {
     return (
@@ -25,14 +26,11 @@ export function NavBar() {
                         <Link href='https://hyperchains.ae/#how-it-works' target='_blank' rel='noopener noreferrer'>
                             About
                         </Link>
-                        <Link
-                            href='https://docs.aeternity.io/en/v7.3.0-rc3/hyperchains/'
-                            target='_blank'
-                            rel='noopener noreferrer'>
+                        <Link href={DOCUMENTATION_URL} target='_blank' rel='noopener noreferrer'>
                             Documentation
                         </Link>
                         <Link href='https://hyperchains.ae/how-to' target='_blank' rel='noopener noreferrer'>
-                            How to start
+                            How to Start
                         </Link>
                         <Link href='https://hyperchains.ae/faqs' target='_blank' rel='noopener noreferrer'>
                             FAQs

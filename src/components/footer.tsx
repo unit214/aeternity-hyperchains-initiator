@@ -2,6 +2,8 @@ import * as React from 'react';
 
 import Link from 'next/link';
 
+import { DOCUMENTATION_URL } from '@/lib/constants';
+
 export interface FooterSectionProps {
     title: string;
     links: { label: string; url: string }[];
@@ -70,15 +72,15 @@ const footerSections = [
         title: 'INITIATOR',
         links: [
             { label: 'Create a Hyperchain', url: '/', isInternalLink: true },
-            { label: 'How to start', url: 'https://hyperchains.ae/how-to' },
-            { label: 'Documentation', url: 'https://hyperchains.ae/faqs' }
+            { label: 'How to Start', url: 'https://hyperchains.ae/how-to' },
+            { label: 'Documentation', url: DOCUMENTATION_URL }
         ]
     },
     {
         title: 'LEGAL',
         links: [
             { label: 'Terms of services', url: 'https://example.com' },
-            { label: 'Privacy policy', url: '/privacy-policy' }
+            { label: 'Privacy policy', url: 'https://aeternity.com/legal-privacy' }
         ]
     }
 ];
