@@ -111,6 +111,7 @@ const InitiatorStep5Form: React.FC = () => {
                                     </span>
                                 </div>
                                 <Button
+                                    data-cy='button-download'
                                     variant='default'
                                     className='ml-auto hidden w-32 md:flex'
                                     onClick={createAndDownloadYamlFile}>

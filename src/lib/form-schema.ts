@@ -41,22 +41,22 @@ const bigNumberSchema = ({
                         : `${fieldName} is not a valid number${dec() > 0 ? ' (use . as a separator)' : ''}`
                 });
             }
-            if (gt && !BigNumber(n).isGreaterThan(gt.toString())) {
+            if (gt !== undefined && !BigNumber(n).isGreaterThan(gt.toString())) {
                 ctx.addIssue({
                     code: z.ZodIssueCode.custom,
                     message: step ? step : `${fieldName} must be greater than ${gt}`
                 });
             }
-            if (min && !BigNumber(n).isGreaterThanOrEqualTo(min.toString())) {
+            if (min !== undefined && !BigNumber(n).isGreaterThanOrEqualTo(min.toString())) {
                 ctx.addIssue({
                     code: z.ZodIssueCode.custom,
                     message: step ? step : `${fieldName} must be at least ${min}`
                 });
             }
-            if (max && !BigNumber(n).isLessThanOrEqualTo(max.toString())) {
+            if (max !== undefined && !BigNumber(n).isLessThanOrEqualTo(max.toString())) {
                 ctx.addIssue({
                     code: z.ZodIssueCode.custom,
-                    message: step ? step : `${fieldName} must not be greater than ${max}`
+                    message: step ? step : `${fieldName} must be at most ${max}`
                 });
             }
             if (BigNumber(n).decimalPlaces()! > dec()) {
@@ -64,7 +64,7 @@ const bigNumberSchema = ({
                     code: z.ZodIssueCode.custom,
                     message: step
                         ? step
-                        : `${dec() > 0 ? `Only up to ${dec} decimal places are allowed` : 'Only whole numbers are allowed'}`
+                        : `${dec() > 0 ? `Only up to ${dec()} decimal places are allowed` : 'Only whole numbers are allowed'}`
                 });
             }
 
@@ -113,8 +113,7 @@ export const step3FormSchema = z.object({
 export const step4FormSchema = z
     .object({
         [StepFieldName.validatorCount]: bigNumberSchema({
-            fieldName: stepFields[StepFieldName.validatorCount].label,
-            gt: 0n
+            fieldName: stepFields[StepFieldName.validatorCount].label
         }),
         [StepFieldName.validatorBalance]: bigNumberSchema({
             fieldName: stepFields[StepFieldName.validatorBalance].label,
@@ -191,7 +190,6 @@ export const formSchema = z
             step: stepFields[StepFieldName.pinningReward].step
         }),
         [StepFieldName.validatorCount]: bigNumberSchema({
-            gt: 0n,
             step: stepFields[StepFieldName.validatorCount].step
         }),
         [StepFieldName.validatorBalance]: bigNumberSchema({
