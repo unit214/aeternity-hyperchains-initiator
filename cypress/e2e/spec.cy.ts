@@ -106,7 +106,13 @@ describe('Form flow', () => {
 
         // Validate URL format
         inputNodeUrl.clear().type('invalid-url').blur();
-        cy.contains('Pinning Chain Node URL is not a valid URL').should('be.visible');
+        cy.contains('Pinning Chain Node URL is not a valid HTTPS URL').should('be.visible');
+
+        inputNodeUrl.clear().type('http://testnet.aeternity.io').blur();
+        cy.contains('Pinning Chain Node URL is not a valid HTTPS URL').should('be.visible');
+
+        inputNodeUrl.clear().type('https://testnet').blur();
+        cy.contains('Pinning Chain Node URL is not a valid HTTPS URL').should('be.visible');
 
         // Validate minimum constraint
         inputEpochLength.clear().type('5').blur();

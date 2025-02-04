@@ -14,6 +14,8 @@ const getPinningChainFromLocalStorage = (): PinningChain | undefined =>
 
 const pinningChainDecimals = () => getPinningChainFromLocalStorage()?.decimals || 18;
 
+const httpsUrlRegex = /^https:\/\/\w+(\.\w+)+.*$/;
+
 const bigNumberSchema = ({
     fieldName = undefined,
     gt,
@@ -89,7 +91,7 @@ export const step2FormSchema = z.object({
     [StepFieldName.pinningChainNodeUrl]: z
         .string()
         .nonempty(`${stepFields[StepFieldName.pinningChainNodeUrl].label} is required`)
-        .url(`${stepFields[StepFieldName.pinningChainNodeUrl].label} is not a valid URL`),
+        .regex(httpsUrlRegex, `${stepFields[StepFieldName.pinningChainNodeUrl].label} is not a valid HTTPS URL`),
     [StepFieldName.pinningChainEpochLength]: bigNumberSchema({
         fieldName: stepFields[StepFieldName.pinningChainEpochLength].label,
         min: 10n,
@@ -173,7 +175,7 @@ export const formSchema = z
         [StepFieldName.pinningChainNodeUrl]: z
             .string({ message: stepFields[StepFieldName.pinningChainNodeUrl].step })
             .nonempty(stepFields[StepFieldName.pinningChainNodeUrl].step)
-            .url(stepFields[StepFieldName.pinningChainNodeUrl].step),
+            .regex(httpsUrlRegex, stepFields[StepFieldName.pinningChainNodeUrl].step),
         [StepFieldName.pinningChainEpochLength]: bigNumberSchema({
             min: 10n,
             max: 100n,
