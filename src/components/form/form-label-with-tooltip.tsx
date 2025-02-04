@@ -20,7 +20,7 @@ export const FormLabelWithTooltip: React.FC<InfoTooltipProps> = ({ label, toolti
                     <HybridTooltipTrigger type='button'>
                         <InfoIcon className='size-4' />
                     </HybridTooltipTrigger>
-                    <HybridTooltipContent className='font-roboto'>
+                    <HybridTooltipContent className='bg-black font-roboto text-sm text-white'>
                         <p>{tooltip}</p>
                     </HybridTooltipContent>
                 </HybridTooltip>
