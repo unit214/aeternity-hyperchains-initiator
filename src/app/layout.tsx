@@ -9,6 +9,7 @@ import { ThemeProvider } from 'next-themes';
 import '@/app/globals.css';
 import { FAQ } from '@/components/faq';
 import { Footer } from '@/components/footer';
+import { TouchProvider } from '@/components/hyprid-tooltip';
 import { NavBar } from '@/components/nav-bar';
 
 const geistSans = localFont({
@@ -55,12 +56,14 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
             className={`${geistSans.variable} ${geistMono.variable} ${clashDisplay.variable} ${roboto.variable}`}>
             <body className='flex min-h-screen justify-center bg-background font-clash text-foreground antialiased'>
                 <ThemeProvider attribute='class' forcedTheme={'light'}>
-                    <div className='flex w-full flex-col items-stretch'>
-                        <NavBar />
-                        <main className='max-w-screen-2xl flex-1 self-center px-4 xl:px-0'>{children}</main>
-                        <FAQ />
-                        <Footer />
-                    </div>
+                    <TouchProvider>
+                        <div className='flex w-full flex-col items-stretch'>
+                            <NavBar />
+                            <main className='max-w-screen-2xl flex-1 self-center px-4 xl:px-0'>{children}</main>
+                            <FAQ />
+                            <Footer />
+                        </div>
+                    </TouchProvider>
                 </ThemeProvider>
             </body>
         </html>

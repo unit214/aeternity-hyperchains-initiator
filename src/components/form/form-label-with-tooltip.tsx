@@ -1,7 +1,8 @@
 import * as React from 'react';
 
+import { HybridTooltip, HybridTooltipContent, HybridTooltipTrigger } from '@/components/hyprid-tooltip';
 import { FormLabel } from '@/components/ui/form';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { TooltipProvider } from '@/components/ui/tooltip';
 
 import { InfoIcon } from 'lucide-react';
 
@@ -15,14 +16,14 @@ export const FormLabelWithTooltip: React.FC<InfoTooltipProps> = ({ label, toolti
         <div className='flex flex-row gap-2'>
             <FormLabel className='font-clash'>{label}</FormLabel>
             <TooltipProvider>
-                <Tooltip>
-                    <TooltipTrigger type='button'>
+                <HybridTooltip delayDuration={0}>
+                    <HybridTooltipTrigger type='button'>
                         <InfoIcon className='size-4' />
-                    </TooltipTrigger>
-                    <TooltipContent className='font-roboto'>
+                    </HybridTooltipTrigger>
+                    <HybridTooltipContent className='font-roboto'>
                         <p>{tooltip}</p>
-                    </TooltipContent>
-                </Tooltip>
+                    </HybridTooltipContent>
+                </HybridTooltip>
             </TooltipProvider>
         </div>
     );
