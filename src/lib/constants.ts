@@ -9,7 +9,7 @@ export const DOCUMENTATION_URL = 'https://github.com/aeternity/aeternity/blob/ma
 
 export const pinningChains: PinningChain[] = [
     {
-        name: 'Aeternity',
+        name: 'aeternity',
         symbol: 'AE',
         blockTime: 180000,
         decimals: 18,
