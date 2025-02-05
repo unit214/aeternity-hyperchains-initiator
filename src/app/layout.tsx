@@ -9,6 +9,7 @@ import { ThemeProvider } from 'next-themes';
 import '@/app/globals.css';
 import { FAQ } from '@/components/faq';
 import { Footer } from '@/components/footer';
+import CookieConsentAndGoogleAnalytics from '@/components/google-analytics';
 import { TouchProvider } from '@/components/hyprid-tooltip';
 import { NavBar } from '@/components/nav-bar';
 
@@ -62,6 +63,7 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
                             <main className='max-w-screen-2xl flex-1 self-center px-4 xl:px-0'>{children}</main>
                             <FAQ />
                             <Footer />
+                            <CookieConsentAndGoogleAnalytics />
                         </div>
                     </TouchProvider>
                 </ThemeProvider>
