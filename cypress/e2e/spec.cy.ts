@@ -108,9 +108,6 @@ describe('Form flow', () => {
         inputNodeUrl.clear().type('invalid-url').blur();
         cy.contains('Pinning Chain Node URL is not a valid HTTPS URL').should('be.visible');
 
-        inputNodeUrl.clear().type('http://testnet.aeternity.io').blur();
-        cy.contains('Pinning Chain Node URL is not a valid HTTPS URL').should('be.visible');
-
         inputNodeUrl.clear().type('https://testnet').blur();
         cy.contains('Pinning Chain Node URL is not a valid HTTPS URL').should('be.visible');
 

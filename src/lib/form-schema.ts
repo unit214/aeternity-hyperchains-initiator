@@ -14,7 +14,7 @@ const getPinningChainFromLocalStorage = (): PinningChain | undefined =>
 
 const pinningChainDecimals = () => getPinningChainFromLocalStorage()?.decimals || 18;
 
-const httpsUrlRegex = /^https:\/\/\w+(\.\w+)+.*$/;
+const httpsUrlRegex = /^https?:\/\/\w+(\.\w+)+.*$/;
 
 const bigNumberSchema = ({
     fieldName = undefined,
