@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import Link from 'next/link';
 
-import { DOCUMENTATION_URL } from '@/lib/constants';
+import { externalUrls } from '@/lib/constants';
 
 export interface FooterSectionProps {
     title: string;
@@ -33,7 +33,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ title, links }) =>
 export const LogoSection: React.FC = () => {
     return (
         <div className='z-0 flex w-64 flex-col items-start text-muted-foreground'>
-            <Link href='https://hyperchains.ae' target='_blank' rel='noopener noreferrer'>
+            <Link href={externalUrls.HOME} target='_blank' rel='noopener noreferrer'>
                 <img
                     loading='lazy'
                     src='/hyperchains_logo_white.svg'
@@ -46,7 +46,7 @@ export const LogoSection: React.FC = () => {
             </div>
             <div className='mt-3 flex max-w-full flex-col leading-loose'>
                 <div>Powered by</div>
-                <Link href='https://aeternity.com' target='_blank' rel='noopener noreferrer'>
+                <Link href={externalUrls.AETERNITY} target='_blank' rel='noopener noreferrer'>
                     <img
                         loading='lazy'
                         src='/aeternity_logo.svg'
@@ -63,22 +63,22 @@ const footerSections = [
     {
         title: 'MAIN',
         links: [
-            { label: 'Home', url: 'https://hyperchains.ae' },
+            { label: 'Home', url: externalUrls.HOME },
             { label: 'Create a Hyperchain', url: '/', isInternalLink: true },
-            { label: 'FAQs', url: 'https://hyperchains.ae/faqs' }
+            { label: 'FAQs', url: externalUrls.FAQ }
         ]
     },
     {
         title: 'INITIATOR',
         links: [
             { label: 'Create a Hyperchain', url: '/', isInternalLink: true },
-            { label: 'How to Start', url: 'https://hyperchains.ae/how-to' },
-            { label: 'Documentation', url: DOCUMENTATION_URL }
+            { label: 'How to Start', url: externalUrls.HOW_TO },
+            { label: 'Documentation', url: externalUrls.DOCUMENTATION }
         ]
     },
     {
         title: 'LEGAL',
-        links: [{ label: 'Privacy policy', url: 'https://aeternity.com/legal-privacy' }]
+        links: [{ label: 'Privacy policy', url: externalUrls.PRIVACY_POLICY }]
     }
 ];
 

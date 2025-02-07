@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
-import { DOCUMENTATION_URL } from '@/lib/constants';
+import { externalUrls } from '@/lib/constants';
 
 export function NavBar() {
     return (
@@ -20,19 +20,19 @@ export function NavBar() {
                         />
                     </Link>
                     <nav className='hidden items-center space-x-4 md:mx-6 md:flex lg:space-x-10'>
-                        <Link href='https://hyperchains.ae' target='_blank' rel='noopener noreferrer'>
+                        <Link href={externalUrls.HOME} target='_blank' rel='noopener noreferrer'>
                             Home
                         </Link>
-                        <Link href='https://hyperchains.ae/#how-it-works' target='_blank' rel='noopener noreferrer'>
+                        <Link href={externalUrls.HOW_IT_WORKS} target='_blank' rel='noopener noreferrer'>
                             About
                         </Link>
-                        <Link href={DOCUMENTATION_URL} target='_blank' rel='noopener noreferrer'>
+                        <Link href={externalUrls.DOCUMENTATION} target='_blank' rel='noopener noreferrer'>
                             Documentation
                         </Link>
-                        <Link href='https://hyperchains.ae/how-to' target='_blank' rel='noopener noreferrer'>
+                        <Link href={externalUrls.HOW_TO} target='_blank' rel='noopener noreferrer'>
                             How to Start
                         </Link>
-                        <Link href='https://hyperchains.ae/faqs' target='_blank' rel='noopener noreferrer'>
+                        <Link href={externalUrls.FAQ} target='_blank' rel='noopener noreferrer'>
                             FAQs
                         </Link>
                     </nav>

@@ -5,7 +5,15 @@ export const INITIATOR_STEP_2_STORAGE_KEY = 'InitiatorStep2';
 export const INITIATOR_STEP_3_STORAGE_KEY = 'InitiatorStep3';
 export const INITIATOR_STEP_4_STORAGE_KEY = 'InitiatorStep4';
 
-export const DOCUMENTATION_URL = 'https://docs.aeternity.com/advanced/hyperchains';
+export const externalUrls = {
+    AETERNITY: 'https://aeternity.com',
+    DOCUMENTATION: 'https://docs.aeternity.com/advanced/hyperchains',
+    FAQ: 'https://hyperchains.ae/faqs',
+    HOME: 'https://hyperchains.ae',
+    HOW_IT_WORKS: 'https://hyperchains.ae/#how-it-works',
+    HOW_TO: 'https://hyperchains.ae/how-to',
+    PRIVACY_POLICY: 'https://aeternity.com/legal-privacy'
+};
 
 export const pinningChains: PinningChain[] = [
     {
