@@ -2,10 +2,13 @@
 
 import { useEffect, useState } from 'react';
 
+import Link from 'next/link';
+
 import { cn } from '@/lib/utils';
 
 import { Button } from './ui/button';
 import { CookieIcon } from 'lucide-react';
+import { externalUrls } from '@/lib/constants';
 
 export default function CookieConsent({ onAcceptCallback = () => {}, onDeclineCallback = () => {} }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -74,9 +77,13 @@ export default function CookieConsent({ onAcceptCallback = () => {}, onDeclineCa
                                 &#34;, you agree to our use of cookies.
                             </span>
                             <br />
-                            <a href='#' className='text-xs underline'>
+                            <Link
+                                className='text-xs underline'
+                                href={externalUrls.PRIVACY_POLICY}
+                                target='_blank'
+                                rel='noopener noreferrer'>
                                 Learn more.
-                            </a>
+                            </Link>
                         </p>
                     </div>
                     <div className='flex gap-2 border-t border-border p-4 py-5'>
