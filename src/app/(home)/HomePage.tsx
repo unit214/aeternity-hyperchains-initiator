@@ -3,7 +3,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { Button } from '@/components/ui/button';
+import { AgreeButton, GetStartedButton } from '@/components/home/buttons-with-ga-event';
 import {
     Dialog,
     DialogContent,
@@ -88,9 +88,7 @@ const HomePage: React.FC = () => {
                 </div>
                 <Dialog>
                     <DialogTrigger asChild>
-                        <Button data-cy='button-get-started' className='w-fit self-center' variant='default'>
-                            Get Started
-                        </Button>
+                        <GetStartedButton />
                     </DialogTrigger>
                     <DialogContent className='max-w-[425px] font-sans'>
                         <DialogHeader>
@@ -111,9 +109,7 @@ const HomePage: React.FC = () => {
                         </DialogHeader>
                         <DialogFooter>
                             <Link href='/initiate/1' className='w-fit'>
-                                <Button data-cy='button-agree' type='submit'>
-                                    Agree &amp; Continue
-                                </Button>
+                                <AgreeButton />
                             </Link>
                         </DialogFooter>
                     </DialogContent>

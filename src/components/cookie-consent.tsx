@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react';
 
 import Link from 'next/link';
 
+import { externalUrls } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 
 import { Button } from './ui/button';
 import { CookieIcon } from 'lucide-react';
-import { externalUrls } from '@/lib/constants';
 
 export default function CookieConsent({ onAcceptCallback = () => {}, onDeclineCallback = () => {} }) {
     const [isOpen, setIsOpen] = useState(false);
