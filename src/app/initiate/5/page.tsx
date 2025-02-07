@@ -8,12 +8,12 @@ import Link from 'next/link';
 import { Code } from '@/components/code';
 import { Button } from '@/components/ui/button';
 import {
-    externalUrls,
     INITIATOR_STEP_1_STORAGE_KEY,
     INITIATOR_STEP_2_STORAGE_KEY,
     INITIATOR_STEP_3_STORAGE_KEY,
     INITIATOR_STEP_4_STORAGE_KEY,
-    Step
+    Step,
+    externalUrls
 } from '@/lib/constants';
 import {
     FormValues,
@@ -24,6 +24,7 @@ import {
     formSchema
 } from '@/lib/form-schema';
 import { getFromLocalStorage } from '@/lib/local-storage';
+import { sendGAEvent } from '@next/third-parties/google';
 
 import { InfoIcon } from 'lucide-react';
 import YAML from 'yaml';
@@ -115,14 +116,21 @@ const InitiatorStep5Form: React.FC = () => {
                                     data-cy='button-download'
                                     variant='default'
                                     className='ml-auto hidden w-32 md:flex'
-                                    onClick={createAndDownloadYamlFile}>
+                                    onClick={() => {
+                                        sendGAEvent('event', 'button_download');
+                                        createAndDownloadYamlFile();
+                                    }}>
                                     Download
                                 </Button>
                             </div>
                             <Button
+                                data-cy='button-download-mobile'
                                 variant='default'
                                 className='mt-2 w-full md:hidden'
-                                onClick={createAndDownloadYamlFile}>
+                                onClick={() => {
+                                    sendGAEvent('event', 'button_download');
+                                    createAndDownloadYamlFile();
+                                }}>
                                 Download
                             </Button>
                         </div>
