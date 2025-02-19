@@ -14,6 +14,10 @@ feel free to run it on your own machine using the instructions in the following 
 - **[Node.js](https://nodejs.org/en/download)**: Version 22.13.0 or higher
 - **Docker** (optional)
 
+### Environment Variables
+
+- `NEXT_PUBLIC_GOOGLE_ANALYTICS_ID` is an optional environment variable that enables tracking deployed versions with Google Analytics. The value should have the format `G-XXXXXXXXXX`
+
 ### Installation
 
 1. **Clone the Repository**:
