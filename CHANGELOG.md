@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.2.0](https://github.com/aeternity/aepp-hyperchains-initiator/compare/v1.1.0...v1.2.0) (2025-02-24)
+
+
+### Features
+
+* add Google Analytics along with cookie consent banner ([3198745](https://github.com/aeternity/aepp-hyperchains-initiator/commit/3198745c16da528c0652966003a15c26c5c20017))
+* adjust documentation url ([6c408ab](https://github.com/aeternity/aepp-hyperchains-initiator/commit/6c408ab7e8b4b287509bece88bb29d255ff0126f))
+* adjust learn more link in cookie banner ([91240b6](https://github.com/aeternity/aepp-hyperchains-initiator/commit/91240b68e532635a73cf9fc24ab807e83879e5af))
+* change tooltip style to bg-black text-white ([b27d365](https://github.com/aeternity/aepp-hyperchains-initiator/commit/b27d365067917f48935b23c7fad7d45ca174e0b7))
+* **form:** allow only https urls for url input ([cd82ca5](https://github.com/aeternity/aepp-hyperchains-initiator/commit/cd82ca5fc2df027465a5af1f43eebbb3a14014cf))
+* **text:** change occurrences of aeternity to use lowercase ([9c58afa](https://github.com/aeternity/aepp-hyperchains-initiator/commit/9c58afae65cf1b96f197a011bcd791febbe1589c))
+* track important CTAs as ga events ([a03b8ba](https://github.com/aeternity/aepp-hyperchains-initiator/commit/a03b8ba33a0728c1a1bbb6344b4b9116e7739d1f))
+
+
+### Bug Fixes
+
+* allows http urls in node field ([0f35971](https://github.com/aeternity/aepp-hyperchains-initiator/commit/0f359712d7ed0dbf3b061d17789ee7633fe7bec5))
+* improve tooltip to work correctly on mobile ([28e68cc](https://github.com/aeternity/aepp-hyperchains-initiator/commit/28e68ccff1a3c708d780bcc852be91e5b9232602))
+
 ## [1.1.0](https://github.com/aeternity/aepp-hyperchains-initiator/compare/v1.0.0...v1.1.0) (2025-01-29)
 
 
