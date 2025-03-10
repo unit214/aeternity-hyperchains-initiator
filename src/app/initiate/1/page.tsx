@@ -129,7 +129,8 @@ const Initiate1Page: React.FC = () => {
         <div className='flex size-full items-center justify-center'>
             <InitiatorStep
                 title='Configure Your Hyperchain'
-                stepNumber={1}
+                step={1}
+                totalSteps={4}
                 description='Define the operational parameters for your hyperchain, including block timings and network identifiers.'
                 form={<FormWrapper />}
             />

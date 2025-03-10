@@ -108,7 +108,8 @@ const Initiate3Page: React.FC = () => {
         <div className='flex size-full items-center justify-center'>
             <InitiatorStep
                 title='Set Token Economics'
-                stepNumber={3}
+                step={3}
+                totalSteps={4}
                 description='Establish the rules for validators on your Hyperchain to ensure network security and efficiency.'
                 form={<FormWrapper />}
             />

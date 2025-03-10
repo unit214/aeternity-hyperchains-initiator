@@ -184,7 +184,8 @@ const Initiate2Page: React.FC = () => {
         <div className='flex size-full items-center justify-center'>
             <InitiatorStep
                 title='Set Up Your Pinning Chain'
-                stepNumber={2}
+                step={2}
+                totalSteps={4}
                 description='Define the key parameters for connecting your hyperchain to the pinning chain. These settings establish the foundation of your network’s relationship with the pinning chain.'
                 form={<FormWrapper />}
             />

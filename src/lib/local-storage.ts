@@ -10,3 +10,10 @@ export const getFromLocalStorage = <T>(localStorageKey: string): T | null => {
 
     return item && JSON.parse(item);
 };
+
+/*
+* Remove provided keys from local storage
+* */
+export function clearLocalStorage(keys: string[]) {
+    keys.forEach(key => localStorage.removeItem(key));
+}
