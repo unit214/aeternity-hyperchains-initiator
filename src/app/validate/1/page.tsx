@@ -48,7 +48,7 @@ const InitiatorForm: React.FC<{ initialData: ValidatorStep1FormValues | null }> 
             saveToLocalStorage<ValidatorStep1FormValues>(values, VALIDATOR_STEP_1_STORAGE_KEY);
             saveToLocalStorage(createValidatorConfigData(data.nodeData, data.nodeConfigData), NODE_DATA);
             router.push('/validate/2');
-        } catch (error: any) {
+        } catch (error) {
             if (error instanceof NodeEndpointError) {
                 setError('Failed to fetch data from node URL.');
             } else if (error instanceof NodeConfigEndpointError) {
@@ -131,6 +131,7 @@ const FormWrapper: React.FC = () => {
     if (initialData !== undefined) {
         return <InitiatorForm initialData={initialData}/>;
     }
+
     return <></>;
 };
 

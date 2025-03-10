@@ -8,7 +8,7 @@ interface Protocol {
     version: number;
 }
 
-interface NodeInfo {
+interface Node {
     difficulty: number;
     genesis_key_block_hash: string;
     hashrate: number;
