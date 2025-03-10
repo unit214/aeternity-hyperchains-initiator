@@ -23,16 +23,17 @@ import {
     Step4FormValues,
     formSchema
 } from '@/lib/form-schema';
-import { getFromLocalStorage } from '@/lib/local-storage';
+import {clearLocalStorage, getFromLocalStorage} from '@/lib/local-storage';
 import { sendGAEvent } from '@next/third-parties/google';
 
 import { InfoIcon } from 'lucide-react';
-import YAML from 'yaml';
 import { ZodError } from 'zod';
+import {downloadYaml} from "@/lib/file";
 
 const InitiatorStep5Form: React.FC = () => {
     const [formData, setFormData] = useState<FormValues | undefined>();
     const [error, setError] = useState<ReactNode | undefined>();
+    const fileName = 'init.yaml';
 
     useEffect(() => {
         const step1Data = getFromLocalStorage<Step1FormValues>(INITIATOR_STEP_1_STORAGE_KEY);
@@ -72,19 +73,9 @@ const InitiatorStep5Form: React.FC = () => {
         }
     }, []);
 
-    const createAndDownloadYamlFile = async () => {
-        const content = YAML.stringify(formData);
-        const file = new Blob([content], { type: 'text/plain' });
-        const element = document.createElement('a');
-        element.href = URL.createObjectURL(file);
-        element.download = 'init.yaml';
-        document.body.appendChild(element); // Required for Firefox
-        element.click();
-        document.body.removeChild(element); // Clean up
-        localStorage.removeItem(INITIATOR_STEP_1_STORAGE_KEY);
-        localStorage.removeItem(INITIATOR_STEP_2_STORAGE_KEY);
-        localStorage.removeItem(INITIATOR_STEP_3_STORAGE_KEY);
-        localStorage.removeItem(INITIATOR_STEP_4_STORAGE_KEY);
+    const downloadFileAndClearCache = async () => {
+        downloadYaml(fileName, formData);
+        clearLocalStorage([INITIATOR_STEP_1_STORAGE_KEY, INITIATOR_STEP_2_STORAGE_KEY, INITIATOR_STEP_3_STORAGE_KEY, INITIATOR_STEP_4_STORAGE_KEY]);
     };
 
     return (
@@ -118,7 +109,7 @@ const InitiatorStep5Form: React.FC = () => {
                                     className='ml-auto hidden w-32 md:flex'
                                     onClick={() => {
                                         sendGAEvent('event', 'button_download');
-                                        createAndDownloadYamlFile();
+                                        downloadFileAndClearCache();
                                     }}>
                                     Download
                                 </Button>
@@ -129,7 +120,7 @@ const InitiatorStep5Form: React.FC = () => {
                                 className='mt-2 w-full md:hidden'
                                 onClick={() => {
                                     sendGAEvent('event', 'button_download');
-                                    createAndDownloadYamlFile();
+                                    downloadFileAndClearCache();
                                 }}>
                                 Download
                             </Button>

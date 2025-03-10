@@ -1,4 +1,11 @@
-import { INITIATOR_STEP_2_STORAGE_KEY, Step, StepFieldName, pinningChains, stepFields } from '@/lib/constants';
+import {
+    INITIATOR_STEP_2_STORAGE_KEY,
+    Step,
+    StepFieldName,
+    pinningChains,
+    stepFields,
+    validationStepFields
+} from '@/lib/constants';
 import { getFromLocalStorage } from '@/lib/local-storage';
 import { PinningChain } from '@/lib/types';
 import { expandDecimals } from '@/lib/utils';
@@ -155,6 +162,11 @@ export const step4FormSchema = z
         return data;
     });
 
+export const validatorStep1FormSchema = z.object({
+    [StepFieldName.nodeUrl]: z.string(),
+    [StepFieldName.nodeConfigUrl]: z.string(),
+});
+
 export const formSchema = z
     // validate input
     .object({
@@ -255,8 +267,21 @@ export const formSchema = z
         };
     });
 
+export const validatorFormSchema = z.object({
+    [StepFieldName.nodeUrl]: z
+        .string({ message: validationStepFields[StepFieldName.nodeUrl].step })
+        .nonempty(validationStepFields[StepFieldName.nodeUrl].step)
+        .regex(httpsUrlRegex, validationStepFields[StepFieldName.nodeUrl].step),
+    [StepFieldName.nodeConfigUrl]: z
+        .string({ message: validationStepFields[StepFieldName.nodeConfigUrl].step })
+        .nonempty(validationStepFields[StepFieldName.nodeConfigUrl].step)
+        .regex(httpsUrlRegex, validationStepFields[StepFieldName.nodeConfigUrl].step),
+});
+
 export type Step1FormValues = z.infer<typeof step1FormSchema>;
 export type Step2FormValues = z.infer<typeof step2FormSchema>;
 export type Step3FormValues = z.infer<typeof step3FormSchema>;
 export type Step4FormValues = z.infer<typeof step4FormSchema>;
+export type ValidatorStep1FormValues = z.infer<typeof validatorStep1FormSchema>;
+export type ValidatorFormValues = z.infer<typeof validatorFormSchema>;
 export type FormValues = z.infer<typeof formSchema>;
