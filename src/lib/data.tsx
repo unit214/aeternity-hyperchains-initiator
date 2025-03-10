@@ -1,6 +1,6 @@
 import {NodeConfigEndpointError, NodeEndpointError} from "@/lib/error";
 
-export function createValidatorConfigData(nodeData: NodeInfo, nodeConfigData: NodeConfig): ValidatorNodeConfig {
+export function createValidatorConfigData(nodeData: Node, nodeConfigData: NodeConfig): ValidatorNodeConfig {
     return {
         peers: [{aenode: 'aenode://pp_' + nodeData.peer_pubkey + '@initiator:3015'}],
         chain: {
@@ -29,12 +29,13 @@ export async function fetchDataFromNode(nodeUrl: string | undefined, nodeConfigU
         throw new NodeEndpointError(`nodeUrl responded with status: ${nodeUrlResponse.status}`);
     }
 
-    const nodeData: NodeInfo = await nodeUrlResponse.json();
+    const nodeData: Node = await nodeUrlResponse.json();
     const nodeConfigUrlResponse = await fetch(nodeConfigUrl);
     if (!nodeConfigUrlResponse.ok) {
         throw new NodeConfigEndpointError(`nodeConfigUrl responded with status: ${nodeConfigUrlResponse.status}`);
     }
 
     const nodeConfigData: NodeConfig = await nodeConfigUrlResponse.json();
+
     return {nodeData, nodeConfigData}
 }
