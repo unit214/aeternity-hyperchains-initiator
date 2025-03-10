@@ -4,6 +4,8 @@ export const INITIATOR_STEP_1_STORAGE_KEY = 'InitiatorStep1';
 export const INITIATOR_STEP_2_STORAGE_KEY = 'InitiatorStep2';
 export const INITIATOR_STEP_3_STORAGE_KEY = 'InitiatorStep3';
 export const INITIATOR_STEP_4_STORAGE_KEY = 'InitiatorStep4';
+export const VALIDATOR_STEP_1_STORAGE_KEY = 'ValidatorStep1';
+export const NODE_DATA = 'NodeData';
 
 export const externalUrls = {
     AETERNITY: 'https://aeternity.com',
@@ -45,9 +47,12 @@ export enum StepFieldName {
     validatorBalance = 'validatorBalance',
     validatorMinStake = 'validatorMinStake',
     faucetInitBalance = 'faucetInitBalance',
-    treasuryInitBalance = 'treasuryInitBalance'
+    treasuryInitBalance = 'treasuryInitBalance',
+    nodeUrl = 'nodeUrl',
+    nodeConfigUrl = 'nodeConfigUrl'
 }
 
+// @ts-ignore
 export const stepFields = {
     [StepFieldName.networkId]: {
         label: 'Hyperchain ID',
@@ -114,5 +119,19 @@ export const stepFields = {
         label: 'Treasury Init Balance',
         tooltip: 'The initial balance of the treasury which is used for manually funding accounts on the chain.',
         step: Step.Four
+    }
+};
+
+// @ts-ignore
+export const validationStepFields = {
+    [StepFieldName.nodeUrl]: {
+        label: 'Node URL',
+        tooltip: 'The API endpoint of a node in the Hyperchain network for syncing and block updates.',
+        step: Step.One
+    },
+    [StepFieldName.nodeConfigUrl]: {
+        label: 'Node Config URL',
+        tooltip: 'The URL to the configuration file for the Hyperchain node.',
+        step: Step.One
     }
 };

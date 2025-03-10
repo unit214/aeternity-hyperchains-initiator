@@ -3,12 +3,13 @@ import { ReactElement } from 'react';
 
 interface InitiatorStepProps {
     title: string;
-    stepNumber: number;
+    step: number;
+    totalSteps: number;
     description: string;
     form: ReactElement;
 }
 
-export const InitiatorStep: React.FC<InitiatorStepProps> = ({ title, stepNumber, description, form }) => {
+export const InitiatorStep: React.FC<InitiatorStepProps> = ({ title, step, totalSteps, description, form }) => {
     return (
         <div className='mb-9 mt-12 flex flex-col md:my-20 md:w-[810px]'>
             <div className='flex flex-row justify-between gap-7 md:mb-12'>
@@ -17,8 +18,8 @@ export const InitiatorStep: React.FC<InitiatorStepProps> = ({ title, stepNumber,
                     <span className='hidden font-roboto text-sm text-muted-foreground md:flex'>{description}</span>
                 </div>
                 <div className='text-4xl font-normal'>
-                    <span>{stepNumber}</span>
-                    <span className='text-grey-3'>/4</span>
+                    <span>{step}</span>
+                    <span className='text-grey-3'>/{totalSteps}</span>
                 </div>
             </div>
             <span className='mb-12 font-roboto text-sm text-muted-foreground md:hidden'>{description}</span>

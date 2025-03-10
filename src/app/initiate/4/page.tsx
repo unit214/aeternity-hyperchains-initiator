@@ -158,7 +158,8 @@ const Initiate4Page: React.FC = () => {
         <div className='flex size-full items-center justify-center'>
             <InitiatorStep
                 title='Set Validator Requirements'
-                stepNumber={4}
+                step={4}
+                totalSteps={4}
                 description='Establish the rules for validators on your hyperchain to ensure network security and efficiency.'
                 form={<FormWrapper />}
             />
