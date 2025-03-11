@@ -15,6 +15,7 @@ import {
     Step,
     externalUrls
 } from '@/lib/constants';
+import { downloadYaml } from '@/lib/file';
 import {
     FormValues,
     Step1FormValues,
@@ -23,12 +24,11 @@ import {
     Step4FormValues,
     formSchema
 } from '@/lib/form-schema';
-import {clearLocalStorage, getFromLocalStorage} from '@/lib/local-storage';
+import { clearLocalStorage, getFromLocalStorage } from '@/lib/local-storage';
 import { sendGAEvent } from '@next/third-parties/google';
 
 import { InfoIcon } from 'lucide-react';
 import { ZodError } from 'zod';
-import {downloadYaml} from "@/lib/file";
 
 const InitiatorStep5Form: React.FC = () => {
     const [formData, setFormData] = useState<FormValues | undefined>();
@@ -75,7 +75,12 @@ const InitiatorStep5Form: React.FC = () => {
 
     const downloadFileAndClearCache = async () => {
         downloadYaml(fileName, formData);
-        clearLocalStorage([INITIATOR_STEP_1_STORAGE_KEY, INITIATOR_STEP_2_STORAGE_KEY, INITIATOR_STEP_3_STORAGE_KEY, INITIATOR_STEP_4_STORAGE_KEY]);
+        clearLocalStorage([
+            INITIATOR_STEP_1_STORAGE_KEY,
+            INITIATOR_STEP_2_STORAGE_KEY,
+            INITIATOR_STEP_3_STORAGE_KEY,
+            INITIATOR_STEP_4_STORAGE_KEY
+        ]);
     };
 
     return (
