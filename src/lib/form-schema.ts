@@ -164,7 +164,7 @@ export const step4FormSchema = z
 
 export const validatorStep1FormSchema = z.object({
     [StepFieldName.nodeUrl]: z.string(),
-    [StepFieldName.nodeConfigUrl]: z.string(),
+    [StepFieldName.nodeConfigUrl]: z.string()
 });
 
 export const formSchema = z
@@ -275,7 +275,7 @@ export const validatorFormSchema = z.object({
     [StepFieldName.nodeConfigUrl]: z
         .string({ message: validationStepFields[StepFieldName.nodeConfigUrl].step })
         .nonempty(validationStepFields[StepFieldName.nodeConfigUrl].step)
-        .regex(httpsUrlRegex, validationStepFields[StepFieldName.nodeConfigUrl].step),
+        .regex(httpsUrlRegex, validationStepFields[StepFieldName.nodeConfigUrl].step)
 });
 
 export type Step1FormValues = z.infer<typeof step1FormSchema>;
