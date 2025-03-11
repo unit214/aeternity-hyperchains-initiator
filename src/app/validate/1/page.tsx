@@ -17,10 +17,9 @@ import {getFromLocalStorage, saveToLocalStorage} from "@/lib/local-storage";
 import {Button} from "@/components/ui/button";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useRouter} from "next/navigation";
-import {fetchDataFromNode, createValidatorConfigData} from "@/lib/data";
+import {fetchDataFromNode, createValidatorConfigData} from "@/app/validate/2/data";
 import {Loader2} from "lucide-react";
 import {NodeConfigEndpointError, NodeEndpointError} from "@/lib/error";
-
 
 const InitiatorForm: React.FC<{ initialData: ValidatorStep1FormValues | null }> = ({initialData}) => {
     const router = useRouter();
