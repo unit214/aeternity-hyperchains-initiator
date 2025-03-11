@@ -7,13 +7,14 @@ import {NODE_DATA, VALIDATOR_STEP_1_STORAGE_KEY} from "@/lib/constants";
 import {Button} from "@/components/ui/button";
 import {sendGAEvent} from "@next/third-parties/google";
 import {downloadYaml} from "@/lib/file";
+import {ValidatorNodeConfig} from "@/app/validate/types/types";
 
 const Initiator: React.FC = () => {
-    const [data, setData] = useState(null);
+    const [data, setData] = useState<ValidatorNodeConfig | undefined>();
     const [error, setError] = useState<ReactNode | undefined>();
     const fileName = 'validate.yaml';
     useEffect(() => {
-        const storedData = getFromLocalStorage<any>(NODE_DATA);
+        const storedData = getFromLocalStorage<ValidatorNodeConfig>(NODE_DATA);
         if (storedData) {
             setData(storedData);
             // validate data
