@@ -1,7 +1,6 @@
-import {NodeConfigEndpointError, NodeEndpointError} from "@/lib/error";
-import {Node, NodeConfig} from "@/app/validate/types/client-types";
-import {ValidatorNodeConfig} from "@/app/validate/types/types";
-
+import { Node, NodeConfig } from '@/app/validate/types/client-types';
+import { ValidatorNodeConfig } from '@/app/validate/types/types';
+import { NodeConfigEndpointError, NodeEndpointError } from '@/lib/error';
 
 export function createValidatorConfigData(nodeData: Node, nodeConfigData: NodeConfig): ValidatorNodeConfig {
     const consensusKey = nodeConfigData.consensus[0].consensus_key;
@@ -20,44 +19,42 @@ export function createValidatorConfigData(nodeData: Node, nodeConfigData: NodeCo
                         parent_chain: {
                             consensus: {
                                 network_id: nodeConfigData.consensus[0].parent_chain.consensus.network_id,
-                                type: nodeConfigData.consensus[0].parent_chain.consensus.type,
+                                type: nodeConfigData.consensus[0].parent_chain.consensus.type
                             },
                             parent_epoch_length: nodeConfigData.consensus[0].parent_chain.parent_epoch_length,
                             polling: {
                                 fetch_interval: nodeConfigData.consensus[0].parent_chain.polling.fetch_interval,
-                                nodes: nodeConfigData.consensus[0].parent_chain.polling.nodes,
+                                nodes: nodeConfigData.consensus[0].parent_chain.polling.nodes
                             },
-                            start_height: nodeConfigData.consensus[0].parent_chain.start_height,
+                            start_height: nodeConfigData.consensus[0].parent_chain.start_height
                         },
-                        pinners: [{parent_chain_account: {}}],
+                        pinners: [{ parent_chain_account: {} }],
                         pinning_reward_value: nodeConfigData.consensus[0].pinning_reward_value,
                         rewards_contract: nodeConfigData.consensus[0].rewards_contract,
-                        stakers: [{hyperchain_account: {}}],
-                        staking_contract: nodeConfigData.consensus[0].staking_contract,
+                        stakers: [{ hyperchain_account: {} }],
+                        staking_contract: nodeConfigData.consensus[0].staking_contract
                     },
-                    type: 'hyperchain',
-                },
+                    type: 'hyperchain'
+                }
             },
             hard_forks: nodeConfigData.hard_forks,
             fork_management: {
-                network_id: nodeConfigData.fork_management.network_id,
+                network_id: nodeConfigData.fork_management.network_id
             },
             http: {
                 endpoints: {
                     hyperchain: true,
-                    dry_run: true,
-                },
+                    dry_run: true
+                }
             },
-            mining: { autostart: true },
-        },
+            mining: { autostart: true }
+        }
     };
 
     return validatorConfigData;
-
 }
 
 export async function fetchDataFromNode(nodeUrl: string | undefined, nodeConfigUrl: string | undefined) {
-
     if (!nodeUrl) {
         throw new NodeEndpointError('nodeUrl is required');
     }
@@ -78,5 +75,5 @@ export async function fetchDataFromNode(nodeUrl: string | undefined, nodeConfigU
 
     const nodeConfigData: NodeConfig = await nodeConfigUrlResponse.json();
 
-    return {nodeData, nodeConfigData}
+    return { nodeData, nodeConfigData };
 }

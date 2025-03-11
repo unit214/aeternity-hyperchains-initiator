@@ -1,13 +1,14 @@
-'use client'
+'use client';
 
-import * as React from "react";
-import {ReactNode, useEffect, useState} from "react";
-import {clearLocalStorage, getFromLocalStorage} from "@/lib/local-storage";
-import {NODE_DATA, VALIDATOR_STEP_1_STORAGE_KEY} from "@/lib/constants";
-import {Button} from "@/components/ui/button";
-import {sendGAEvent} from "@next/third-parties/google";
-import {downloadYaml} from "@/lib/file";
-import {ValidatorNodeConfig} from "@/app/validate/types/types";
+import * as React from 'react';
+import { ReactNode, useEffect, useState } from 'react';
+
+import { ValidatorNodeConfig } from '@/app/validate/types/types';
+import { Button } from '@/components/ui/button';
+import { NODE_DATA, VALIDATOR_STEP_1_STORAGE_KEY } from '@/lib/constants';
+import { downloadYaml } from '@/lib/file';
+import { clearLocalStorage, getFromLocalStorage } from '@/lib/local-storage';
+import { sendGAEvent } from '@next/third-parties/google';
 
 const Initiator: React.FC = () => {
     const [data, setData] = useState<ValidatorNodeConfig | undefined>();
@@ -39,7 +40,8 @@ const Initiator: React.FC = () => {
                     </>
                 )}
                 {!error && data && (
-                    <div>Download a file
+                    <div>
+                        Download a file
                         <Button
                             data-cy='button-download'
                             variant='default'
@@ -60,9 +62,11 @@ const Initiator: React.FC = () => {
                             }}>
                             Download
                         </Button>
-                    </div>)}
+                    </div>
+                )}
             </div>
-        </div>)
-}
+        </div>
+    );
+};
 
 export default Initiator;
