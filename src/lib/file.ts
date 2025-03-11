@@ -11,6 +11,6 @@ export function downloadYaml(filename: string, data: unknown) {
         element.click();
         document.body.removeChild(element)
     } catch (error) {
-        new Error('Error downloading file');
+        new Error('Error downloading file: ' + error);
     }
 }

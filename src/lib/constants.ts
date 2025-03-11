@@ -52,7 +52,7 @@ export enum StepFieldName {
     nodeConfigUrl = 'nodeConfigUrl'
 }
 
-// @ts-ignore
+// "@ts-expect-error"
 export const stepFields = {
     [StepFieldName.networkId]: {
         label: 'Hyperchain ID',
@@ -122,7 +122,7 @@ export const stepFields = {
     }
 };
 
-// @ts-ignore
+// "@ts-expect-error"
 export const validationStepFields = {
     [StepFieldName.nodeUrl]: {
         label: 'Node URL',
