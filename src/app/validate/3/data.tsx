@@ -2,10 +2,11 @@ import { Node, NodeConfig } from '@/app/validate/types/client-types';
 import { ValidatorNodeConfig } from '@/app/validate/types/types';
 import { NodeConfigEndpointError, NodeEndpointError } from '@/lib/error';
 
-export function createValidatorConfigData(nodeData: Node, nodeConfigData: NodeConfig): ValidatorNodeConfig {
+export function createValidatorConfigData(nodeData: Node, nodeConfigData: NodeConfig, nodeAeUrl: string): ValidatorNodeConfig {
     const consensusKey = nodeConfigData.consensus[0].consensus_key;
     const validatorConfigData: ValidatorNodeConfig = {
-        peers: [{ aenode: `aenode://pp_${nodeData.peer_pubkey}@initiator:3015` }],
+        // we replace the web port 3013 with the aenode protocol endpoint 3015, if its part of the url
+        peers: [`aenode://pp_${nodeData.peer_pubkey}@${nodeAeUrl}`],
         chain: {
             consensus: {
                 [consensusKey]: {
@@ -54,26 +55,36 @@ export function createValidatorConfigData(nodeData: Node, nodeConfigData: NodeCo
     return validatorConfigData;
 }
 
-export async function fetchDataFromNode(nodeUrl: string | undefined, nodeConfigUrl: string | undefined) {
+export async function fetchDataFromNode(nodeUrl: string | undefined, middlewareUrl: string | undefined) {
     if (!nodeUrl) {
         throw new NodeEndpointError('nodeUrl is required');
     }
-    if (!nodeConfigUrl) {
-        throw new NodeConfigEndpointError('nodeConfigUrl is required');
+    if (!middlewareUrl) {
+        throw new NodeConfigEndpointError('middlewareUrl is required');
     }
 
-    const nodeUrlResponse = await fetch(nodeUrl);
+    const composedNodeUrl = new URL(nodeUrl);
+    if (!composedNodeUrl.pathname.includes('v3/status')) {
+        composedNodeUrl.pathname += 'v3/status';
+    }
+    const nodeUrlResponse = await fetch(composedNodeUrl.toString());
     if (!nodeUrlResponse.ok) {
-        throw new NodeEndpointError(`nodeUrl responded with status: ${nodeUrlResponse.status}`);
+        throw new NodeEndpointError(`The node responded with status: ${nodeUrlResponse.status}`);
     }
 
     const nodeData: Node = await nodeUrlResponse.json();
-    const nodeConfigUrlResponse = await fetch(nodeConfigUrl);
-    if (!nodeConfigUrlResponse.ok) {
-        throw new NodeConfigEndpointError(`nodeConfigUrl responded with status: ${nodeConfigUrlResponse.status}`);
+
+    const composedMiddlewareUrl = new URL(middlewareUrl);
+    if (!composedMiddlewareUrl.pathname.includes('v3/hyperchain/config')) {
+        composedMiddlewareUrl.pathname += 'v3/hyperchain/config';
+    }
+    console.log(composedMiddlewareUrl.toString());
+    const middlewareUrlResponse = await fetch(composedMiddlewareUrl.toString());
+    if (!middlewareUrlResponse.ok) {
+        throw new NodeConfigEndpointError(`The middleware responded with status: ${middlewareUrlResponse.status}`);
     }
 
-    const nodeConfigData: NodeConfig = await nodeConfigUrlResponse.json();
+    const middlewareData: NodeConfig = await middlewareUrlResponse.json();
 
-    return { nodeData, nodeConfigData };
+    return { nodeData, middlewareData };
 }

@@ -1,4 +1,4 @@
-import HomePage from '@/app/(home)/HomePage';
+import { HomePage } from '@/app/(home)/HomePage';
 
 /**
  * The main page component that renders the HomePage component.

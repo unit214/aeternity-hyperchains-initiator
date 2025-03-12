@@ -164,7 +164,14 @@ export const step4FormSchema = z
 
 export const validatorStep1FormSchema = z.object({
     [StepFieldName.nodeUrl]: z.string(),
-    [StepFieldName.nodeConfigUrl]: z.string()
+    [StepFieldName.nodeAeUrl]: z.string(),
+    [StepFieldName.middlewareUrl]: z.string()
+});
+
+export const validatorStep2FormSchema = z.object({
+    [StepFieldName.checkbox1]: z.boolean(),
+    [StepFieldName.checkbox2]: z.boolean(),
+    [StepFieldName.checkbox3]: z.boolean()
 });
 
 export const formSchema = z
@@ -272,10 +279,10 @@ export const validatorFormSchema = z.object({
         .string({ message: validationStepFields[StepFieldName.nodeUrl].step })
         .nonempty(validationStepFields[StepFieldName.nodeUrl].step)
         .regex(httpsUrlRegex, validationStepFields[StepFieldName.nodeUrl].step),
-    [StepFieldName.nodeConfigUrl]: z
-        .string({ message: validationStepFields[StepFieldName.nodeConfigUrl].step })
-        .nonempty(validationStepFields[StepFieldName.nodeConfigUrl].step)
-        .regex(httpsUrlRegex, validationStepFields[StepFieldName.nodeConfigUrl].step)
+    [StepFieldName.middlewareUrl]: z
+        .string({ message: validationStepFields[StepFieldName.middlewareUrl].step })
+        .nonempty(validationStepFields[StepFieldName.middlewareUrl].step)
+        .regex(httpsUrlRegex, validationStepFields[StepFieldName.middlewareUrl].step)
 });
 
 export type Step1FormValues = z.infer<typeof step1FormSchema>;
@@ -283,5 +290,5 @@ export type Step2FormValues = z.infer<typeof step2FormSchema>;
 export type Step3FormValues = z.infer<typeof step3FormSchema>;
 export type Step4FormValues = z.infer<typeof step4FormSchema>;
 export type ValidatorStep1FormValues = z.infer<typeof validatorStep1FormSchema>;
-export type ValidatorFormValues = z.infer<typeof validatorFormSchema>;
+export type ValidatorStep2FormValues = z.infer<typeof validatorStep2FormSchema>;
 export type FormValues = z.infer<typeof formSchema>;

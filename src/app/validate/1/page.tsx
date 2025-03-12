@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import { createValidatorConfigData, fetchDataFromNode } from '@/app/validate/2/data';
+import { createValidatorConfigData, fetchDataFromNode } from '@/app/validate/3/data';
 import { FormLabelWithTooltip } from '@/components/form/form-label-with-tooltip';
 import { InitiatorStep } from '@/components/initiator-step';
 import { Button } from '@/components/ui/button';
@@ -26,15 +26,15 @@ const InitiatorForm: React.FC<{ initialData: ValidatorStep1FormValues | null }> 
     const form = useForm<ValidatorStep1FormValues>({
         resolver: zodResolver(validatorStep1FormSchema),
         defaultValues: {
-            nodeUrl: initialData?.nodeUrl || 'https://demo.hyperchains.aeternity.io/v3/status',
-            nodeConfigUrl:
-                initialData?.nodeConfigUrl || 'https://demo.hyperchains.aeternity.io:8443/v3/hyperchain/config'
+            nodeUrl: initialData?.nodeUrl || 'https://demo.hyperchains.aeternity.io/',
+            nodeAeUrl: initialData?.nodeAeUrl || 'demo.hyperchains.aeternity.io:3015',
+            middlewareUrl:
+                initialData?.middlewareUrl || 'https://demo.hyperchains.aeternity.io:8443/'
         },
         mode: 'onBlur'
     });
 
     function onBack() {
-        saveToLocalStorage<ValidatorStep1FormValues>(form.getValues(), VALIDATOR_STEP_1_STORAGE_KEY);
         router.push('/');
     }
 
@@ -42,16 +42,17 @@ const InitiatorForm: React.FC<{ initialData: ValidatorStep1FormValues | null }> 
         setLoading(true);
         setError(null);
         try {
-            const data = await fetchDataFromNode(values.nodeUrl, values.nodeConfigUrl);
+            const data = await fetchDataFromNode(values.nodeUrl, values.middlewareUrl);
             saveToLocalStorage<ValidatorStep1FormValues>(values, VALIDATOR_STEP_1_STORAGE_KEY);
-            saveToLocalStorage(createValidatorConfigData(data.nodeData, data.nodeConfigData), NODE_DATA);
+            saveToLocalStorage(createValidatorConfigData(data.nodeData, data.middlewareData, values.nodeAeUrl), NODE_DATA);
             router.push('/validate/2');
         } catch (error) {
             if (error instanceof NodeEndpointError) {
                 setError('Failed to fetch data from node URL.');
             } else if (error instanceof NodeConfigEndpointError) {
-                setError('Failed to fetch data from node config URL');
+                setError('Failed to fetch data from middleware URL');
             } else {
+                console.error(error);
                 setError('An unexpected error occurred. Please try again.');
             }
         } finally {
@@ -64,7 +65,7 @@ const InitiatorForm: React.FC<{ initialData: ValidatorStep1FormValues | null }> 
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
                 className={'flex flex-col justify-between gap-10 font-roboto md:gap-36'}>
-                <div className='grid grid-cols-1 gap-x-12 gap-y-8 md:grid-cols-2 md:gap-y-6'>
+                <div className='grid grid-cols-1 gap-x-12 gap-y-8  md:gap-y-6'>
                     <FormField
                         control={form.control}
                         name={StepFieldName.nodeUrl}
@@ -87,17 +88,37 @@ const InitiatorForm: React.FC<{ initialData: ValidatorStep1FormValues | null }> 
                     />
                     <FormField
                         control={form.control}
-                        name={StepFieldName.nodeConfigUrl}
+                        name={StepFieldName.nodeAeUrl}
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabelWithTooltip
-                                    label={validationStepFields[StepFieldName.nodeConfigUrl].label}
-                                    tooltip={validationStepFields[StepFieldName.nodeConfigUrl].tooltip}
+                                    label={validationStepFields[StepFieldName.nodeAeUrl].label}
+                                    tooltip={validationStepFields[StepFieldName.nodeAeUrl].tooltip}
+                                />
+                                <FormControl>
+                                    <Input
+                                        data-cy='input-validator-node-ae-url'
+                                        placeholder='example.node.com:3015'
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name={StepFieldName.middlewareUrl}
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabelWithTooltip
+                                    label={validationStepFields[StepFieldName.middlewareUrl].label}
+                                    tooltip={validationStepFields[StepFieldName.middlewareUrl].tooltip}
                                 />
                                 <FormControl>
                                     <Input
                                         data-cy='input-validator-node-config-url'
-                                        placeholder='https://example.node.com'
+                                        placeholder='https://example.mdw.com'
                                         {...field}
                                     />
                                 </FormControl>
@@ -138,10 +159,10 @@ const Validate1Page: React.FC = () => {
     return (
         <div className='flex size-full items-center justify-center'>
             <InitiatorStep
-                title='Configure the Validator Node'
+                title='Tell us about the hyperchain'
                 step={1}
                 totalSteps={2}
-                description='Enter the node URL and node config URL'
+                description='Enter the node URL and middleware URL'
                 form={<FormWrapper />}
             />
         </div>

@@ -1,58 +1,18 @@
+import { BetaLabel, Step } from '@/app/(home)/HomePage';
 import React from 'react';
-
-import Image from 'next/image';
-import Link from 'next/link';
-
-import { AgreeButton, GetStartedButton } from '@/components/home/buttons-with-ga-event';
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
-    DialogFooter,
+    DialogDescription, DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger
 } from '@/components/ui/dialog';
+import { AgreeButton, GetStartedButton } from '@/components/home/buttons-with-ga-event';
+import Link from 'next/link';
 
-export const BetaLabel: React.FC = () => {
-    return (
-        <span className='inline-flex align-middle'>
-            <div className='ml-2 rounded-lg bg-violet-2 px-2.5 py-1 text-lg font-medium uppercase text-white md:ml-4'>
-                beta
-            </div>
-        </span>
-    );
-};
 
-interface StepProps {
-    stepNumber: number;
-    title: string;
-    description: string;
-    imageSrc: string;
-    alt: string;
-}
-
-export const Step: React.FC<StepProps> = ({ stepNumber, title, description, imageSrc, alt }) => {
-    return (
-        <div className='flex w-full flex-col items-start rounded-xl bg-primary-foreground p-4 md:w-64'>
-            <div className='hidden flex-col md:flex'>
-                <Image className='h-40 self-center' src={imageSrc} alt={alt} width={222} height={154} />
-                <span className='font-roboto text-sm text-pink'>Step {stepNumber}</span>
-                <span className='lead text-2xl font-semibold'>{title}</span>
-            </div>
-            <div className='flex flex-row md:hidden'>
-                <div className='flex flex-col'>
-                    <span className='font-roboto text-sm text-pink'>Step {stepNumber}</span>
-                    <span className='lead text-2xl font-semibold'>{title}</span>
-                </div>
-                <Image className='h-24 self-center' src={imageSrc} alt={alt} width={222} height={154} />
-            </div>
-            <span className='mt-3 font-roboto text-sm text-muted-foreground'>{description}</span>
-        </div>
-    );
-};
-
-export const HomePage: React.FC = () => {
+const HomePage: React.FC = () => {
     return (
         <div className='mb-9 mt-12 flex items-center justify-center font-clash md:mb-24 md:mt-20'>
             <div className='flex flex-col'>
@@ -66,22 +26,22 @@ export const HomePage: React.FC = () => {
                 <div className='mb-14 flex flex-col gap-2 md:flex-row md:gap-6'>
                     <Step
                         stepNumber={1}
-                        title='Generate Your Custom Chain'
-                        description='Define the parameters, security, and functionality of your new chain.'
+                        title='Enter Your Hyperchain Details'
+                        description='Input the node URL and middleware URL.'
                         imageSrc='/home_illustration_1.png'
                         alt='Home illustration 1'
                     />
                     <Step
                         stepNumber={2}
                         title='Download Your Config File'
-                        description='Instantly receive the configuration file tailored for your chain setup.'
-                        imageSrc='/home_illustration_2.png'
+                        description='Instantly receive the configuration file tailored for your validator node.'
+                        imageSrc='/home_validator_2.svg'
                         alt='Home illustration 2'
                     />
                     <Step
                         stepNumber={3}
-                        title='Start Running Your Chain'
-                        description='Launch your chain and take the first step towards decentralization.'
+                        title='Start Running Your Validator'
+                        description='Take the first step towards decentralization.'
                         imageSrc='/home_illustration_3.png'
                         alt='Home illustration 3'
                     />
@@ -108,7 +68,7 @@ export const HomePage: React.FC = () => {
                             </DialogDescription>
                         </DialogHeader>
                         <DialogFooter>
-                            <Link href='/initiate/1' className='w-fit'>
+                            <Link href='/validate/1' className='w-fit'>
                                 <AgreeButton />
                             </Link>
                         </DialogFooter>
@@ -118,3 +78,10 @@ export const HomePage: React.FC = () => {
         </div>
     );
 };
+
+
+const Page = () => {
+    return <HomePage />;
+};
+
+export default Page;
