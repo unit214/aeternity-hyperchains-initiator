@@ -2,9 +2,14 @@ import { Node, NodeConfig } from '@/app/validate/types/client-types';
 import { ValidatorNodeConfig } from '@/app/validate/types/types';
 import { NodeConfigEndpointError, NodeEndpointError } from '@/lib/error';
 
-export function createValidatorConfigData(nodeData: Node, nodeConfigData: NodeConfig, nodeAeUrl: string): ValidatorNodeConfig {
+export function createValidatorConfigData(
+    nodeData: Node,
+    nodeConfigData: NodeConfig,
+    nodeAeUrl: string
+): ValidatorNodeConfig {
     const consensusKey = nodeConfigData.consensus[0].consensus_key;
-    const validatorConfigData: ValidatorNodeConfig = {
+
+    return {
         // we replace the web port 3013 with the aenode protocol endpoint 3015, if its part of the url
         peers: [`aenode://pp_${nodeData.peer_pubkey}@${nodeAeUrl}`],
         chain: {
@@ -51,8 +56,6 @@ export function createValidatorConfigData(nodeData: Node, nodeConfigData: NodeCo
             mining: { autostart: true }
         }
     };
-
-    return validatorConfigData;
 }
 
 export async function fetchDataFromNode(nodeUrl: string | undefined, middlewareUrl: string | undefined) {
