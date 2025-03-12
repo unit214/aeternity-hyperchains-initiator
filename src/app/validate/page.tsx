@@ -19,11 +19,11 @@ const HomePage: React.FC = () => {
         <div className='mb-9 mt-12 flex items-center justify-center font-clash md:mb-24 md:mt-20'>
             <div className='flex flex-col'>
                 <div className='mb-4 text-4xl font-semibold'>
-                    Welcome to Your Chain Builder
+                    Welcome to the Validator Setup
                     <BetaLabel />
                 </div>
                 <div className='mb-10 font-roboto text-muted-foreground'>
-                    Ready to create your custom Hyperchain? Use this chain builder to do it in just a few steps.
+                    Want to participate in a Hyperchains network? Follow these simple steps to set up your validator!
                 </div>
                 <div className='mb-14 flex flex-col gap-2 md:flex-row md:gap-6'>
                     <Step
