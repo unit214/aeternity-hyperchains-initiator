@@ -1,16 +1,18 @@
-import { BetaLabel, Step } from '@/app/(home)/HomePage';
 import React from 'react';
+
+import Link from 'next/link';
+
+import { BetaLabel, Step } from '@/app/(home)/HomePage';
+import { AgreeButton, GetStartedButton } from '@/components/home/buttons-with-ga-event';
 import {
     Dialog,
     DialogContent,
-    DialogDescription, DialogFooter,
+    DialogDescription,
+    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger
 } from '@/components/ui/dialog';
-import { AgreeButton, GetStartedButton } from '@/components/home/buttons-with-ga-event';
-import Link from 'next/link';
-
 
 const HomePage: React.FC = () => {
     return (
@@ -78,7 +80,6 @@ const HomePage: React.FC = () => {
         </div>
     );
 };
-
 
 const Page = () => {
     return <HomePage />;

@@ -3,15 +3,16 @@
 import * as React from 'react';
 import { ReactNode, useEffect, useState } from 'react';
 
+import Link from 'next/link';
+
 import { ValidatorNodeConfig } from '@/app/validate/types/types';
 import { Button } from '@/components/ui/button';
 import { NODE_DATA, VALIDATOR_STEP_1_STORAGE_KEY } from '@/lib/constants';
 import { downloadYaml } from '@/lib/file';
 import { clearLocalStorage, getFromLocalStorage } from '@/lib/local-storage';
 import { sendGAEvent } from '@next/third-parties/google';
-import { InfoIcon } from 'lucide-react';
-import Link from 'next/link';
 
+import { InfoIcon } from 'lucide-react';
 
 const Initiator: React.FC = () => {
     const [data, setData] = useState<ValidatorNodeConfig | undefined>();
@@ -40,14 +41,17 @@ const Initiator: React.FC = () => {
                     <>
                         <div className='mb-4 text-2xl font-semibold md:text-4xl'>Error parsing form data</div>
                         <span className='mb-2 font-sans text-base text-muted-foreground'>{error}</span>
-                        <Link className='mb-16 font-sans text-base text-pink md:mb-24' href='/validate'>Go back</Link>
+                        <Link className='mb-16 font-sans text-base text-pink md:mb-24' href='/validate'>
+                            Go back
+                        </Link>
                     </>
                 )}
                 {!error && data && (
                     <>
                         <div className='mb-4 text-2xl font-semibold md:text-4xl'>Success! Your Validator is Ready</div>
                         <span className='font-sans text-base text-muted-foreground'>
-                            Use the configuration file to start your validator and participate in the proof of stake process.
+                            Use the configuration file to start your validator and participate in the proof of stake
+                            process.
                         </span>
                         <div className='mt-8 rounded-xl bg-gray-50 p-3'>
                             <div className='flex items-center'>
@@ -90,17 +94,22 @@ const Initiator: React.FC = () => {
                         <div className='mt-8'>
                             <h3 className='text-lg font-semibold'>Next Steps</h3>
                         </div>
-                        <div className='mt-4 mb-2 font-sans text-base text-black'>
-                            After completing the Validator Setup flow and receiving the configuration file, the next step is to review the setup instructions. Please refer to the Validator Setup Guide for detailed steps on how to proceed and finalize your Validator.
+                        <div className='mb-2 mt-4 font-sans text-base text-black'>
+                            After completing the Validator Setup flow and receiving the configuration file, the next
+                            step is to review the setup instructions. Please refer to the Validator Setup Guide for
+                            detailed steps on how to proceed and finalize your Validator.
                         </div>
-                        <a className="text-pink font-sans text-base underline mb-8" href='https://hyperchains.ae/'>
+                        <a className='mb-8 font-sans text-base text-pink underline' href='https://hyperchains.ae/'>
                             Check the guide
                         </a>
-
                     </>
                 )}
             </div>
-            <img src='/validator_success.png' className='hidden object-contain object-top xl:block max-w-' alt='Success Screen' />
+            <img
+                src='/validator_success.png'
+                className='max-w- hidden object-contain object-top xl:block'
+                alt='Success Screen'
+            />
         </div>
     );
 };
