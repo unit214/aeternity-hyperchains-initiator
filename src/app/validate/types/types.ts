@@ -1,5 +1,5 @@
 export type ValidatorNodeConfig = {
-    peers: [{ aenode: string }];
+    peers: [ string ];
     chain: {
         consensus: Record<
             string,
