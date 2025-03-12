@@ -1,72 +1,154 @@
 'use client';
 
-import * as React from 'react';
-import { ReactNode, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+import { useRouter } from 'next/navigation';
 
 import { ValidatorNodeConfig } from '@/app/validate/types/types';
+import { InitiatorStep } from '@/components/initiator-step';
 import { Button } from '@/components/ui/button';
-import { NODE_DATA, VALIDATOR_STEP_1_STORAGE_KEY } from '@/lib/constants';
-import { downloadYaml } from '@/lib/file';
-import { clearLocalStorage, getFromLocalStorage } from '@/lib/local-storage';
-import { sendGAEvent } from '@next/third-parties/google';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { NODE_DATA, StepFieldName } from '@/lib/constants';
+import { ValidatorStep2FormValues, validatorStep2FormSchema } from '@/lib/form-schema';
+import { getFromLocalStorage } from '@/lib/local-storage';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-const Initiator: React.FC = () => {
+import { useForm } from 'react-hook-form';
+
+const InitiatorForm: React.FC = () => {
+    const router = useRouter();
+    const form = useForm<ValidatorStep2FormValues>({
+        resolver: zodResolver(validatorStep2FormSchema),
+        defaultValues: {
+            checkbox1: false,
+            checkbox2: false,
+            checkbox3: false
+        },
+        mode: 'onBlur'
+    });
+
     const [data, setData] = useState<ValidatorNodeConfig | undefined>();
-    const [error, setError] = useState<ReactNode | undefined>();
-    const fileName = 'validate.yaml';
     useEffect(() => {
         const storedData = getFromLocalStorage<ValidatorNodeConfig>(NODE_DATA);
         if (storedData) {
             setData(storedData);
-            // validate data
         } else {
-            setError('No data found');
+            router.push('/validate/1');
         }
     }, []);
 
-    const downloadFileAndClearCache = async () => {
-        downloadYaml(fileName, data);
-        clearLocalStorage([VALIDATOR_STEP_1_STORAGE_KEY]);
-        clearLocalStorage([NODE_DATA]);
-    };
+    function onBack() {
+        router.push('/validate/1');
+    }
+
+    async function onSubmit(values: ValidatorStep2FormValues) {
+        console.log(values);
+        router.push('/validate/3');
+    }
 
     return (
-        <div className='flex flex-row justify-between gap-20'>
-            <div className='mt-11 flex flex-col md:mx-28 md:mt-20 xl:mr-0'>
-                {error && (
-                    <>
-                        <div className='mb-4 text-2xl font-semibold md:text-4xl'>Error parsing form data</div>
-                        <span className='mb-16 font-sans text-base text-muted-foreground md:mb-24'>{error}</span>
-                    </>
-                )}
-                {!error && data && (
-                    <div>
-                        Download a file
-                        <Button
-                            data-cy='button-download'
-                            variant='default'
-                            className='ml-auto hidden w-32 md:flex'
-                            onClick={() => {
-                                sendGAEvent('event', 'button_download');
-                                downloadFileAndClearCache();
-                            }}>
-                            Download
-                        </Button>
-                        <Button
-                            data-cy='button-download-mobile'
-                            variant='default'
-                            className='mt-2 w-full md:hidden'
-                            onClick={() => {
-                                sendGAEvent('event', 'button_download');
-                                downloadFileAndClearCache();
-                            }}>
-                            Download
-                        </Button>
-                    </div>
-                )}
-            </div>
+        <Form {...form}>
+            <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className={'flex flex-col justify-between gap-10 font-roboto md:gap-36'}>
+                <div className='grid grid-cols-1 gap-x-12 gap-y-8 md:gap-y-6'>
+                    <FormField
+                        control={form.control}
+                        name={StepFieldName.checkbox1}
+                        render={({ field }) => (
+                            <FormItem>
+                                <div className='flex items-center space-x-1'>
+                                    <FormControl>
+                                        <Checkbox
+                                            checked={field.value}
+                                            onCheckedChange={field.onChange}
+                                            onBlur={field.onBlur}
+                                            name={field.name}
+                                            ref={field.ref}></Checkbox>
+                                    </FormControl>
+                                    <FormLabel className='font-clash'>
+                                        Do you have more than the required amount of tokens on the{' '}
+                                        {data?.chain.fork_management.network_id} hyperchain to become a validator
+                                    </FormLabel>
+                                    <FormMessage />
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name={StepFieldName.checkbox2}
+                        render={({ field }) => (
+                            <FormItem>
+                                <div className='flex items-center space-x-1'>
+                                    <FormControl>
+                                        <Checkbox
+                                            checked={field.value}
+                                            onCheckedChange={field.onChange}
+                                            onBlur={field.onBlur}
+                                            name={field.name}
+                                            ref={field.ref}></Checkbox>
+                                    </FormControl>{' '}
+                                    <FormLabel className='font-clash'>
+                                        Do you have an account with funds on the aeternity chain{' '}
+                                        {data?.chain.consensus[0].config.parent_chain.consensus.network_id}
+                                    </FormLabel>
+                                    <FormMessage />
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name={StepFieldName.checkbox3}
+                        render={({ field }) => (
+                            <FormItem>
+                                <div className='flex items-center space-x-1'>
+                                    <FormControl>
+                                        <Checkbox
+                                            checked={field.value}
+                                            onCheckedChange={field.onChange}
+                                            onBlur={field.onBlur}
+                                            name={field.name}
+                                            ref={field.ref}></Checkbox>
+                                    </FormControl>{' '}
+                                    <FormLabel className='font-clash'>
+                                        Do you have access to a node of the aeternity chain{' '}
+                                        {data?.chain.consensus[0].config.parent_chain.consensus.network_id}
+                                    </FormLabel>
+                                    <FormMessage />
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+                </div>
+
+                <div className='flex w-full flex-row gap-4 self-center md:w-fit'>
+                    <Button type='button' variant='outline' className='w-full md:w-24' onClick={onBack}>
+                        Back
+                    </Button>
+                    <Button data-cy='button-next' type='submit' variant='default' className='w-full md:w-24'>
+                        Next
+                    </Button>
+                </div>
+            </form>
+        </Form>
+    );
+};
+
+const Validate1Page: React.FC = () => {
+    return (
+        <div className='flex size-full items-center justify-center'>
+            <InitiatorStep
+                title='Check the Requirements'
+                step={2}
+                totalSteps={2}
+                description='Read each step carefully and confirm that you meet the requirements.'
+                form={<InitiatorForm />}
+            />
         </div>
     );
 };
 
-export default Initiator;
+export default Validate1Page;

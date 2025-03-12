@@ -49,7 +49,11 @@ export enum StepFieldName {
     faucetInitBalance = 'faucetInitBalance',
     treasuryInitBalance = 'treasuryInitBalance',
     nodeUrl = 'nodeUrl',
-    nodeConfigUrl = 'nodeConfigUrl'
+    nodeAeUrl = 'nodeAeUrl',
+    middlewareUrl = 'middlewareUrl',
+    checkbox1 = 'checkbox1',
+    checkbox2 = 'checkbox2',
+    checkbox3 = 'checkbox3',
 }
 
 // "@ts-expect-error"
@@ -126,12 +130,17 @@ export const stepFields = {
 export const validationStepFields = {
     [StepFieldName.nodeUrl]: {
         label: 'Node URL',
-        tooltip: 'The API endpoint of a node in the Hyperchain network for syncing and block updates.',
+        tooltip: 'The API endpoint of a node in the Hyperchain network for syncing and block updates. Usually at port 3013.',
         step: Step.One
     },
-    [StepFieldName.nodeConfigUrl]: {
-        label: 'Node Config URL',
-        tooltip: 'The URL to the configuration file for the Hyperchain node.',
+    [StepFieldName.nodeAeUrl]: {
+        label: 'Node AE-Chatter URL',
+        tooltip: 'The URL to the Aeternity node of the Hyperchain network used for the ae protocol. Usually at port 3015.',
+        step: Step.One
+    },
+    [StepFieldName.middlewareUrl]: {
+        label: 'Middleware URL',
+        tooltip: 'The URL to the Middleware of the Hyperchain network.',
         step: Step.One
     }
 };

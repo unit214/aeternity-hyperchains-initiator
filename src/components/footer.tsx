@@ -18,7 +18,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ title, links }) =>
                     const linkProps = link.url.startsWith('/') ? {} : { target: '_blank', rel: 'noopener noreferrer' };
 
                     return (
-                        <div key={index} className={index > 0 ? 'mt-2' : ''}>
+                        <div key={index} className={index > 0 ? 'mt-3' : ''}>
                             <a href={link.url} className='hover:underline' {...linkProps}>
                                 {link.label}
                             </a>
