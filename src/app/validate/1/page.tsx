@@ -28,8 +28,7 @@ const InitiatorForm: React.FC<{ initialData: ValidatorStep1FormValues | null }> 
         defaultValues: {
             nodeUrl: initialData?.nodeUrl || 'https://demo.hyperchains.aeternity.io/',
             nodeAeUrl: initialData?.nodeAeUrl || 'demo.hyperchains.aeternity.io:3015',
-            middlewareUrl:
-                initialData?.middlewareUrl || 'https://demo.hyperchains.aeternity.io:8443/'
+            middlewareUrl: initialData?.middlewareUrl || 'https://demo.hyperchains.aeternity.io:8443/'
         },
         mode: 'onBlur'
     });
@@ -44,7 +43,10 @@ const InitiatorForm: React.FC<{ initialData: ValidatorStep1FormValues | null }> 
         try {
             const data = await fetchDataFromNode(values.nodeUrl, values.middlewareUrl);
             saveToLocalStorage<ValidatorStep1FormValues>(values, VALIDATOR_STEP_1_STORAGE_KEY);
-            saveToLocalStorage(createValidatorConfigData(data.nodeData, data.middlewareData, values.nodeAeUrl), NODE_DATA);
+            saveToLocalStorage(
+                createValidatorConfigData(data.nodeData, data.middlewareData, values.nodeAeUrl),
+                NODE_DATA
+            );
             router.push('/validate/2');
         } catch (error) {
             if (error instanceof NodeEndpointError) {
@@ -65,7 +67,7 @@ const InitiatorForm: React.FC<{ initialData: ValidatorStep1FormValues | null }> 
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
                 className={'flex flex-col justify-between gap-10 font-roboto md:gap-36'}>
-                <div className='grid grid-cols-1 gap-x-12 gap-y-8  md:gap-y-6'>
+                <div className='grid grid-cols-1 gap-x-12 gap-y-8 md:gap-y-6'>
                     <FormField
                         control={form.control}
                         name={StepFieldName.nodeUrl}
