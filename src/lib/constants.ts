@@ -53,7 +53,8 @@ export enum StepFieldName {
     middlewareUrl = 'middlewareUrl',
     checkbox1 = 'checkbox1',
     checkbox2 = 'checkbox2',
-    checkbox3 = 'checkbox3'
+    checkbox3 = 'checkbox3',
+    checkbox4 = 'checkbox4'
 }
 
 // "@ts-expect-error"

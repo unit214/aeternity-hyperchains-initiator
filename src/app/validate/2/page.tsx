@@ -23,7 +23,8 @@ const InitiatorForm: React.FC = () => {
         defaultValues: {
             checkbox1: false,
             checkbox2: false,
-            checkbox3: false
+            checkbox3: false,
+            checkbox4: false
         },
         mode: 'onBlur'
     });
@@ -116,6 +117,29 @@ const InitiatorForm: React.FC = () => {
                                     <FormLabel className='font-clash'>
                                         Do you have access to a node of the aeternity chain{' '}
                                         {data?.chain.consensus[0].config.parent_chain.consensus.network_id}
+                                    </FormLabel>
+                                    <FormMessage />
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name={StepFieldName.checkbox4}
+                        render={({ field }) => (
+                            <FormItem>
+                                <div className='flex items-center space-x-1'>
+                                    <FormControl>
+                                        <Checkbox
+                                            checked={field.value}
+                                            onCheckedChange={field.onChange}
+                                            onBlur={field.onBlur}
+                                            name={field.name}
+                                            ref={field.ref}></Checkbox>
+                                    </FormControl>{' '}
+                                    <FormLabel className='font-clash'>
+                                        Did you get the accounts file {data?.chain.hard_forks[0].accounts_file} and the{' '}
+                                        contracts file {data?.chain.hard_forks[0].contracts_file}?
                                     </FormLabel>
                                     <FormMessage />
                                 </div>
