@@ -171,7 +171,8 @@ export const validatorStep1FormSchema = z.object({
 export const validatorStep2FormSchema = z.object({
     [StepFieldName.checkbox1]: z.boolean(),
     [StepFieldName.checkbox2]: z.boolean(),
-    [StepFieldName.checkbox3]: z.boolean()
+    [StepFieldName.checkbox3]: z.boolean(),
+    [StepFieldName.checkbox4]: z.boolean()
 });
 
 export const formSchema = z
