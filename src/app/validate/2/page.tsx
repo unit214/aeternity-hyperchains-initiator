@@ -138,8 +138,8 @@ const InitiatorForm: React.FC = () => {
                                             ref={field.ref}></Checkbox>
                                     </FormControl>{' '}
                                     <FormLabel className='font-clash'>
-                                        Did you get the accounts file {data?.chain.hard_forks[0].accounts_file} and the{' '}
-                                        contracts file {data?.chain.hard_forks[0].contracts_file}?
+                                        Did you get the accounts file {data?.chain.hard_forks['6'].accounts_file} and
+                                        the contracts file {data?.chain.hard_forks['6'].contracts_file}?
                                     </FormLabel>
                                     <FormMessage />
                                 </div>
