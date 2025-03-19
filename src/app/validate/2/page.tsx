@@ -152,7 +152,17 @@ const InitiatorForm: React.FC = () => {
                     <Button type='button' variant='outline' className='w-full md:w-24' onClick={onBack}>
                         Back
                     </Button>
-                    <Button data-cy='button-next' type='submit' variant='default' className='w-full md:w-24'>
+                    <Button
+                        data-cy='button-next'
+                        type='submit'
+                        variant='default'
+                        className='w-full md:w-24'
+                        disabled={
+                            !form.watch('checkbox1') ||
+                            !form.watch('checkbox2') ||
+                            !form.watch('checkbox3') ||
+                            !form.watch('checkbox4')
+                        }>
                         Next
                     </Button>
                 </div>
