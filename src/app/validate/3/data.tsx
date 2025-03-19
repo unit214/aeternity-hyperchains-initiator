@@ -2,6 +2,8 @@ import { Node, NodeConfig } from '@/app/validate/types/client-types';
 import { ValidatorNodeConfig } from '@/app/validate/types/types';
 import { NodeConfigEndpointError, NodeEndpointError } from '@/lib/error';
 
+import BigNumber from 'bignumber.js';
+
 export function createValidatorConfigData(
     nodeData: Node,
     nodeConfigData: NodeConfig,
@@ -21,7 +23,7 @@ export function createValidatorConfigData(
                         contract_owner: nodeConfigData.consensus[0].contract_owner,
                         default_pinning_behavior: nodeConfigData.consensus[0].default_pinning_behavior,
                         election_contract: nodeConfigData.consensus[0].election_contract,
-                        fixed_coinbase: nodeConfigData.consensus[0].fixed_coinbase,
+                        fixed_coinbase: BigNumber(nodeConfigData.consensus[0].fixed_coinbase).toFixed(0),
                         parent_chain: {
                             consensus: {
                                 network_id: nodeConfigData.consensus[0].parent_chain.consensus.network_id,
@@ -35,7 +37,7 @@ export function createValidatorConfigData(
                             start_height: nodeConfigData.consensus[0].parent_chain.start_height
                         },
                         pinners: [{ parent_chain_account: {} }],
-                        pinning_reward_value: nodeConfigData.consensus[0].pinning_reward_value,
+                        pinning_reward_value: BigNumber(nodeConfigData.consensus[0].pinning_reward_value).toFixed(0),
                         rewards_contract: nodeConfigData.consensus[0].rewards_contract,
                         stakers: [{ hyperchain_account: {} }],
                         staking_contract: nodeConfigData.consensus[0].staking_contract
