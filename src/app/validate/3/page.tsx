@@ -59,7 +59,7 @@ const Initiator: React.FC = () => {
                                 <div className='pl-2'>
                                     <h2 className='text-lg font-semibold'>Download Your Config File</h2>
                                     <span className='font-sans text-sm text-muted-foreground'>
-                                        Config YAML file contains all the parameters you’ve set is
+                                        The config YAML file contains all the parameters you’ve set
                                     </span>
                                 </div>
                                 <Button
