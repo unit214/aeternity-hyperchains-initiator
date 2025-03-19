@@ -36,10 +36,25 @@ export function createValidatorConfigData(
                             },
                             start_height: nodeConfigData.consensus[0].parent_chain.start_height
                         },
-                        pinners: [{ parent_chain_account: {} }],
+                        pinners: [
+                            {
+                                parent_chain_account: {
+                                    owner: 'ak_2hT1UTe...your_hyperchain_pub_key...KHxk26kU',
+                                    priv: '4469eb65...your_parent_chain_priv_key...09ac200387ab5631a25',
+                                    pub: 'ak_2CQQctWm26...your_parent_chain_pub_key...pn8qog6MZ'
+                                }
+                            }
+                        ],
                         pinning_reward_value: BigNumber(nodeConfigData.consensus[0].pinning_reward_value).toFixed(0),
                         rewards_contract: nodeConfigData.consensus[0].rewards_contract,
-                        stakers: [{ hyperchain_account: {} }],
+                        stakers: [
+                            {
+                                hyperchain_account: {
+                                    priv: '4469eb65...your_priv_key...09ac200387ab5631a25',
+                                    pub: 'ak_2hT1UTe...your_pub_key...KHxk26kU'
+                                }
+                            }
+                        ],
                         staking_contract: nodeConfigData.consensus[0].staking_contract
                     },
                     type: 'hyperchain'
