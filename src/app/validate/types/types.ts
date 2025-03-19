@@ -10,7 +10,7 @@ export type ValidatorNodeConfig = {
                     contract_owner: string;
                     default_pinning_behavior: boolean;
                     election_contract: string;
-                    fixed_coinbase: number;
+                    fixed_coinbase: string;
                     parent_chain: {
                         consensus: {
                             network_id: string;
@@ -28,7 +28,7 @@ export type ValidatorNodeConfig = {
                             parent_chain_account: object;
                         }
                     ];
-                    pinning_reward_value: number;
+                    pinning_reward_value: string;
                     rewards_contract: string;
                     stakers: [{ hyperchain_account: object }];
                     staking_contract: string;
