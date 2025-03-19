@@ -70,7 +70,7 @@ const InitiatorForm: React.FC = () => {
                                     </FormControl>
                                     <FormLabel className='font-clash'>
                                         Do you have more than the required amount of tokens on the{' '}
-                                        {data?.chain.fork_management.network_id} hyperchain to become a validator
+                                        {data?.chain.fork_management.network_id} hyperchain to become a validator?
                                     </FormLabel>
                                     <FormMessage />
                                 </div>
@@ -93,7 +93,7 @@ const InitiatorForm: React.FC = () => {
                                     </FormControl>{' '}
                                     <FormLabel className='font-clash'>
                                         Do you have an account with funds on the aeternity chain{' '}
-                                        {data?.chain.consensus[0].config.parent_chain.consensus.network_id}
+                                        {data?.chain.consensus[0].config.parent_chain.consensus.network_id}?
                                     </FormLabel>
                                     <FormMessage />
                                 </div>
@@ -116,7 +116,7 @@ const InitiatorForm: React.FC = () => {
                                     </FormControl>{' '}
                                     <FormLabel className='font-clash'>
                                         Do you have access to a node of the aeternity chain{' '}
-                                        {data?.chain.consensus[0].config.parent_chain.consensus.network_id}
+                                        {data?.chain.consensus[0].config.parent_chain.consensus.network_id}?
                                     </FormLabel>
                                     <FormMessage />
                                 </div>
