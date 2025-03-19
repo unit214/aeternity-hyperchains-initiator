@@ -26,9 +26,9 @@ const InitiatorForm: React.FC<{ initialData: ValidatorStep1FormValues | null }> 
     const form = useForm<ValidatorStep1FormValues>({
         resolver: zodResolver(validatorStep1FormSchema),
         defaultValues: {
-            nodeUrl: initialData?.nodeUrl || 'https://demo.hyperchains.aeternity.io/',
-            nodeAeUrl: initialData?.nodeAeUrl || 'demo.hyperchains.aeternity.io:3015',
-            middlewareUrl: initialData?.middlewareUrl || 'https://demo.hyperchains.aeternity.io:8443/'
+            nodeUrl: initialData?.nodeUrl,
+            nodeAeUrl: initialData?.nodeAeUrl,
+            middlewareUrl: initialData?.middlewareUrl
         },
         mode: 'onBlur'
     });
