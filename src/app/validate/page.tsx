@@ -1,8 +1,9 @@
 import React from 'react';
 
+import Image from 'next/image';
 import Link from 'next/link';
 
-import { BetaLabel, Step } from '@/app/(home)/HomePage';
+import { BetaLabel } from '@/app/(home)/HomePage';
 import { AgreeButton, GetStartedButton } from '@/components/home/buttons-with-ga-event';
 import {
     Dialog,
@@ -13,6 +14,32 @@ import {
     DialogTitle,
     DialogTrigger
 } from '@/components/ui/dialog';
+
+const FullWidthStep: React.FC = () => {
+    return (
+        <div className='flex w-full flex-col items-start rounded-xl bg-primary-foreground'>
+            <div className='flex flex-col md:flex-row'>
+                <div className='flex w-full flex-1 flex-col p-4 md:pl-12 md:pt-12'>
+                    <span className='font-roboto text-sm text-pink'>Validator</span>
+                    <span className='lead text-2xl font-semibold'>Create Your Validator Config</span>
+                    <span className='mt-3 font-roboto text-sm text-muted-foreground'>
+                        Define the parameters, assign the Hyperchain and complete the checklist to bring your Validator
+                        live
+                    </span>
+                </div>
+                <div className='flex w-full flex-1 items-center justify-center md:justify-items-end'>
+                    <Image
+                        className='h-40 self-center md:ml-auto md:h-64'
+                        src='validator_start.svg'
+                        alt='validator start'
+                        width={400}
+                        height={400}
+                    />
+                </div>
+            </div>
+        </div>
+    );
+};
 
 const HomePage: React.FC = () => {
     return (
@@ -26,27 +53,7 @@ const HomePage: React.FC = () => {
                     Want to participate in a Hyperchains network? Follow these simple steps to set up your validator!
                 </div>
                 <div className='mb-14 flex flex-col gap-2 md:flex-row md:gap-6'>
-                    <Step
-                        stepNumber={1}
-                        title='Enter Your Hyperchain Details'
-                        description='Input the node URL and middleware URL.'
-                        imageSrc='/home_illustration_1.png'
-                        alt='Home illustration 1'
-                    />
-                    <Step
-                        stepNumber={2}
-                        title='Download Your Config File'
-                        description='Instantly receive the configuration file tailored for your validator node.'
-                        imageSrc='/home_validator_2.svg'
-                        alt='Home illustration 2'
-                    />
-                    <Step
-                        stepNumber={3}
-                        title='Start Running Your Validator'
-                        description='Take the first step towards decentralization.'
-                        imageSrc='/home_illustration_3.png'
-                        alt='Home illustration 3'
-                    />
+                    <FullWidthStep />
                 </div>
                 <Dialog>
                     <DialogTrigger asChild>
