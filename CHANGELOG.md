@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.3.0](https://github.com/aeternity/aepp-hyperchains-initiator/compare/v1.2.0...v1.3.0) (2025-03-26)
+
+
+### Features
+
+* **#50:** updates home page to meet design ([d27052b](https://github.com/aeternity/aepp-hyperchains-initiator/commit/d27052bfda6734a82e693d58f09d899ac2f0f013))
+* **#54:** disable button if checkboxes are not checked ([f81eb2d](https://github.com/aeternity/aepp-hyperchains-initiator/commit/f81eb2d62ec8aa6fe077a130e05dffea98efce02))
+* adds files hint in checklist ([365f0e6](https://github.com/aeternity/aepp-hyperchains-initiator/commit/365f0e621c75cc26cfe5c836070512f896b77061))
+* validator v1 ([4c0c900](https://github.com/aeternity/aepp-hyperchains-initiator/commit/4c0c900c4bff6425dc55585206b99244fe3eebca))
+
+
+### Bug Fixes
+
+* **#49:** adds examples for keypairs ([d5b6e39](https://github.com/aeternity/aepp-hyperchains-initiator/commit/d5b6e39a16347091fc59ca251b4a8de738b501cc))
+* **#50:** fixes scientific notation on reward value ([5349974](https://github.com/aeternity/aepp-hyperchains-initiator/commit/5349974231e4f7953e45b75669d14d52bdf281bc))
+* **#52:** adds question marks in checklist ([43dfb5d](https://github.com/aeternity/aepp-hyperchains-initiator/commit/43dfb5d076dd3c97a02ed0c2945dd3b429022399))
+* **#53:** removes word ([33afea5](https://github.com/aeternity/aepp-hyperchains-initiator/commit/33afea557c217beb176500e9f6a543095df46bc0))
+* access correct hardfork for filenames ([1811ba9](https://github.com/aeternity/aepp-hyperchains-initiator/commit/1811ba93d34cdf9d0ad54f4f2b6447343f49aecf))
+* removes default values ([4fcb414](https://github.com/aeternity/aepp-hyperchains-initiator/commit/4fcb414d3ec20d40147bda9b5d5e04a3cf1c4eca))
+
 ## [1.2.0](https://github.com/aeternity/aepp-hyperchains-initiator/compare/v1.1.0...v1.2.0) (2025-02-24)
 
 
