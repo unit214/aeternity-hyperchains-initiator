@@ -37,6 +37,7 @@ export enum Step {
 export enum StepFieldName {
     networkId = 'networkId',
     childBlockTime = 'childBlockTime',
+    childBlockProductionTime = 'childBlockProductionTime',
     pinningChain = 'pinningChain',
     pinningChainNetworkId = 'pinningChainNetworkId',
     pinningChainNodeUrl = 'pinningChainNodeUrl',
@@ -67,6 +68,11 @@ export const stepFields = {
     [StepFieldName.childBlockTime]: {
         label: 'Hyperchain Block Time',
         tooltip: 'The time (in milliseconds) between each key block creation.',
+        step: Step.One
+    },
+    [StepFieldName.childBlockProductionTime]: {
+        label: 'Child Block Production Time',
+        tooltip: 'The time (in milliseconds) for block production in the hyperchain.',
         step: Step.One
     },
     [StepFieldName.pinningChain]: {

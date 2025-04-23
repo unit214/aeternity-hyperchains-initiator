@@ -87,6 +87,12 @@ export const step1FormSchema = z.object({
         fieldName: stepFields[StepFieldName.childBlockTime].label,
         min: 3000n,
         max: 10000n
+    }),
+    // childBlockProductionTime is hardcoded to 500ms in RC5 and later versions
+    [StepFieldName.childBlockProductionTime]: bigNumberSchema({
+        fieldName: stepFields[StepFieldName.childBlockProductionTime].label,
+        min: 100n,
+        max: 1000n
     })
 });
 
@@ -186,6 +192,12 @@ export const formSchema = z
             max: 10000n,
             step: stepFields[StepFieldName.childBlockTime].step
         }),
+        // childBlockProductionTime is hardcoded to 500ms in RC5 and later versions
+        [StepFieldName.childBlockProductionTime]: bigNumberSchema({
+            min: 100n,
+            max: 1000n,
+            step: stepFields[StepFieldName.childBlockProductionTime].step
+        }),
         [StepFieldName.pinningChain]: z
             .string({ message: stepFields[StepFieldName.pinningChain].step })
             .nonempty(stepFields[StepFieldName.pinningChain].step),
@@ -254,6 +266,7 @@ export const formSchema = z
                     .dividedBy(data.childBlockTime)
                     .toFixed(0)
             ), // TODO take next higher number for non absolute result?
+            childBlockProductionTime: BigInt(data.childBlockProductionTime),
             contractSourcesPrefix: pinningChain.contractSourcesPrefix,
             enablePinning: true,
             faucetInitBalance: expandDecimals(data.faucetInitBalance, pinningChain.decimals),

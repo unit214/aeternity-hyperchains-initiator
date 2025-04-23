@@ -23,7 +23,8 @@ const InitiatorForm: React.FC<{ initialData: Step1FormValues | null }> = ({ init
         resolver: zodResolver(step1FormSchema),
         defaultValues: {
             networkId: initialData?.networkId || '',
-            childBlockTime: initialData?.childBlockTime || '3000'
+            childBlockTime: initialData?.childBlockTime || '3000',
+            childBlockProductionTime: '500' // hardcoded to 500ms in RC5 and later versions
         },
         mode: 'onBlur'
     });
