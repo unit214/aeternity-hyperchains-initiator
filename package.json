@@ -16,6 +16,7 @@
         "cypress:open": "cypress open"
     },
     "dependencies": {
+        "@aeternity/aepp-sdk": "^14.0.0",
         "@hookform/resolvers": "^3.9.1",
         "@next/third-parties": "^15.1.6",
         "@radix-ui/react-accordion": "^1.2.2",

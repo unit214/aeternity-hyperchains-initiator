@@ -181,6 +181,15 @@ export const validatorStep2FormSchema = z.object({
     [StepFieldName.checkbox4]: z.boolean()
 });
 
+export const delegatorStep1FormSchema = z.object({
+    [StepFieldName.nodeUrl]: z.string(),
+    [StepFieldName.delegationContract]: z.string()
+});
+
+export const delegatorStep3FormSchema = z.object({
+    [StepFieldName.amount]: z.string()
+});
+
 export const formSchema = z
     // validate input
     .object({
@@ -305,4 +314,6 @@ export type Step3FormValues = z.infer<typeof step3FormSchema>;
 export type Step4FormValues = z.infer<typeof step4FormSchema>;
 export type ValidatorStep1FormValues = z.infer<typeof validatorStep1FormSchema>;
 export type ValidatorStep2FormValues = z.infer<typeof validatorStep2FormSchema>;
+export type DelegatorStep1FormValues = z.infer<typeof delegatorStep1FormSchema>;
+export type DelegatorStep3FormValues = z.infer<typeof delegatorStep3FormSchema>;
 export type FormValues = z.infer<typeof formSchema>;

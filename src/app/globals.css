@@ -31,12 +31,15 @@
         --pink: 349 91% 56%;
         --pink-2: 353 58.6% 94.3%;
         --pink-light: 353 99% 77%;
+        --grey-1: 0 0% 98%;
         --grey-2: 0 0% 93%;
         --grey-3: 0 0% 85%;
         --grey-4: 0 1% 72%; /* input placeholder */
         --grey-5: 0 0% 46%; /* muted-foreground */
         --grey-6: 0 0% 24%;
+        --violet: 266 81% 57%;
         --violet-2: 266, 100%, 64%;
+        --violet-3: 267 100% 96%;
         --black-1: 0, 0%, 13%;
         --radius: 0.5rem;
     }

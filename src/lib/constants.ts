@@ -5,6 +5,7 @@ export const INITIATOR_STEP_2_STORAGE_KEY = 'InitiatorStep2';
 export const INITIATOR_STEP_3_STORAGE_KEY = 'InitiatorStep3';
 export const INITIATOR_STEP_4_STORAGE_KEY = 'InitiatorStep4';
 export const VALIDATOR_STEP_1_STORAGE_KEY = 'ValidatorStep1';
+export const DELEGATOR_STEP_1_STORAGE_KEY = 'DelegatorStep1';
 export const NODE_DATA = 'NodeData';
 
 export const externalUrls = {
@@ -55,7 +56,9 @@ export enum StepFieldName {
     checkbox1 = 'checkbox1',
     checkbox2 = 'checkbox2',
     checkbox3 = 'checkbox3',
-    checkbox4 = 'checkbox4'
+    checkbox4 = 'checkbox4',
+    delegationContract = 'delegationContract',
+    amount = 'amount'
 }
 
 // "@ts-expect-error"
@@ -150,6 +153,21 @@ export const validationStepFields = {
     [StepFieldName.middlewareUrl]: {
         label: 'Middleware URL',
         tooltip: 'The URL to the Middleware of the Hyperchain network.',
+        step: Step.One
+    }
+};
+
+// "@ts-expect-error"
+export const delegationStepFields = {
+    [StepFieldName.nodeUrl]: {
+        label: 'Node URL',
+        tooltip:
+            'The API endpoint of a node in the Hyperchain network for syncing and block updates. Usually at port 3013.',
+        step: Step.One
+    },
+    [StepFieldName.delegationContract]: {
+        label: 'Delegation contract',
+        tooltip: 'The delegation contract address',
         step: Step.One
     }
 };
