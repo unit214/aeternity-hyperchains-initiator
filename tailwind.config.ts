@@ -61,12 +61,15 @@ const config: Config = {
                 pink: 'hsl(var(--pink))',
                 'pink-2': 'hsl(var(--pink-2))',
                 'pink-light': 'hsl(var(--pink-light))',
+                'grey-1': 'hsl(var(--grey-1))',
                 'grey-2': 'hsl(var(--grey-2))',
                 'grey-3': 'hsl(var(--grey-3))',
                 'grey-4': 'hsl(var(--grey-4))',
                 'grey-5': 'hsl(var(--grey-5))',
                 'grey-6': 'hsl(var(--grey-6))',
+                violet: 'hsl(var(--violet))',
                 'violet-2': 'hsl(var(--violet-2))',
+                'violet-3': 'hsl(var(--violet-3))',
                 'black-1': 'hsl(var(--black-1))'
             },
             fontFamily: {
