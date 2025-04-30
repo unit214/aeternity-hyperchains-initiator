@@ -2,8 +2,8 @@ import Image from 'next/image';
 
 const Delegate4Page: React.FC = () => {
     return (
-        <div className='flex flex-row justify-between gap-20 md:w-screen'>
-            <div className='mt-11 flex grow flex-col md:mx-28 md:mt-20 xl:mr-0'>
+        <div className='flex flex-row justify-between gap-20'>
+            <div className='mt-11 flex flex-col md:mx-28 md:mt-20 xl:mr-0'>
                 <Image src='/icon_success.png' alt='success' width={62} height={62} />
                 <div className='mb-4 mt-6 text-2xl font-semibold md:text-4xl'>Success!</div>
                 <span className='font-sans text-base text-muted-foreground'>Your delegation is all set</span>
