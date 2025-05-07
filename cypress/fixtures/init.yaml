@@ -1,5 +1,6 @@
 childBlockTime: 4000
 childEpochLength: 900
+childBlockProductionTime: 500
 contractSourcesPrefix: https://raw.githubusercontent.com/aeternity/aeternity/refs/tags/v7.3.0-rc2/
 enablePinning: true
 faucetInitBalance: 100500000000000000000
